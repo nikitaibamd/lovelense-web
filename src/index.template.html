@@ -851,7 +851,7 @@ var sTimer=null,sSeq=0;
 function srcKind(v){
  if(/https?:\/\/\S+/.test(v)){
   var u=v.match(/https?:\/\/\S+/)[0];
-  var src=/spotify/.test(u)?"Spotify":/yandex/.test(u)?"ya":/apple\.co/.test(u)?"Apple Music":/deezer/.test(u)?"Deezer":/youtu/.test(u)?(/[?&]list=(?!RD)/.test(u)?"Плейлист YouTube":"YouTube"):/(vk\.com|vk\.ru|soundcloud|zvuk\.com)/.test(u)?"bad":"Ссылка";
+  var src=/spotify/.test(u)?"Spotify":/yandex/.test(u)?"ya":/apple\.co/.test(u)?"Apple Music":/deezer/.test(u)?"Deezer":/soundcloud/.test(u)?"SoundCloud":/youtu/.test(u)?(/[?&]list=(?!RD)/.test(u)?"Плейлист YouTube":"YouTube"):/(vk\.com|vk\.ru|zvuk\.com)/.test(u)?"bad":"Ссылка";
   return {kind:"url",src:src,url:u};
  }
  var lines=v.split(/\n/).filter(function(l){return l.trim().length>1});
@@ -861,10 +861,10 @@ function srcKind(v){
 function sRender(B,v){
  var R=B.querySelector("#sRes");R.innerHTML="";
  v=v.trim();
- if(!v){R.innerHTML='<div class="shint"><b>Напиши название песни или исполнителя</b> — нажми на трек, и он заиграет у вас обоих.<br><br>Ещё сюда можно вставить <b>ссылку на плейлист или альбом</b> из Spotify, YouTube, Apple Music или Deezer — песни сыграют по очереди.<br><br>Из Яндекс Музыки, VK и других приложений скопируй список треков (каждый с новой строки) и вставь сюда.</div>';return}
+ if(!v){R.innerHTML='<div class="shint"><b>Напиши название песни или исполнителя</b> — нажми на трек, и он заиграет у вас обоих.<br><br>Ещё сюда можно вставить <b>ссылку на плейлист или альбом</b> из Spotify, SoundCloud, YouTube, Apple Music или Deezer — песни сыграют по очереди.<br><br>Из Яндекс Музыки, VK и других приложений скопируй список треков (каждый с новой строки) и вставь сюда.</div>';return}
  var k=srcKind(v);
  if(k.kind==="url"&&k.src==="ya"){R.innerHTML='<div class="shint"><b>Яндекс Музыка не отдаёт плейлисты</b> — она закрыта для серверов за пределами России, а наш сервер работает в Европе.<br><br>Что можно сделать: скопируй названия треков (каждый с новой строки, «Исполнитель — Название») и вставь сюда. Или просто найди песни поиском — их всё равно включит YouTube.</div>';return}
- if(k.kind==="url"&&k.src==="bad"){R.innerHTML='<div class="shint">Из VK, SoundCloud и Звука плейлист по ссылке не открыть — эти сервисы его не отдают. Скопируй названия треков (каждый с новой строки) и вставь сюда.</div>';return}
+ if(k.kind==="url"&&k.src==="bad"){R.innerHTML='<div class="shint">Из VK и Звука плейлист по ссылке не открыть — эти сервисы его не отдают. Скопируй названия треков (каждый с новой строки) и вставь сюда.</div>';return}
  if(k.kind!=="q"){
   var c=node('<div class="card simp"><div class="ttl"></div><div class="hint" style="margin-top:2px"></div><div class="row2"><button class="btn" type="button" data-m="play">▶ Слушать</button><button class="btn sec" type="button" data-m="queue">В очередь</button></div></div>');
   c.querySelector(".ttl").textContent=k.kind==="url"?(k.src==="YouTube"?"Видео с YouTube":k.src==="Ссылка"?"Плейлист по ссылке":k.src):"Список · "+k.n+" "+plural(k.n,"трек","трека","треков");
