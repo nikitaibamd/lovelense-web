@@ -24,15 +24,7 @@ def put(name, data, ext):
     open(os.path.join(A, fn), 'wb').write(data)
     return 'a/' + fn
 bg = {'sunlit-room': put('room', open(P('assets', 'sunlit-room.webp'), 'rb').read(), 'webp')}
-b = io.BytesIO(); Image.open(P('assets', 'cat.png')).convert('RGB').save(b, 'WEBP', quality=80)
-cat = put('cat', b.getvalue(), 'webp')
-spr_src = json.load(open(P('assets', 'sprites.json')))
-spr = {}
-for k, v in spr_src.items():
-    head, data = v.split(',', 1)
-    ext = 'webp' if 'webp' in head else 'png'
-    spr[k] = put('pet-' + k, base64.b64decode(data), ext)
-t = t.replace('%%BG%%', json.dumps(bg)).replace('%%CAT%%', cat).replace('%%ICONS%%', '{}').replace('%%SPR%%', json.dumps(spr))
+t = t.replace('%%BG%%', json.dumps(bg)).replace('%%ICONS%%', '{}').replace('%%PETJS%%', open(P('src', 'pet.js'), encoding='utf-8').read())
 assert not re.findall(r'%%[A-Za-z]+%%', t)
 os.makedirs(P('dist'), exist_ok=True)
 open(P('dist', 'index.html'), 'w', encoding='utf-8').write(t)

@@ -64,7 +64,8 @@ button{font:inherit;color:inherit}
 .tile .s{font-size:13px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .row{display:flex;align-items:center;gap:14px;padding:14px 16px;margin-top:14px;cursor:pointer}
 .row .chev{margin-left:auto;width:22px;height:22px;flex:none;opacity:.75}
-.petpic{width:112px;height:86px;flex:none;border-radius:20px;background:center/cover no-repeat}
+.petpic{width:104px;height:90px;flex:none;border-radius:20px;background:var(--chip);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.petpic svg{height:86px;width:auto}
 .rt{font-size:20px;font-weight:600;display:flex;align-items:center;gap:6px}
 .rt svg{width:20px;height:20px}
 .rs{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:15px;margin-top:4px}
@@ -150,8 +151,24 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 /* питомец */
 .room{position:relative;height:300px;border-radius:28px;overflow:hidden;margin-top:6px;background:center/cover;box-shadow:var(--shadow)}
 .room::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,246,242,0) 50%,rgba(255,246,242,.55))}
-.room img{position:absolute;left:50%;bottom:16px;height:230px;transform:translateX(-50%);z-index:1;transition:transform .2s;-webkit-user-drag:none;cursor:pointer}
-.room img.bounce{animation:petb .6s ease}
+.room .decor{position:absolute;inset:0;width:100%;height:100%}
+#petSvg{position:absolute;left:50%;bottom:6px;width:230px;transform:translateX(-50%);z-index:1;cursor:pointer;-webkit-user-select:none;user-select:none}
+#petSvg.bounce{animation:petb .6s ease}
+.pet-svg{display:block;overflow:visible}
+.pet-svg .bob{transform-box:view-box;transform-origin:100px 205px;animation:bob 3.2s ease-in-out infinite}
+.pet-svg .eyes{transform-box:view-box;transform-origin:100px 101px;animation:blink 4.6s infinite}
+.mood-sleep .bob{animation:breathe 4.2s ease-in-out infinite}
+.pet-svg .zz text{animation:zz 3s ease-in-out infinite}.pet-svg .zz text+text{animation-delay:.8s}
+@keyframes bob{0%,100%{transform:none}50%{transform:translateY(-4px) scale(1.01,.99)}}
+@keyframes breathe{0%,100%{transform:none}50%{transform:scale(1.025,.975)}}
+@keyframes blink{0%,93%,100%{transform:none}95%{transform:scaleY(.12)}}
+@keyframes zz{0%,100%{opacity:.25;transform:translateY(4px)}50%{opacity:1;transform:none}}
+.rooms{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 6px;margin-top:8px;-webkit-overflow-scrolling:touch}
+.rooms button{flex:none;width:76px;border:0;background:none;padding:0;cursor:pointer;color:var(--ink);font-size:11px;font-weight:600;text-align:center}
+.rooms button i{display:block;height:56px;border-radius:16px;border:3px solid transparent;margin-bottom:4px;box-shadow:var(--shadow)}
+.rooms button.on i{border-color:var(--acc)}
+.kinds button{display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding:0}
+.kinds button svg{width:44px;height:44px}
 @keyframes petb{0%,100%{transform:translateX(-50%) scale(1)}30%{transform:translateX(-50%) scale(1.1,.92)}60%{transform:translateX(-50%) scale(.96,1.05)}}
 .room .bd{position:absolute;right:16px;top:16px;z-index:2;font-size:26px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center}
 .fh{position:absolute;z-index:3;bottom:120px;font-size:24px;color:var(--acc);pointer-events:none;animation:fly 1.5s ease-out forwards}
@@ -230,7 +247,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 "use strict";
 var API="https://wispy-star-4736.brukenfang.workers.dev";
 var TG=window.Telegram&&window.Telegram.WebApp,INIT=TG&&TG.initData?TG.initData:"";
-var BG=%%BG%%,CAT="%%CAT%%",ICON=%%ICONS%%,SPR=%%SPR%%;
+var BG=%%BG%%,ICON=%%ICONS%%;
 var BG_NAMES={"cherry-blossoms":"Сакура","pink-clouds":"Розовые облака","moonlit-clouds":"Лунная ночь","dreamy-sky":"Закат вдвоём","starlit-sky":"Вечернее небо","sunlit-room":"Солнечная комната"};
 var BG_TONE={"moonlit-clouds":"dark","dreamy-sky":"dark","starlit-sky":"dark"};
 var BGS={},BG_GROUPS=[[],["Белые",[]],["Чёрные",[]],["Светло-голубые",[]],["Бежевые",[]]];
@@ -245,8 +262,9 @@ var BGS={},BG_GROUPS=[[],["Белые",[]],["Чёрные",[]],["Светло-г
 ].forEach(function(x){BGS[x[1]]={n:x[2],css:x[3],tone:x[4],dark:!!x[5]};BG_GROUPS[x[0]][1].push(x[1])});
 BG_GROUPS.shift();
 var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лаванда"],["blue","#8FB5DE","Голубой"],["mint","#8CC7B0","Мята"],["peach","#E8A97E","Персик"],["graphite","#8A7E85","Графит"]];
-var PREF_DEF={bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on"};
+var PREF_DEF={room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
+%%PETJS%%
 var ERR={partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже"};
 var $=function(id){return document.getElementById(id)};
 var S=null,pos={},lastPut=0,poller=null,started=false;
@@ -327,7 +345,7 @@ function render(){
  $("pUid").textContent=me?me.id:"—";
  var p=S.pet;
  $("petRow").style.display=p?"":"none";
- if(p){$("petTitle").textContent=p.name;$("petStatus").textContent=petStatus(p)}
+ if(p){$("petTitle").textContent=p.name;$("petStatus").textContent=petStatus(p);var pk=p.kind+"|"+moodOf(p);if($("petPic").getAttribute("data-k")!==pk){$("petPic").setAttribute("data-k",pk);$("petPic").innerHTML=petSvg(p.kind,moodOf(p))}}
  $("mapSub").textContent=pa&&S.partner_loc&&S.partner_active!==false?"Обновлено "+ago(S.partner_loc.t):"Где мы сейчас";
  try{updateMini()}catch(e){console.error(e)}
  if(cur&&cur.live)cur.live();
@@ -339,7 +357,6 @@ function petStatus(p){
  if(night())return "Сейчас спит";
  return {hungry:"Хочет кушать",lonely:"Скучает, погладь его",love:"Вы рядом — он счастлив",joy:"Мурлычет от удовольствия",fed:"Спасибо за вкусняшку!"}[p.mood]||"Всё хорошо";
 }
-$("petPic").style.backgroundImage='url("'+CAT+'")';
 $("daysCard").onclick=function(){haptic();openSheet(S&&S.partner?"me":"partner")};
 $("bell").onclick=function(){haptic();openSheet("notify")};
 $("gear").onclick=function(){haptic();openSheet("look")};
@@ -529,27 +546,15 @@ function devRender(){
 function devLoad(){call("/v2/device/list").then(function(x){devList=x.devices||[];devRender()}).catch(function(){})}
 
 // --- питомец ---
-var petTick=0,petScene="idle";
-function frame(p){
- var t=petTick,a=t%2;
- if(night())return "sleep"+a;
- if(p.mood==="fed")return "eat"+a;
- if(p.mood==="joy")return "happy"+a;
- if(p.mood==="hungry")return t%6===5?"think0":"hungry";
- if(p.mood==="lonely")return "think"+a;
- if(p.mood==="love")return "wave"+a;
- if(t%10===0)petScene=["idle","idle","look","think","wave"][Math.floor(Math.random()*5)];
- if(petScene==="look")return "look";if(petScene==="think")return "think"+a;if(petScene==="wave")return "wave"+a;
- return t%5===4?"idle1":"idle0";
-}
-setInterval(function(){petTick++;var im=$("petImg");if(im&&S&&S.pet&&S.pet.kind==="cat"){var f=frame(S.pet);if(im.getAttribute("data-f")!==f){im.setAttribute("data-f",f);im.src=SPR[f]}}},1500);
 function renderPet(B){
  var p=S&&S.pet;if(!p){B.innerHTML='<div class="card box">Питомец появится, когда вы добавите партнёра.</div>';return}
- var room=BG["sunlit-room"];
+ var rm=roomOf();
  B.innerHTML="";
- var r=node('<div class="room" style="background-image:url(&quot;'+room+'&quot;)"><span class="bd" id="pBd"></span></div>');B.appendChild(r);
- if(p.kind==="cat"){var im=document.createElement("img");im.id="petImg";im.alt="";var f=frame(p);im.src=SPR[f];im.setAttribute("data-f",f);r.appendChild(im);im.onclick=function(){petAct("pet")}}
- else{var em=node('<div style="position:absolute;left:0;right:0;bottom:40px;text-align:center;font-size:120px;z-index:1;cursor:pointer" id="petImg2">'+(PET_EMO[p.kind]||"🐾")+'</div>');r.appendChild(em);em.onclick=function(){petAct("pet")}}
+ var r=node('<div class="room" id="pRoom"><span class="bd" id="pBd"></span></div>');r.style.background=roomBg(rm);r.insertAdjacentHTML("afterbegin",roomDecor(rm));B.appendChild(r);
+ var pv=node('<div id="petSvg"></div>');r.appendChild(pv);pv.onclick=function(){petAct("pet")};
+ var rs=node('<div class="rooms" id="pRooms"></div>');B.appendChild(rs);
+ ROOMS.forEach(function(x){var b=node('<button type="button" class="'+(x[0]===rm[0]?"on":"")+'"><i></i>'+esc(x[1])+'</button>');b.querySelector("i").style.background=roomBg(x);
+  b.onclick=function(){setPref("room",x[0]);haptic();var R2=$("pRoom");R2.style.background=roomBg(x);var d=R2.querySelector(".decor");if(d)d.remove();R2.insertAdjacentHTML("afterbegin",roomDecor(x));Array.prototype.forEach.call(rs.children,function(c){c.classList.toggle("on",c===b)})};rs.appendChild(b)});
  var info=box(B,'<div style="font-size:22px;font-weight:600"><span id="pN"></span><span class="lvl" id="pL"></span></div><div class="hint" style="margin-top:2px" id="pS"></div>'+
   '<div class="bar"><div class="bl"><span>Опыт</span><span id="pXv"></span></div><i><b id="pX"></b></i></div>'+
   '<div class="bar"><div class="bl"><span>Сытость</span><span id="pFv"></span></div><i><b id="pF"></b></i></div>'+
@@ -557,7 +562,7 @@ function renderPet(B){
  var a=node('<div class="acts"><button type="button" data-a="feed"><span>🍖</span>Кормить</button><button type="button" data-a="play"><span>🎾</span>Играть</button><button type="button" data-a="pet"><span>🤍</span>Гладить</button><button type="button" data-a="care"><span>🫧</span>Уход</button></div>');
  B.appendChild(a);Array.prototype.forEach.call(a.querySelectorAll("button"),function(b){b.onclick=function(){petAct(b.getAttribute("data-a"))}});
  var c=box(B,'<div class="lab">Кто это</div><div class="kinds" id="pK"></div><div class="lab" style="margin-top:14px">Имя</div><input class="in" id="pName" maxlength="16"><button class="btn sec" id="pNameS" type="button">Сохранить имя</button>');
- Object.keys(PET_EMO).forEach(function(k){var x=node('<button type="button" class="'+(k===p.kind?"on":"")+'">'+PET_EMO[k]+'</button>');x.onclick=function(){call("/v2/pet/setup",{kind:k}).then(function(r){S.pet=r.pet;renderPet(B);render()}).catch(function(){})};$("pK").appendChild(x)});
+ Object.keys(PET_LOOK).forEach(function(k){var x=node('<button type="button" aria-label="'+PET_NAMES[k]+'" class="'+(k===p.kind?"on":"")+'">'+petSvg(k,"idle")+'</button>');x.onclick=function(){call("/v2/pet/setup",{kind:k}).then(function(r){S.pet=r.pet;renderPet(B);render()}).catch(function(){})};$("pK").appendChild(x)});
  $("pName").value=p.name;
  $("pNameS").onclick=function(){var n=$("pName").value.trim();if(!n)return;call("/v2/pet/setup",{name:n}).then(function(r){S.pet=r.pet;fillPet();render();toast("Имя сохранено ♡")}).catch(function(){toast("Не получилось сохранить")})};
  fillPet();cur.live=fillPet;
@@ -569,12 +574,13 @@ function fillPet(){
  $("pF").style.width=(100-p.hunger)+"%";$("pFv").textContent=(100-p.hunger)+"%";
  $("pH").style.width=p.love+"%";$("pHv").textContent=p.love+"%";
  $("pBd").textContent=night()?"💤":(PET_BADGE[p.mood]||"✨");
+ var pv=$("petSvg"),pk=p.kind+"|"+moodOf(p);if(pv&&pv.getAttribute("data-k")!==pk){pv.setAttribute("data-k",pk);pv.innerHTML=petSvg(p.kind,moodOf(p))}
  if(p.last){var who=p.last.mine?"Ты":name(S.partner);$("pLast").textContent=who+" "+({feed:"покормил(а)",pet:"погладил(а)",play:"поиграл(а) с ним",care:"позаботился(ась) о нём"}[p.last.type]||"заходил(а)")+" · "+ago(p.last.at)}
 }
 var petBusy=false;
 function petAct(a){
  if(petBusy)return;petBusy=true;haptic();
- var im=$("petImg");if(im){im.classList.remove("bounce");void im.offsetWidth;im.classList.add("bounce")}
+ var im=$("petSvg");if(im){im.classList.remove("bounce");void im.offsetWidth;im.classList.add("bounce")}
  call("/v2/pair/pet",{action:a}).then(function(x){
   S.pet=x.pet;fillPet();render();
   toast({feed:"Ням! Спасибо 😋",play:"Как весело! ✨",care:"Чистенький и довольный 🫧",pet:"Мурр 🤍"}[a]);
