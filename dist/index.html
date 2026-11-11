@@ -179,6 +179,40 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 .kinds{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .kinds button{width:48px;height:48px;border-radius:16px;border:1px solid var(--line);background:var(--inbg);font-size:24px;cursor:pointer}
 .kinds button.on{background:var(--acc1);border-color:var(--acc)}
+.mnow{padding:14px}
+.mvid{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,var(--acc1),var(--acc))}
+.mvid iframe,#ytp{position:absolute;inset:0;width:100%;height:100%;border:0}
+.mempty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:8px;font-size:15px;font-weight:600;text-align:center;padding:0 20px}
+.mempty svg{width:46px;height:46px}
+.mjoin{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:7px 14px;border-radius:999px;background:rgba(73,59,69,.86);color:#fff;font-size:13px;font-weight:600;white-space:nowrap;pointer-events:none;display:none}
+.mjoin.on{display:block;animation:fadein .3s}
+.mt{font-size:19px;font-weight:700;margin:14px 2px 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ma{color:var(--muted);font-size:14px;margin:0 2px}
+.mbar{display:flex;align-items:center;gap:10px;margin:14px 2px 4px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.mbar input{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:5px;border-radius:9px;background:linear-gradient(90deg,var(--acc2) var(--p,0%),var(--line) var(--p,0%));outline:none;margin:0}
+.mbar input::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--acc2);box-shadow:0 2px 6px rgba(111,76,100,.25)}
+.mctl{display:flex;align-items:center;justify-content:center;gap:26px;margin-top:6px}
+.mctl button{border:0;background:var(--chip);color:var(--ink);width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(111,76,100,.08)}
+.mctl button svg{width:22px;height:22px}
+.mctl button.big{width:70px;height:70px;background:linear-gradient(160deg,var(--acc1),var(--acc2));color:#fff;box-shadow:0 10px 22px rgba(201,130,145,.35)}
+.mctl button.big svg{width:30px;height:30px}
+.mctl button:disabled{opacity:.4}
+.mhere{display:flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-size:13px;font-weight:600;max-width:58%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.mhere i{width:8px;height:8px;border-radius:50%;background:#bbb;flex:none}
+.mhere.on i{background:#5BBF7A;box-shadow:0 0 0 0 rgba(91,191,122,.5);animation:mkPulse2 1.8s infinite}
+@keyframes mkPulse2{0%{box-shadow:0 0 0 0 rgba(91,191,122,.55)}100%{box-shadow:0 0 0 8px rgba(91,191,122,0)}}
+.madd{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.madd .in{flex:1;min-width:0;width:auto}
+.madd .btn{width:auto;margin:0;padding:12px 18px}
+.madd .hint{width:100%;margin-top:2px}
+.mh{font-weight:700;font-size:16px;margin-bottom:6px}
+.mq{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
+.mq:first-child{border-top:0}
+.mq img{width:64px;height:36px;border-radius:9px;object-fit:cover;flex:none;background:var(--chip)}
+.mq .t{flex:1;min-width:0}.mq .t b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mq .t span{font-size:12px;color:var(--muted)}
+.mq button{border:0;background:none;color:var(--muted);font-size:22px;line-height:1;padding:4px 6px;cursor:pointer}
+.nav button{position:relative}
+.nav button.live::after{content:"";position:absolute;top:6px;right:calc(50% - 20px);width:8px;height:8px;border-radius:50%;background:var(--acc2);animation:mkPulse2 1.6s infinite}
 .ping{position:fixed;left:50%;bottom:calc(96px + var(--bot));transform:translate(-50%,24px);width:min(420px,calc(100% - 36px));padding:12px 12px 14px;z-index:60;opacity:0;pointer-events:none;transition:opacity .22s,transform .28s cubic-bezier(.2,1.3,.4,1)}
 .ping.on{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
 .pg-h{display:flex;align-items:center;gap:10px;padding:0 4px 10px;font-size:15px;font-weight:600}
@@ -234,6 +268,20 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
   <div class="card box" id="mapFoot" style="margin-top:12px"></div>
  </section>
 
+ <!-- МУЗЫКА -->
+ <section class="view" id="v-music">
+  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Музыка</h1><div class="mhere" id="mHere"><i></i><span>Вместе</span></div></div>
+  <div class="card mnow">
+   <div class="mvid"><div id="ytp"></div><div class="mempty" id="mEmpty"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></g></svg><span>Включите что-нибудь вместе ♡</span></div><div class="mjoin" id="mJoin">Нажми на видео, чтобы подключиться ▶</div></div>
+   <div class="mt" id="mTitle">Ничего не играет</div>
+   <div class="ma" id="mAuthor">Добавьте трек ссылкой с YouTube</div>
+   <div class="mbar"><span id="mCur">0:00</span><input type="range" id="mSeek" min="0" max="100" value="0" step="1"><span id="mDur">0:00</span></div>
+   <div class="mctl"><button type="button" id="mStop" aria-label="Убрать трек"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M9.5 7V4.8h5V7M6.5 7l.8 12.2a1.2 1.2 0 0 0 1.2 1.1h7a1.2 1.2 0 0 0 1.2-1.1L17.5 7M10 11v6M14 11v6"/></g></svg></button><button type="button" class="big" id="mPlay" aria-label="Играть"><svg viewBox="0 0 24 24"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6Z" fill="currentColor"/></svg></button><button type="button" id="mNext" aria-label="Следующий"><svg viewBox="0 0 24 24"><path d="M5 6.2v11.6a.9.9 0 0 0 1.4.75L15 12.75a.9.9 0 0 0 0-1.5L6.4 5.45A.9.9 0 0 0 5 6.2Z" fill="currentColor"/><rect x="16.5" y="5.5" width="2.6" height="13" rx="1.2" fill="currentColor"/></svg></button></div>
+  </div>
+  <div class="card box madd"><input class="in" id="mUrl" placeholder="Ссылка на YouTube" inputmode="url" autocomplete="off"><button class="btn" id="mAdd" type="button">Добавить</button><div class="hint">YouTube → «Поделиться» → «Копировать ссылку» и вставь сюда. Трек услышите вы оба.</div></div>
+  <div class="card box"><div class="mh">Дальше в очереди</div><div id="mQ"></div></div>
+ </section>
+
  <!-- ПРОФИЛЬ -->
  <section class="view" id="v-prof">
   <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Профиль</h1><button class="round" id="gear" type="button" aria-label="Оформление"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.1 1.9-2 3.4-2.2-.6a8 8 0 0 1-2 .9L14 23h-4l-.4-2.3a8 8 0 0 1-2-.9l-2.2.6-2-3.4 1.1-1.9a8 8 0 0 1 0-2.2l-1.1-1.9 2-3.4 2.2.6a8 8 0 0 1 2-.9L10 5h4l.4 2.3a8 8 0 0 1 2 .9l2.2-.6 2 3.4-1.1 1.9a8 8 0 0 1-.1 2.1Z" transform="translate(0 -2) scale(1 1)"/></g></svg></button></div>
@@ -254,6 +302,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 <nav class="card nav">
  <button type="button" class="on" data-tab="home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5M9 21v-7h6v7"/></g></svg>Дом</button>
  <button type="button" data-tab="map"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5.2-8 11-8 11S4 15.2 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></g></svg>Карта</button>
+ <button type="button" data-tab="music"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></g></svg>Музыка</button>
  <button type="button" data-tab="prof"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c.6-4.2 3.3-6.3 8-6.3s7.4 2.1 8 6.3"/></g></svg>Профиль</button>
 </nav>
 
@@ -371,7 +420,7 @@ function roomOf(){var k=prefs().room;for(var i=0;i<ROOMS.length;i++)if(ROOMS[i][
 function roomBg(r){return r[2]}
 function roomDecor(r){return r[3]?'<svg class="decor" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">'+r[3]+'</svg>':""}
 
-var ERR={partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже"};
+var ERR={bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже"};
 var $=function(id){return document.getElementById(id)};
 var S=null,pos={},lastPut=0,poller=null,started=false;
 
@@ -425,8 +474,8 @@ applyLook();
 Array.prototype.forEach.call(document.querySelectorAll(".nav button"),function(b){
  b.onclick=function(){haptic();closePing();var t=b.getAttribute("data-tab");
   Array.prototype.forEach.call(document.querySelectorAll(".nav button"),function(x){x.classList.toggle("on",x===b)});
-  $("v-home").classList.toggle("on",t==="home");$("v-map").classList.toggle("on",t==="map");$("v-prof").classList.toggle("on",t==="prof");
-  window.scrollTo(0,0);if(t==="map")setTimeout(showMap,40);
+  $("v-home").classList.toggle("on",t==="home");$("v-map").classList.toggle("on",t==="map");$("v-prof").classList.toggle("on",t==="prof");$("v-music").classList.toggle("on",t==="music");
+  window.scrollTo(0,0);if(t==="map")setTimeout(showMap,40);if(t==="music")openMusic();
  };
 });
 
@@ -624,7 +673,7 @@ var SHEETS={
  }},
  notify:{t:"Уведомления",r:function(B){
   var b=box(B,'<div class="hint" style="margin-top:0">Бот Lovelense присылает сообщения, когда партнёр что-то делает.</div><div id="ntf" style="margin-top:6px"><div class="hint">Загрузка…</div></div>');
-  var items=[["pet","Питомец","Партнёр покормил, поиграл или позаботился"],["hungry","Голодный питомец","Напоминание покормить"],["meet","Встречи","Партнёр назначил дату встречи"],["ping","Эмодзи от партнёра","Партнёр отправил эмодзи с карты"],["us","Раздел «Мы»","Воспоминания, письма, вопрос дня (в iPhone-приложении)"]];
+  var items=[["pet","Питомец","Партнёр покормил, поиграл или позаботился"],["hungry","Голодный питомец","Напоминание покормить"],["meet","Встречи","Партнёр назначил дату встречи"],["ping","Эмодзи от партнёра","Партнёр отправил эмодзи с карты"],["music","Музыка","Партнёр включил трек"],["us","Раздел «Мы»","Воспоминания, письма, вопрос дня (в iPhone-приложении)"]];
   call("/v2/pair/notify").then(function(x){
    var n=x.notify||{},w=$("ntf");if(!w)return;w.innerHTML="";
    items.forEach(function(it){
@@ -736,6 +785,119 @@ function petAct(a){
 }
 function hearts(){var r=document.querySelector(".room");if(!r)return;var h=node('<span class="fh">♥</span>');h.style.left=(30+Math.random()*40)+"%";h.style.animationDelay=(Math.random()*.3)+"s";r.appendChild(h);setTimeout(function(){h.remove()},1900)}
 
+// ---------- музыка вместе (YouTube) ----------
+var M=null,MQ=[],mOff=0,mLast=0,mOpened=false,yt=null,ytReady=false,ytLoading=false,ytVid=null,mSup=0,mSeeking=false,mBusy=false;
+var IC_PLAY='<svg viewBox="0 0 24 24"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6Z" fill="currentColor"/></svg>',IC_PAUSE='<svg viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1.4" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.4" fill="currentColor"/></svg>';
+function mfmt(s){s=Math.max(0,Math.floor(s||0));var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+":"+(m<10?"0":""):"")+m+":"+(x<10?"0":"")+x}
+function mExp(){if(!M||!M.vid)return 0;if(!M.playing)return M.pos||0;return (M.pos||0)+((Date.now()+mOff)-M.at)/1000}
+function ytSt(){try{return yt&&yt.getPlayerState?yt.getPlayerState():-1}catch(e){return -1}}
+function ytT(){try{return yt&&yt.getCurrentTime?(yt.getCurrentTime()||0):0}catch(e){return 0}}
+function ytD(){try{return yt&&yt.getDuration?(yt.getDuration()||0):0}catch(e){return 0}}
+function myPos(){var st=ytSt();return (yt&&ytVid===(M&&M.vid)&&st!==-1&&st!==5)?ytT():mExp()}
+function loadYT(){
+ if(ytLoading||ytReady)return;ytLoading=true;
+ window.onYouTubeIframeAPIReady=function(){ytReady=true;mApply()};
+ var s=document.createElement("script");s.src="https://www.youtube.com/iframe_api";
+ s.onerror=function(){ytLoading=false;toast("YouTube не загрузился — проверьте VPN")};document.head.appendChild(s);
+}
+function mSet(m){if(!m)return;M=m;mOff=(m.now||Date.now())-Date.now();if(m.queue)MQ=m.queue;mApply()}
+function mAct(a,x){var b=x||{};b.action=a;mLast=Date.now();
+ return call("/v2/pair/music",b).then(function(r){mLast=Date.now();mSet(r.music);return r}).catch(function(e){if(a!=="get")toast(ERR[e.message]||"Не получилось");throw e})}
+function openMusic(){mOpened=true;loadYT();mAct("get").catch(function(){});renderMusic()}
+function mApply(){
+ renderMusic();
+ if(!M||!mOpened)return;
+ if(!M.vid){if(yt&&ytVid){try{yt.stopVideo()}catch(e){}ytVid=null}return}
+ if(!ytReady){loadYT();return}
+ var exp=mExp();
+ if(!yt){
+  ytVid=M.vid;mSup=Date.now()+3000;
+  yt=new YT.Player("ytp",{videoId:M.vid,width:"100%",height:"100%",
+   playerVars:{playsinline:1,controls:0,rel:0,modestbranding:1,disablekb:1,fs:0,iv_load_policy:3,start:Math.floor(exp),origin:location.origin},
+   events:{onReady:function(){mApply()},onStateChange:ytChange,onError:ytErr}});
+  return;
+ }
+ if(!yt.getPlayerState)return;
+ if(ytVid!==M.vid){ytVid=M.vid;mSup=Date.now()+3000;if(M.playing){yt.loadVideoById(M.vid,exp);setTimeout(checkJoin,2500)}else yt.cueVideoById(M.vid,M.pos||0);return}
+ var st=ytSt();
+ if(M.playing){
+  if(st!==1&&st!==3){mSup=Date.now()+2000;try{yt.seekTo(exp,true);yt.playVideo()}catch(e){}setTimeout(checkJoin,2000)}
+  else if(Date.now()>mSup&&Math.abs(ytT()-exp)>2.5){mSup=Date.now()+2000;yt.seekTo(exp,true)}
+ }else{
+  if(st===1||st===3){mSup=Date.now()+2000;yt.pauseVideo()}
+  if(st===2&&Math.abs(ytT()-(M.pos||0))>2){mSup=Date.now()+2000;yt.seekTo(M.pos||0,true)}
+ }
+}
+function checkJoin(){var st=ytSt();$("mJoin").classList.toggle("on",!!(M&&M.playing&&st!==1&&st!==3))}
+function ytChange(e){
+ var s=e.data;
+ if(s===1)$("mJoin").classList.remove("on");
+ renderMusic();
+ if(!M||!M.vid)return;
+ if(s===0){if(M.playing)mAct("next",{rev:M.rev}).catch(function(){});return}
+ if(Date.now()<mSup)return;
+ // пользователь сам нажал на видео (а не система свернула приложение)
+ if(s===2&&M.playing)setTimeout(function(){if(!document.hidden&&ytSt()===2&&M.playing&&Date.now()>mSup)mAct("pause",{pos:ytT()}).catch(function(){})},500);
+ else if(s===1&&!M.playing)mAct("play",{pos:ytT()}).catch(function(){});
+}
+function ytErr(e){var c=e&&e.data;toast(c===101||c===150?"Этот трек нельзя проиграть здесь — переключаю":"Не получилось проиграть трек");if(M&&M.vid)mAct("next",{rev:M.rev}).catch(function(){})}
+function renderMusic(){
+ var has=!!(M&&M.vid),pl=has&&M.playing;
+ var nb=document.querySelector('.nav button[data-tab="music"]');if(nb)nb.classList.toggle("live",!!pl);
+ $("mEmpty").style.display=has?"none":"";
+ $("mTitle").textContent=has?(M.title||"YouTube"):"Ничего не играет";
+ var who=has&&M.by?(S&&S.me&&M.by===S.me.id?"включил(а) ты":"включил(а) "+pingName()):"";
+ $("mAuthor").textContent=has?[M.author,who].filter(Boolean).join(" · "):"Добавьте трек ссылкой с YouTube";
+ $("mPlay").innerHTML=pl?IC_PAUSE:IC_PLAY;$("mPlay").disabled=!has;$("mStop").disabled=!has;$("mNext").disabled=!has;
+ var h=$("mHere"),here=!!(M&&M.partner_here);h.classList.toggle("on",here);
+ h.querySelector("span").textContent=S&&S.partner?(here?pingName()+" слушает с тобой":pingName()+" не в музыке"):"Нет партнёра";
+ if(!has)$("mJoin").classList.remove("on");
+ var q=$("mQ");q.innerHTML="";
+ if(!MQ.length){q.innerHTML='<div class="hint" style="margin:0">Пока пусто. Добавленные треки будут играть по очереди.</div>'}
+ MQ.forEach(function(it){
+  var r=node('<div class="mq"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/'+esc(it.vid)+'/mqdefault.jpg"><div class="t"><b></b><span></span></div><button type="button" aria-label="Убрать">×</button></div>');
+  r.querySelector("b").textContent=it.title||"YouTube";
+  r.querySelector("span").textContent=(it.author?it.author+" · ":"")+(S&&S.me&&it.by===S.me.id?"от тебя":"от "+pingName());
+  r.onclick=function(){haptic("medium");mAct("pick",{id:it.id}).then(function(){mSup=0}).catch(function(){})};
+  r.querySelector("button").onclick=function(ev){ev.stopPropagation();haptic();mAct("remove",{id:it.id}).catch(function(){})};
+  q.appendChild(r);
+ });
+ mTick();
+}
+function mTick(){
+ if(!M||!M.vid){$("mCur").textContent="0:00";$("mDur").textContent="0:00";$("mSeek").value=0;return}
+ var d=ytD(),c=ytVid===M.vid&&ytSt()===1?ytT():mExp();
+ $("mDur").textContent=d?mfmt(d):"--:--";
+ if(!mSeeking){$("mSeek").max=Math.max(1,Math.floor(d||c+1));$("mSeek").value=Math.floor(c);$("mCur").textContent=mfmt(c)}
+ var sk=$("mSeek");sk.style.setProperty("--p",(100*sk.value/Math.max(1,sk.max))+"%");
+}
+setInterval(function(){if($("v-music").classList.contains("on"))mTick()},500);
+setInterval(function(){if(!INIT||!S||!S.partner)return;if($("v-music").classList.contains("on")||(M&&M.playing&&yt))mAct("get").catch(function(){})},2500);
+$("mPlay").onclick=function(){
+ haptic("medium");if(!M||!M.vid)return;
+ if(!ytReady&&!yt)loadYT();
+ var st=ytSt();
+ if(M.playing){
+  if(yt&&st!==1&&st!==3){mSup=Date.now()+2000;try{yt.seekTo(mExp(),true);yt.playVideo()}catch(e){}return} // у меня не играет — подключаемся
+  var p=myPos();mSup=Date.now()+2000;try{yt&&yt.pauseVideo()}catch(e){}
+  M.playing=false;M.pos=p;renderMusic();mAct("pause",{pos:p}).catch(function(){});
+ }else{
+  var p2=myPos();mSup=Date.now()+2000;try{yt&&yt.playVideo&&yt.playVideo()}catch(e){}
+  M.playing=true;M.pos=p2;M.at=Date.now()+mOff;renderMusic();mAct("play",{pos:p2}).catch(function(){});
+ }
+};
+$("mNext").onclick=function(){haptic();if(M&&M.vid)mAct("next",{rev:M.rev}).catch(function(){})};
+$("mStop").onclick=function(){haptic();if(M&&M.vid)mAct("stop").catch(function(){})};
+$("mSeek").oninput=function(){mSeeking=true;$("mCur").textContent=mfmt(+this.value);this.style.setProperty("--p",(100*this.value/Math.max(1,this.max))+"%")};
+$("mSeek").onchange=function(){var v=+this.value;mSeeking=false;if(!M||!M.vid)return;M.pos=v;M.at=Date.now()+mOff;mSup=Date.now()+2000;try{yt&&yt.seekTo(v,true)}catch(e){}mAct("seek",{pos:v}).catch(function(){})};
+$("mAdd").onclick=function(){
+ var u=$("mUrl").value.trim();if(!u||mBusy)return;mBusy=true;haptic();
+ var first=!(M&&M.vid);
+ mAct("add",{url:u}).then(function(){mBusy=false;$("mUrl").value="";toast(first?"Трек готов — жми ▶":"Добавлено в очередь ♡")}).catch(function(){mBusy=false});
+};
+$("mUrl").onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();$("mAdd").click()}};
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&mOpened)mAct("get").catch(function(){})});
+
 // ---------- подписка ----------
 function showGate(ch){$("gate").style.display="flex";$("gate").dataset.ch=ch||"@lovelense";$("gchan").textContent=ch||"@lovelense"}
 function hideGate(){$("gate").style.display="none"}
@@ -744,7 +906,7 @@ $("gchk").onclick=function(){poll()};
 
 // ---------- данные ----------
 function poll(done){
- call("/v2/state").then(function(d){hideGate();S=d;render();safe(checkPings);if(done)done()}).catch(function(e){
+ call("/v2/state").then(function(d){hideGate();S=d;render();safe(checkPings);if(d.music&&Date.now()-mLast>6000)safe(function(){mSet(d.music)});if(done)done()}).catch(function(e){
   if(e.message==="unsub")showGate(e.channel);
   else if(e.message==="expired"){toast("Закройте и откройте приложение заново");clearInterval(poller)}
  });
