@@ -197,7 +197,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 .mctl button.big{width:70px;height:70px;background:linear-gradient(160deg,var(--acc1),var(--acc2));color:#fff;box-shadow:0 10px 22px rgba(201,130,145,.35)}
 .mctl button.big svg{width:30px;height:30px}
 .mctl button:disabled{opacity:.4}
-.mhere{display:flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-size:13px;font-weight:600;max-width:58%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.mhere{margin:-6px 0 12px;width:max-content;display:flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-size:13px;font-weight:600;max-width:58%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .mhere i{width:8px;height:8px;border-radius:50%;background:#bbb;flex:none}
 .mhere.on i{background:#5BBF7A;box-shadow:0 0 0 0 rgba(91,191,122,.5);animation:mkPulse2 1.8s infinite}
 @keyframes mkPulse2{0%{box-shadow:0 0 0 0 rgba(91,191,122,.55)}100%{box-shadow:0 0 0 8px rgba(91,191,122,0)}}
@@ -205,7 +205,28 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 .madd .in{flex:1;min-width:0;width:auto}
 .madd .btn{width:auto;margin:0;padding:12px 18px}
 .madd .hint{width:100%;margin-top:2px}
-.mh{font-weight:700;font-size:16px;margin-bottom:6px}
+.mh{font-weight:700;font-size:16px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
+.mh small{font-weight:600;color:var(--muted);font-size:13px;margin-left:4px}
+.mh button{border:0;background:none;color:var(--muted);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:4px}
+.mq .ph{width:64px;height:36px;border-radius:9px;flex:none;background:linear-gradient(135deg,var(--acc1),var(--acc2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+.mempty{cursor:pointer}
+.sx{position:sticky;top:0;z-index:2;padding:4px 0 10px;background:var(--sheet)}
+.sx .f{display:flex;align-items:center;gap:10px;padding:0 14px;border-radius:18px;border:1px solid var(--line);background:var(--inbg)}
+.sx .f svg{width:20px;height:20px;color:var(--muted);flex:none}
+.sx textarea{flex:1;border:0;background:none;color:var(--ink);font:inherit;font-size:17px;padding:13px 0;outline:none;resize:none;height:48px;max-height:140px;line-height:22px}
+.sx .clr{border:0;background:var(--chip);color:var(--muted);width:24px;height:24px;border-radius:50%;font-size:15px;line-height:1;cursor:pointer;flex:none;display:none}
+.sr{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.sr:active{opacity:.6}
+.sr img{width:72px;height:41px;border-radius:10px;object-fit:cover;flex:none;background:var(--chip)}
+.sr .t{flex:1;min-width:0}.sr .t b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px;line-height:1.25}.sr .t span{font-size:12px;color:var(--muted)}
+.sr .add{border:0;background:var(--chip);color:var(--ink);width:36px;height:36px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer;flex:none}
+.shint{color:var(--muted);font-size:14px;line-height:1.5;padding:10px 4px}
+.shint b{color:var(--ink)}
+.simp{padding:16px;margin-top:4px}
+.simp .ttl{font-weight:700;font-size:16px;margin-bottom:2px}
+.simp .row2{display:flex;gap:8px;margin-top:12px}.simp .row2 .btn{margin:0}
+.sload{display:flex;justify-content:center;padding:24px}.sload i{width:26px;height:26px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--acc2);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 .mq{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
 .mq:first-child{border-top:0}
 .mq img{width:64px;height:36px;border-radius:9px;object-fit:cover;flex:none;background:var(--chip)}
@@ -270,16 +291,16 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 
  <!-- МУЗЫКА -->
  <section class="view" id="v-music">
-  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Музыка</h1><div class="mhere" id="mHere"><i></i><span>Вместе</span></div></div>
+  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Музыка</h1><button class="round" id="mFind" type="button" aria-label="Поиск">%%search%%</button></div>
+  <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
   <div class="card mnow">
-   <div class="mvid"><div id="ytp"></div><div class="mempty" id="mEmpty">%%note%%<span>Включите что-нибудь вместе ♡</span></div><div class="mjoin" id="mJoin">Нажми на видео, чтобы подключиться ▶</div></div>
+   <div class="mvid"><div id="ytp"></div><div class="mempty" id="mEmpty">%%note%%<span>Нажми 🔍 и найди песню —<br>она заиграет у вас обоих ♡</span></div><div class="mjoin" id="mJoin">Нажми на видео, чтобы подключиться ▶</div></div>
    <div class="mt" id="mTitle">Ничего не играет</div>
    <div class="ma" id="mAuthor">Добавьте трек ссылкой с YouTube</div>
    <div class="mbar"><span id="mCur">0:00</span><input type="range" id="mSeek" min="0" max="100" value="0" step="1"><span id="mDur">0:00</span></div>
    <div class="mctl"><button type="button" id="mStop" aria-label="Убрать трек">%%mstop%%</button><button type="button" class="big" id="mPlay" aria-label="Играть">%%mplay%%</button><button type="button" id="mNext" aria-label="Следующий">%%mnext%%</button></div>
   </div>
-  <div class="card box madd"><input class="in" id="mUrl" placeholder="Ссылка на YouTube" inputmode="url" autocomplete="off"><button class="btn" id="mAdd" type="button">Добавить</button><div class="hint">YouTube → «Поделиться» → «Копировать ссылку» и вставь сюда. Трек услышите вы оба.</div></div>
-  <div class="card box"><div class="mh">Дальше в очереди</div><div id="mQ"></div></div>
+  <div class="card box"><div class="mh"><span>Дальше в очереди <small id="mQn"></small></span><button type="button" id="mClear">Очистить</button></div><div id="mQ"></div></div>
  </section>
 
  <!-- ПРОФИЛЬ -->
@@ -336,7 +357,7 @@ var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лава
 var PREF_DEF={room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
 %%PETJS%%
-var ERR={bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже"};
+var ERR={yandex_geo:"Яндекс Музыка не отдаёт плейлисты за пределами России — вставь список треков текстом",unsupported:"Этот сервис не отдаёт плейлист по ссылке — вставь список треков текстом",bad_playlist:"Не понял ссылку — нужна ссылка на плейлист, альбом или трек",empty_playlist:"Плейлист пустой или закрытый — сделай его публичным",import_failed:"Не получилось открыть плейлист, попробуй ещё раз",search_failed:"Поиск сейчас не отвечает",bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже"};
 var $=function(id){return document.getElementById(id)};
 var S=null,pos={},lastPut=0,poller=null,started=false;
 
@@ -541,6 +562,16 @@ function node(h){var d=document.createElement("div");d.innerHTML=h.trim();return
 function box(par,h){var b=node('<div class="card box">'+(h||"")+'</div>');par.appendChild(b);return b}
 
 var SHEETS={
+ msearch:{t:"Найти музыку",r:function(B){
+  var w=node('<div class="sx"><div class="f">%%search%%<textarea id="sIn" rows="1" placeholder="Песня, исполнитель или ссылка" enterkeyhint="search" autocomplete="off" autocapitalize="off"></textarea><button class="clr" id="sClr" type="button" aria-label="Очистить">×</button></div></div>');
+  B.appendChild(w);B.appendChild(node('<div id="sRes"></div>'));
+  var inp=w.querySelector("textarea"),clr=w.querySelector(".clr");
+  var fit=function(){inp.style.height="48px";inp.style.height=Math.min(140,Math.max(48,inp.scrollHeight))+"px";clr.style.display=inp.value?"block":"none"};
+  inp.oninput=function(){fit();clearTimeout(sTimer);var v=inp.value;var k=srcKind(v);sTimer=setTimeout(function(){sRender(B,v)},k.kind==="q"?450:50)};
+  inp.onkeydown=function(e){if(e.key==="Enter"&&!e.shiftKey&&srcKind(inp.value).kind==="q"){e.preventDefault();clearTimeout(sTimer);inp.blur();sRender(B,inp.value)}};
+  clr.onclick=function(){inp.value="";fit();sRender(B,"");inp.focus()};
+  sRender(B,"");setTimeout(function(){try{inp.focus()}catch(e){}},250);
+ }},
  me:{t:"Мой профиль",r:function(B){
   var me=S&&S.me;
   var b=box(B,'<div class="prow" style="margin-top:0"><div class="pav" id="mpAv"></div><div class="pnm"><b>'+esc(me?(me.first_name||""):"")+'</b><span>'+esc(me&&me.username?"@"+me.username:"")+'</span></div></div><div class="hint">Имя и фото берутся из Telegram. Чтобы поменять их, измените профиль в Telegram.</div>');
@@ -716,7 +747,11 @@ function loadYT(){
  var s=document.createElement("script");s.src="https://www.youtube.com/iframe_api";
  s.onerror=function(){ytLoading=false;toast("YouTube не загрузился — проверьте VPN")};document.head.appendChild(s);
 }
-function mSet(m){if(!m)return;M=m;mOff=(m.now||Date.now())-Date.now();if(m.queue)MQ=m.queue;mApply()}
+var mPend=0;
+function mSet(m){if(!m)return;
+ if(M&&m.rev!=null&&M.rev!=null&&m.rev<M.rev)return; // устаревший ответ
+ if(Date.now()<mPend&&m.vid!==ytVid)return; // ждём ответ на только что включённый трек
+ M=m;mOff=(m.now||Date.now())-Date.now();if(m.queue)MQ=m.queue;mApply()}
 function mAct(a,x){var b=x||{};b.action=a;mLast=Date.now();
  return call("/v2/pair/music",b).then(function(r){mLast=Date.now();mSet(r.music);return r}).catch(function(e){if(a!=="get")toast(ERR[e.message]||"Не получилось");throw e})}
 function openMusic(){mOpened=true;loadYT();mAct("get").catch(function(){});renderMusic()}
@@ -756,7 +791,7 @@ function ytChange(e){
  if(s===2&&M.playing)setTimeout(function(){if(!document.hidden&&ytSt()===2&&M.playing&&Date.now()>mSup)mAct("pause",{pos:ytT()}).catch(function(){})},500);
  else if(s===1&&!M.playing)mAct("play",{pos:ytT()}).catch(function(){});
 }
-function ytErr(e){var c=e&&e.data;toast(c===101||c===150?"Этот трек нельзя проиграть здесь — переключаю":"Не получилось проиграть трек");if(M&&M.vid)mAct("next",{rev:M.rev}).catch(function(){})}
+function ytErr(e){var c=e&&e.data;toast("Эта версия не играет — ищу другую…");if(M&&M.vid)mAct("alt",{rev:M.rev}).catch(function(){})}
 function renderMusic(){
  var has=!!(M&&M.vid),pl=has&&M.playing;
  var nb=document.querySelector('.nav button[data-tab="music"]');if(nb)nb.classList.toggle("live",!!pl);
@@ -768,10 +803,11 @@ function renderMusic(){
  var h=$("mHere"),here=!!(M&&M.partner_here);h.classList.toggle("on",here);
  h.querySelector("span").textContent=S&&S.partner?(here?pingName()+" слушает с тобой":pingName()+" не в музыке"):"Нет партнёра";
  if(!has)$("mJoin").classList.remove("on");
- var q=$("mQ");q.innerHTML="";
- if(!MQ.length){q.innerHTML='<div class="hint" style="margin:0">Пока пусто. Добавленные треки будут играть по очереди.</div>'}
+ var q=$("mQ");q.innerHTML="";$("mQn").textContent=MQ.length?"· "+MQ.length:"";$("mClear").style.display=MQ.length?"":"none";
+ if(!MQ.length){q.innerHTML='<div class="hint" style="margin:0">Пока пусто. Нажми 🔍 — можно добавить песню или целый плейлист.</div>'}
  MQ.forEach(function(it){
-  var r=node('<div class="mq"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/'+esc(it.vid)+'/mqdefault.jpg"><div class="t"><b></b><span></span></div><button type="button" aria-label="Убрать">×</button></div>');
+  var pic=it.vid&&it.vid!=="-"?'<img alt="" loading="lazy" src="https://i.ytimg.com/vi/'+esc(it.vid)+'/mqdefault.jpg">':'<div class="ph">♪</div>';
+  var r=node('<div class="mq">'+pic+'<div class="t"><b></b><span></span></div><button type="button" aria-label="Убрать">×</button></div>');
   r.querySelector("b").textContent=it.title||"YouTube";
   r.querySelector("span").textContent=(it.author?it.author+" · ":"")+(S&&S.me&&it.by===S.me.id?"от тебя":"от "+pingName());
   r.onclick=function(){haptic("medium");mAct("pick",{id:it.id}).then(function(){mSup=0}).catch(function(){})};
@@ -806,12 +842,62 @@ $("mNext").onclick=function(){haptic();if(M&&M.vid)mAct("next",{rev:M.rev}).catc
 $("mStop").onclick=function(){haptic();if(M&&M.vid)mAct("stop").catch(function(){})};
 $("mSeek").oninput=function(){mSeeking=true;$("mCur").textContent=mfmt(+this.value);this.style.setProperty("--p",(100*this.value/Math.max(1,this.max))+"%")};
 $("mSeek").onchange=function(){var v=+this.value;mSeeking=false;if(!M||!M.vid)return;M.pos=v;M.at=Date.now()+mOff;mSup=Date.now()+2000;try{yt&&yt.seekTo(v,true)}catch(e){}mAct("seek",{pos:v}).catch(function(){})};
-$("mAdd").onclick=function(){
- var u=$("mUrl").value.trim();if(!u||mBusy)return;mBusy=true;haptic();
- var first=!(M&&M.vid);
- mAct("add",{url:u}).then(function(){mBusy=false;$("mUrl").value="";toast(first?"Трек готов — жми ▶":"Добавлено в очередь ♡")}).catch(function(){mBusy=false});
-};
-$("mUrl").onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();$("mAdd").click()}};
+$("mFind").onclick=function(){haptic();openSheet("msearch")};
+$("mEmpty").onclick=function(){haptic();openSheet("msearch")};
+$("mClear").onclick=function(){haptic();mAct("clear").catch(function(){})};
+// включаем видео прямо в момент нажатия — так iPhone разрешает звук
+function ytNow(vid){mOpened=true;mPend=Date.now()+5000;if(yt&&yt.loadVideoById){ytVid=vid;mSup=Date.now()+3000;try{yt.loadVideoById(vid,0)}catch(e){}}else loadYT()}
+var sTimer=null,sSeq=0;
+function srcKind(v){
+ if(/https?:\/\/\S+/.test(v)){
+  var u=v.match(/https?:\/\/\S+/)[0];
+  var src=/spotify/.test(u)?"Spotify":/yandex/.test(u)?"ya":/apple\.co/.test(u)?"Apple Music":/deezer/.test(u)?"Deezer":/youtu/.test(u)?(/[?&]list=(?!RD)/.test(u)?"Плейлист YouTube":"YouTube"):/(vk\.com|vk\.ru|soundcloud|zvuk\.com)/.test(u)?"bad":"Ссылка";
+  return {kind:"url",src:src,url:u};
+ }
+ var lines=v.split(/\n/).filter(function(l){return l.trim().length>1});
+ if(lines.length>=2)return {kind:"text",n:lines.length};
+ return {kind:"q"};
+}
+function sRender(B,v){
+ var R=B.querySelector("#sRes");R.innerHTML="";
+ v=v.trim();
+ if(!v){R.innerHTML='<div class="shint"><b>Напиши название песни или исполнителя</b> — нажми на трек, и он заиграет у вас обоих.<br><br>Ещё сюда можно вставить <b>ссылку на плейлист или альбом</b> из Spotify, YouTube, Apple Music или Deezer — песни сыграют по очереди.<br><br>Из Яндекс Музыки, VK и других приложений скопируй список треков (каждый с новой строки) и вставь сюда.</div>';return}
+ var k=srcKind(v);
+ if(k.kind==="url"&&k.src==="ya"){R.innerHTML='<div class="shint"><b>Яндекс Музыка не отдаёт плейлисты</b> — она закрыта для серверов за пределами России, а наш сервер работает в Европе.<br><br>Что можно сделать: скопируй названия треков (каждый с новой строки, «Исполнитель — Название») и вставь сюда. Или просто найди песни поиском — их всё равно включит YouTube.</div>';return}
+ if(k.kind==="url"&&k.src==="bad"){R.innerHTML='<div class="shint">Из VK, SoundCloud и Звука плейлист по ссылке не открыть — эти сервисы его не отдают. Скопируй названия треков (каждый с новой строки) и вставь сюда.</div>';return}
+ if(k.kind!=="q"){
+  var c=node('<div class="card simp"><div class="ttl"></div><div class="hint" style="margin-top:2px"></div><div class="row2"><button class="btn" type="button" data-m="play">▶ Слушать</button><button class="btn sec" type="button" data-m="queue">В очередь</button></div></div>');
+  c.querySelector(".ttl").textContent=k.kind==="url"?(k.src==="YouTube"?"Видео с YouTube":k.src==="Ссылка"?"Плейлист по ссылке":k.src):"Список · "+k.n+" "+plural(k.n,"трек","трека","треков");
+  c.querySelector(".hint").textContent=k.kind==="url"?"Найду все песни и включу их по очереди у вас обоих":"Каждая строка — «Исполнитель — Название»";
+  Array.prototype.forEach.call(c.querySelectorAll("[data-m]"),function(b){b.onclick=function(){
+   var mode=b.getAttribute("data-m");if(mBusy)return;mBusy=true;haptic("medium");
+   R.insertAdjacentHTML("beforeend",'<div class="sload"><i></i></div>');
+   var body=k.kind==="url"?{url:k.url,mode:mode}:{text:v,mode:mode};
+   mAct("import",body).then(function(r){mBusy=false;var im=r.imported||{};
+    closeSheet();toast((mode==="play"?"♪ Играет":"Добавлено")+(im.name?" «"+im.name+"»":"")+(im.count>1?" · "+im.count+" "+plural(im.count,"трек","трека","треков"):""));
+    if(mode==="play"&&r.music&&r.music.vid)ytNow(r.music.vid);
+   }).catch(function(){mBusy=false;var l=R.querySelector(".sload");if(l)l.remove()});
+  }});
+  R.appendChild(c);return;
+ }
+ if(v.length<2)return;
+ R.innerHTML='<div class="sload"><i></i></div>';
+ var my=++sSeq;
+ call("/v2/pair/music",{action:"search",q:v}).then(function(r){
+  if(my!==sSeq)return;R.innerHTML="";
+  var list=r.results||[];
+  if(!list.length){R.innerHTML='<div class="shint">Ничего не нашлось. Попробуй написать иначе — например, «исполнитель название».</div>';return}
+  list.forEach(function(it){
+   var row=node('<div class="sr"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/'+esc(it.vid)+'/mqdefault.jpg"><div class="t"><b></b><span></span></div><button class="add" type="button" aria-label="В очередь">+</button></div>');
+   row.querySelector("b").textContent=it.title;row.querySelector("span").textContent=[it.author,it.len].filter(Boolean).join(" · ");
+   row.onclick=function(){haptic("medium");ytNow(it.vid);closeSheet();
+    mAct("playnow",{vid:it.vid,title:it.title,author:it.author,q:v}).then(function(){toast("♪ "+it.title)}).catch(function(){})};
+   row.querySelector(".add").onclick=function(ev){ev.stopPropagation();haptic();var b=this;
+    mAct("queue",{vid:it.vid,title:it.title,author:it.author,q:v}).then(function(){b.textContent="✓";toast("Добавлено в очередь ♡")}).catch(function(){})};
+   R.appendChild(row);
+  });
+ }).catch(function(e){if(my!==sSeq)return;R.innerHTML='<div class="shint">'+(e.message==="search_failed"?"Поиск YouTube сейчас не отвечает, попробуй через минуту":"Не получилось найти — проверь интернет")+'</div>'});
+}
 document.addEventListener("visibilitychange",function(){if(!document.hidden&&mOpened)mAct("get").catch(function(){})});
 
 // ---------- подписка ----------
