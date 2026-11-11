@@ -23,7 +23,7 @@ def put(name, data, ext):
     fn = f'{name}.{h}.{ext}'
     open(os.path.join(A, fn), 'wb').write(data)
     return 'a/' + fn
-bg = {'sunlit-room': put('room', open(P('assets', 'sunlit-room.webp'), 'rb').read(), 'webp')}
+bg = {}
 t = t.replace('%%BG%%', json.dumps(bg)).replace('%%ICONS%%', '{}').replace('%%PETJS%%', open(P('src', 'pet.js'), encoding='utf-8').read())
 assert not re.findall(r'%%[A-Za-z]+%%', t)
 os.makedirs(P('dist'), exist_ok=True)

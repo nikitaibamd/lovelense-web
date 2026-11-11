@@ -247,7 +247,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 "use strict";
 var API="https://wispy-star-4736.brukenfang.workers.dev";
 var TG=window.Telegram&&window.Telegram.WebApp,INIT=TG&&TG.initData?TG.initData:"";
-var BG={"sunlit-room": "a/room.a72b9e4b2a.webp"},ICON={};
+var BG={},ICON={};
 var BG_NAMES={"cherry-blossoms":"Сакура","pink-clouds":"Розовые облака","moonlit-clouds":"Лунная ночь","dreamy-sky":"Закат вдвоём","starlit-sky":"Вечернее небо","sunlit-room":"Солнечная комната"};
 var BG_TONE={"moonlit-clouds":"dark","dreamy-sky":"dark","starlit-sky":"dark"};
 var BGS={},BG_GROUPS=[[],["Белые",[]],["Чёрные",[]],["Светло-голубые",[]],["Бежевые",[]]];
@@ -336,7 +336,6 @@ function petSvg(kind,mood){
 var ROOMS=[
  ["pink","Розовая спальня","radial-gradient(circle at 12px 12px,rgba(255,255,255,.75) 2.5px,transparent 3px) 0 0/30px 30px,linear-gradient(180deg,#F8D7D9 0%,#F8D7D9 66%,#EBC4B9 66%,#E2B4A7 100%)",
   '<rect x="48" y="34" width="92" height="96" rx="14" fill="#CFE6F6" stroke="#fff" stroke-width="7"/><path d="M94 34 V130 M48 82 H140" stroke="#fff" stroke-width="5"/><path d="M290 70 c-14 -18 -38 0 0 26 c38 -26 14 -44 0 -26 Z" fill="#F2A7B3"/><ellipse cx="200" cy="272" rx="150" ry="20" fill="#F5D1D6"/>'],
- ["room","Солнечная комната",null,""],
  ["night","Ночная спальня","linear-gradient(180deg,#4A4166 0%,#7A6990 68%,#B99AAE 68%,#CDAEBE 100%)",
   '<circle cx="320" cy="62" r="24" fill="#FFF3CF"/><circle cx="332" cy="54" r="22" fill="#5A4E77"/><circle cx="70" cy="40" r="2.5" fill="#fff"/><circle cx="130" cy="74" r="2" fill="#fff"/><circle cx="210" cy="36" r="2.5" fill="#fff"/><circle cx="260" cy="96" r="1.8" fill="#fff"/><circle cx="40" cy="110" r="1.8" fill="#fff"/><ellipse cx="200" cy="272" rx="150" ry="18" fill="#A98A9F"/>'],
  ["garden","Сад","linear-gradient(180deg,#FFE9E6 0%,#FFF6F2 58%,#C3E2B4 58%,#A8D395 100%)",
@@ -347,7 +346,7 @@ var ROOMS=[
   '<circle cx="320" cy="50" r="24" fill="#FFE1A8"/><path d="M0 182 q25 -8 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" stroke="#fff" stroke-width="4" fill="none" opacity=".8"/><circle cx="60" cy="250" r="5" fill="#F6B3BF"/><path d="M330 258 l8 -14 l8 14 Z" fill="#F7C99A"/>']
 ];
 function roomOf(){var k=prefs().room;for(var i=0;i<ROOMS.length;i++)if(ROOMS[i][0]===k)return ROOMS[i];return ROOMS[0]}
-function roomBg(r){return r[2]||('url("'+BG["sunlit-room"]+'") center/cover no-repeat')}
+function roomBg(r){return r[2]}
 function roomDecor(r){return r[3]?'<svg class="decor" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">'+r[3]+'</svg>':""}
 
 var ERR={partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже"};

@@ -70,7 +70,6 @@ function petSvg(kind,mood){
 var ROOMS=[
  ["pink","Розовая спальня","radial-gradient(circle at 12px 12px,rgba(255,255,255,.75) 2.5px,transparent 3px) 0 0/30px 30px,linear-gradient(180deg,#F8D7D9 0%,#F8D7D9 66%,#EBC4B9 66%,#E2B4A7 100%)",
   '<rect x="48" y="34" width="92" height="96" rx="14" fill="#CFE6F6" stroke="#fff" stroke-width="7"/><path d="M94 34 V130 M48 82 H140" stroke="#fff" stroke-width="5"/><path d="M290 70 c-14 -18 -38 0 0 26 c38 -26 14 -44 0 -26 Z" fill="#F2A7B3"/><ellipse cx="200" cy="272" rx="150" ry="20" fill="#F5D1D6"/>'],
- ["room","Солнечная комната",null,""],
  ["night","Ночная спальня","linear-gradient(180deg,#4A4166 0%,#7A6990 68%,#B99AAE 68%,#CDAEBE 100%)",
   '<circle cx="320" cy="62" r="24" fill="#FFF3CF"/><circle cx="332" cy="54" r="22" fill="#5A4E77"/><circle cx="70" cy="40" r="2.5" fill="#fff"/><circle cx="130" cy="74" r="2" fill="#fff"/><circle cx="210" cy="36" r="2.5" fill="#fff"/><circle cx="260" cy="96" r="1.8" fill="#fff"/><circle cx="40" cy="110" r="1.8" fill="#fff"/><ellipse cx="200" cy="272" rx="150" ry="18" fill="#A98A9F"/>'],
  ["garden","Сад","linear-gradient(180deg,#FFE9E6 0%,#FFF6F2 58%,#C3E2B4 58%,#A8D395 100%)",
@@ -81,5 +80,5 @@ var ROOMS=[
   '<circle cx="320" cy="50" r="24" fill="#FFE1A8"/><path d="M0 182 q25 -8 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" stroke="#fff" stroke-width="4" fill="none" opacity=".8"/><circle cx="60" cy="250" r="5" fill="#F6B3BF"/><path d="M330 258 l8 -14 l8 14 Z" fill="#F7C99A"/>']
 ];
 function roomOf(){var k=prefs().room;for(var i=0;i<ROOMS.length;i++)if(ROOMS[i][0]===k)return ROOMS[i];return ROOMS[0]}
-function roomBg(r){return r[2]||('url("'+BG["sunlit-room"]+'") center/cover no-repeat')}
+function roomBg(r){return r[2]}
 function roomDecor(r){return r[3]?'<svg class="decor" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">'+r[3]+'</svg>':""}
