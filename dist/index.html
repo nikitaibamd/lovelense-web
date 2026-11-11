@@ -580,6 +580,11 @@ var SHEETS={
  about:{t:"О приложении",r:function(B){
   box(B,'<div style="font:400 26px Georgia,serif">Lovelense ♡</div><div class="hint" style="font-size:15px;color:var(--ink)">Общее пространство для пары на расстоянии: где вы, сколько между вами километров, время, заряд и общий питомец.</div><button class="btn sec" id="abCh" type="button">Канал @lovelense — новости и обновления</button>');
   $("abCh").onclick=function(){openLink("https://t.me/lovelense")};
+  var dn=box(B,'<div class="lab">💝 Поддержать проект</div><div class="hint" style="margin-top:0">Lovelense бесплатный. Если он делает вас ближе — можно поддержать его звёздами Telegram ♡</div><div class="kinds" id="donA" style="margin-top:10px"></div>');
+  [50,100,250,500,1000].forEach(function(n){var b=node('<button type="button" class="chip" style="width:auto;height:auto;padding:9px 14px;font-size:14px">⭐ '+n+'</button>');
+   b.onclick=function(){haptic();call("/v2/donate",{amount:n}).then(function(x){
+    if(TG&&TG.openInvoice)TG.openInvoice(x.url,function(st){if(st==="paid"){haptic("heavy");toast("Спасибо за поддержку! 💖")}});else openLink(x.url)
+   }).catch(function(){toast("Не получилось открыть оплату")})};$("donA").appendChild(b)});
   var d=box(B,'<div class="lab">iPhone-приложение</div><div class="hint" style="margin-top:0">Передаёт заряд и геопозицию в фоне, показывает виджеты и питомца в Dynamic Island. Привяжите его кодом:</div><div id="devW"></div>');
   devRender();devLoad();
  }},
