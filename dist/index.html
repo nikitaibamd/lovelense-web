@@ -72,6 +72,13 @@ button{font:inherit;color:inherit}
 .rs i{width:9px;height:9px;border-radius:50%;background:var(--acc);display:inline-block}
 .leaflet-container{background:#f7e6e3;font:inherit}
 .leaflet-tile-pane{filter:sepia(.35) saturate(.75) hue-rotate(-18deg) brightness(1.06)}
+.mapbox.sat .leaflet-tile-pane{filter:saturate(1.08) contrast(1.04)}
+.mapbox{position:relative}
+.mapsw{position:absolute;top:12px;right:12px;z-index:500;border:0;border-radius:999px;padding:7px 12px 7px 10px;display:flex;align-items:center;gap:6px;font:600 13px/1 inherit;font-family:inherit;color:#fff;background:rgba(40,30,38,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.mapbox:not(.sat) .mapsw{color:var(--ink);background:rgba(255,255,255,.82)}
+.mapsw svg{width:16px;height:16px}
+.mapbox.sat .leaflet-control-attribution{background:rgba(0,0,0,.35);color:#eee}
+.mapbox.sat .leaflet-control-attribution a{color:#fff}
 .mk{width:46px;height:46px;border-radius:50%;border:3px solid #fff;background:linear-gradient(160deg,var(--acc1),var(--acc)) center/cover;box-shadow:0 6px 14px rgba(111,76,100,.3);display:flex;align-items:center;justify-content:center;color:#fff;font:600 18px Georgia,serif}
 .mkh{width:30px;height:30px}
 .nav{position:fixed;left:50%;bottom:calc(14px + var(--bot));transform:translateX(-50%);width:min(440px,calc(100% - 36px));display:flex;gap:6px;padding:6px;border-radius:30px;z-index:50}
@@ -291,7 +298,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
  <!-- КАРТА -->
  <section class="view" id="v-map">
   <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Карта</h1><button class="round" id="fitBoth" type="button" aria-label="Показать обоих"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.8c0 5.1-8.8 11-8.8 11s-8.8-5.9-8.8-11A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z"/></g></svg></button></div>
-  <div class="card mapbox"><div id="bigmap"></div></div>
+  <div class="card mapbox" id="mapBox"><div id="bigmap"></div><button class="mapsw" id="mapSw" type="button"></button></div>
   <div class="card box" id="mapFoot" style="margin-top:12px"></div>
  </section>
 
@@ -361,7 +368,7 @@ var BGS={},BG_GROUPS=[[],["Белые",[]],["Чёрные",[]],["Светло-г
 ].forEach(function(x){BGS[x[1]]={n:x[2],css:x[3],tone:x[4],dark:!!x[5]};BG_GROUPS[x[0]][1].push(x[1])});
 BG_GROUPS.shift();
 var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лаванда"],["blue","#8FB5DE","Голубой"],["mint","#8CC7B0","Мята"],["peach","#E8A97E","Персик"],["graphite","#8A7E85","Графит"]];
-var PREF_DEF={room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on"};
+var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
 // ---------- питомцы: милые SVG-зверьки ----------
 var PET_LOOK={
@@ -565,14 +572,33 @@ function draw(map,key){
  if(p.a)L.marker([p.a.lat,p.a.lng],{icon:mkIcon(S&&S.me),interactive:false}).addTo(g);
  if(p.b)L.marker([p.b.lat,p.b.lng],{icon:mkIcon(S.partner,true),interactive:true,zIndexOffset:500}).on("click",function(){openPing()}).addTo(g);
  if(p.a&&p.b){
-  L.polyline([[p.a.lat,p.a.lng],[p.b.lat,p.b.lng]],{color:"#D89494",weight:3,dashArray:"7 9",lineCap:"round"}).addTo(g);
+  var sat=prefs().map!=="plan";
+  if(sat)L.polyline([[p.a.lat,p.a.lng],[p.b.lat,p.b.lng]],{color:"#F3B6C0",weight:7,opacity:.45,lineCap:"round",interactive:false}).addTo(g);
+  L.polyline([[p.a.lat,p.a.lng],[p.b.lat,p.b.lng]],{color:sat?"#fff":"#D89494",weight:3,dashArray:"7 9",lineCap:"round",interactive:false}).addTo(g);
   L.marker([(p.a.lat+p.b.lat)/2,(p.a.lng+p.b.lng)/2],{icon:heartIcon(),interactive:false}).addTo(g);
  }
  g.addTo(map);layers[key]=g;
 }
 function fit(map,pad){var p=pts(),l=[p.a,p.b].filter(Boolean).map(function(x){return [x.lat,x.lng]});
  if(l.length===2)map.fitBounds(l,{padding:[pad,pad],maxZoom:14});else if(l.length===1)map.setView(l[0],12);}
-function tiles(m){L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(m);if(m.attributionControl)m.attributionControl.setPrefix(false)}
+// подложка: спутник (Esri World Imagery + подписи) или схема OpenStreetMap
+var baseLayers=[];
+var IC_SAT='<svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 7 9 3 5 7l4 4"/><path d="m17 11 4 4-4 4-4-4"/><path d="m8 12 4 4 6-6-4-4Z"/><path d="m16 8 3-3"/><path d="M9 21a6 6 0 0 0-6-6"/></g></svg>';
+var IC_PLAN='<svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></g></svg>';
+function tiles(m){
+ baseLayers.forEach(function(l){try{m.removeLayer(l)}catch(e){}});baseLayers=[];
+ var sat=prefs().map!=="plan";
+ if(sat){
+  baseLayers.push(L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,maxNativeZoom:18,attribution:"© Esri, Maxar, Earthstar Geographics"}));
+  baseLayers.push(L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,maxNativeZoom:18}));
+ }else baseLayers.push(L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}));
+ baseLayers.forEach(function(l){l.addTo(m)});
+ if(m.attributionControl)m.attributionControl.setPrefix(false);
+ $("mapBox").classList.toggle("sat",sat);
+ $("mapSw").innerHTML=sat?IC_PLAN+"Схема":IC_SAT+"Спутник";
+}
+(function(){var sat=prefs().map!=="plan";$("mapBox").classList.toggle("sat",sat);$("mapSw").innerHTML=sat?IC_PLAN+"Схема":IC_SAT+"Спутник"})();
+$("mapSw").onclick=function(){haptic();setPref("map",prefs().map==="plan"?"sat":"plan");if(big){tiles(big);draw(big,"big")}else{var sat=prefs().map!=="plan";$("mapBox").classList.toggle("sat",sat)}};
 function updateMini(){
  if(typeof L==="undefined"||!big)return;
  draw(big,"big");if(!bigFitted&&pts().a&&pts().b){fit(big,70);bigFitted=true}
