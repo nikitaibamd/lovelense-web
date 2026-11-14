@@ -1,0 +1,92 @@
+/* ===== визуальные эффекты (fx) ===== */
+/* 1. живой фон: плывущие цветовые пятна и искорки, палитра по времени суток */
+html{--a1:#FFD3C2;--a2:#F6B8C8;--a3:#FFE6D6}
+html[data-dph=day]{--a1:#FBC6CF;--a2:#F7D2E0;--a3:#FFE2D2}
+html[data-dph=eve]{--a1:#EBB5D3;--a2:#CDBDF2;--a3:#F8C6C4}
+html[data-dph=night]{--a1:#B7A8EA;--a2:#8F86D6;--a3:#D7A9D8}
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aura b{position:absolute;border-radius:50%;filter:blur(60px);opacity:.42;animation:auraFloat 28s ease-in-out infinite alternate;transition:background 3s}
+.aura b:nth-child(1){width:70vmax;height:70vmax;left:-28vmax;top:-22vmax;background:var(--a1)}
+.aura b:nth-child(2){width:58vmax;height:58vmax;right:-26vmax;top:28vh;background:var(--a2);animation-duration:34s;animation-delay:-9s}
+.aura b:nth-child(3){width:52vmax;height:52vmax;left:4vw;bottom:-28vmax;background:var(--a3);animation-duration:41s;animation-delay:-17s}
+@keyframes auraFloat{0%{transform:translate(0,0) scale(1)}50%{transform:translate(7vw,-5vh) scale(1.1)}100%{transform:translate(-6vw,6vh) scale(.94)}}
+.aura i{position:absolute;bottom:-12px;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px rgba(255,255,255,.75);opacity:0;animation:auraSpark 16s linear infinite}
+@keyframes auraSpark{0%{transform:translate(0,0);opacity:0}12%{opacity:.85}85%{opacity:.5}100%{transform:translate(28px,-104vh);opacity:0}}
+html[data-cards=dark] .aura b{opacity:.26}
+html[data-aura=off] .aura{display:none}
+
+/* 2. нить между вами */
+.couple{position:relative}
+.couple>.ava,.couple>.hbtn{z-index:1}
+.thread{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}
+.thread .tl{fill:none;stroke:url(#thrG);stroke-width:3;stroke-linecap:round;stroke-dasharray:2 9;animation:thrDash 1.1s linear infinite;opacity:.9}
+.thread .tg{fill:none;stroke:url(#thrG);stroke-width:10;stroke-linecap:round;opacity:.22;filter:blur(3px)}
+.thread circle{fill:#fff;filter:drop-shadow(0 0 4px #F06E8C)}
+.thread.off .tl{opacity:.35;animation-duration:3.5s}
+.thread.off .tg,.thread.off circle{opacity:0}
+@keyframes thrDash{to{stroke-dashoffset:-22}}
+
+/* 3. аватарки: свой цвет у каждого и сияние у партнёра онлайн */
+#avMe{background-image:linear-gradient(160deg,#FFD2B8,#F2A08E)}
+#avPa{background-image:linear-gradient(160deg,#D8CCF6,#A595D8)}
+.ava.live::before{content:"";position:absolute;inset:-8px;border-radius:50%;background:conic-gradient(from 0deg,#F7A8B8,#C9B8F0,#FFD3B5,#F7A8B8);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));animation:spin 4s linear infinite;pointer-events:none}
+.ava.live::after{content:"";position:absolute;inset:-14px;border-radius:50%;box-shadow:0 0 30px 6px rgba(201,184,240,.45);animation:auraPulse 2.6s ease-in-out infinite;pointer-events:none}
+@keyframes auraPulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* 4. круглые даты: искры вокруг «вы вместе» */
+.days{position:relative;overflow:visible}
+.days.round{box-shadow:0 0 0 2px rgba(255,214,107,.7),0 0 26px rgba(255,214,107,.55)}
+.spk{position:absolute;font-style:normal;font-size:16px;pointer-events:none;animation:spk 1.6s ease-out forwards}
+@keyframes spk{0%{transform:translate(0,0) scale(.3);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1);opacity:0}}
+
+/* 5. пружинистые карточки и появление лесенкой */
+.card{transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .2s}
+.days:active,.tile:active,.row:active,.meet:active,.sky:active,.mnow:active{transform:scale(.965)}
+.stg>.card,.stg>.couple,.stg>.thint,.stg>.stroll,.stg .tiles>.card{animation:cardIn .55s cubic-bezier(.2,.9,.3,1.15) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+
+/* 6. переходы между вкладками и заглушки при загрузке */
+.view.slide{animation:viewIn .38s cubic-bezier(.2,.9,.3,1) both}
+@keyframes viewIn{from{opacity:0;transform:translateX(var(--vx,24px))}to{opacity:1;transform:none}}
+html.ll-load .tile .v,html.ll-load .days .n{color:transparent!important;display:block;width:72%;margin-left:auto;margin-right:auto;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,.25) 25%,rgba(255,255,255,.85) 50%,rgba(255,255,255,.25) 75%);background-size:300% 100%;animation:shim 1.3s linear infinite}
+html.ll-load .ava .img{color:transparent;animation:shim 1.3s linear infinite;background-image:linear-gradient(90deg,#f3dede 25%,#fff3f3 50%,#f3dede 75%)!important;background-size:300% 100%!important}
+@keyframes shim{from{background-position:100% 0}to{background-position:0 0}}
+
+/* 7. виниловая пластинка и эквалайзер */
+.mart.on{border-radius:50%;animation:vspin 7s linear infinite;animation-play-state:paused;transition:none}
+.mart.on.pl{animation-play-state:running}
+.mart.on::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 25deg,transparent 0 8%,rgba(255,255,255,.14) 12%,transparent 18% 50%,rgba(255,255,255,.14) 62%,transparent 68%),repeating-radial-gradient(circle,rgba(255,255,255,.07) 0 1px,transparent 1px 4px),radial-gradient(circle,transparent 0 31%,#171115 31.5% 100%)}
+.mart.on::after{content:"";position:absolute;left:50%;top:50%;width:7%;height:7%;margin:-3.5% 0 0 -3.5%;border-radius:50%;background:#F7EDEF;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25)}
+@keyframes vspin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.meq{position:absolute;left:14px;bottom:12px;display:flex;align-items:flex-end;gap:3px;height:22px;opacity:0;transition:opacity .4s}
+.meq i{width:4px;border-radius:2px;background:#fff;height:30%;animation:eq .9s ease-in-out infinite}
+.meq i:nth-child(2){animation-delay:-.3s}.meq i:nth-child(3){animation-delay:-.6s}.meq i:nth-child(4){animation-delay:-.15s}.meq i:nth-child(5){animation-delay:-.45s}
+@keyframes eq{0%,100%{height:25%}50%{height:100%}}
+.mart.pl~.meq{opacity:.9}
+.mempty svg.sleeve{width:150px;height:105px}
+.sleeve .dk{animation:dk 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes dk{0%,100%{transform:translateX(0) rotate(0)}50%{transform:translateX(22px) rotate(120deg)}}
+
+/* 8. маршрут на карте */
+.route{stroke-dasharray:8 10;animation:routeDash 1.2s linear infinite}
+@keyframes routeDash{to{stroke-dashoffset:-18}}
+.plane{font-size:22px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));transition:transform .08s linear}
+.kmpill{display:inline-block;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.95);color:#493B45;font:600 13px/1 -apple-system,BlinkMacSystemFont,sans-serif;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.25);transform:translate(-50%,-50%)}
+.mk.tap{animation:mkPulse 2s ease-in-out infinite}
+
+/* 10. питомец гуляет по главному экрану */
+.stroll{position:relative;height:104px;margin-top:12px;display:none}
+.stroll.on{display:block}
+.walker{position:absolute;left:0;bottom:0;width:86px;height:96px;cursor:pointer;will-change:transform}
+.walker .wk{width:100%;height:100%;--f:1;transform:scaleX(var(--f))}
+.walker .wk svg{width:100%;height:100%;display:block}
+.walker.walk .wk{animation:walkHop .42s ease-in-out infinite}
+@keyframes walkHop{0%,100%{transform:scaleX(var(--f)) translateY(0)}50%{transform:scaleX(var(--f)) translateY(-6px)}}
+.walker.hop .wk{animation:bigHop .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes bigHop{0%,100%{transform:scaleX(var(--f)) translateY(0)}40%{transform:scaleX(var(--f)) translateY(-28px) scale(1.05,.95)}}
+.walker .say{position:absolute;left:50%;top:-6px;transform:translateX(-50%);padding:4px 9px;border-radius:12px;background:var(--card);font-size:12px;white-space:nowrap;box-shadow:var(--shadow);opacity:0;transition:opacity .3s;pointer-events:none}
+.walker .say.on{opacity:1}
+.stroll .fh{bottom:60px}
+
+/* бережём тех, кто просит меньше движения */
+@media (prefers-reduced-motion:reduce){.aura b,.aura i,.thread .tl,.ava.live::before,.ava.live::after,.stg>*,.view.slide,.mart.on,.meq i,.route{animation:none!important}}

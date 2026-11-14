@@ -51,6 +51,7 @@ button{font:inherit;color:inherit}
 .ava .bat{position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);padding:2px 9px;border-radius:999px;background:var(--card);font-size:12px;font-weight:600;white-space:nowrap;color:var(--ink);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 4px 10px rgba(111,76,100,.12)}
 .bigheart{width:56px;height:56px;flex:none;filter:drop-shadow(0 6px 12px rgba(216,148,148,.45));animation:beat 2.4s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.12)}24%{transform:scale(1)}36%{transform:scale(1.08)}}
+%%FXCSS%%
 /* касание сердца */
 .hbtn{position:relative;width:56px;height:56px;flex:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .hbtn .bigheart{display:block;pointer-events:none}
@@ -68,9 +69,9 @@ button{font:inherit;color:inherit}
 .sky{margin-top:16px;padding:0!important;overflow:hidden}
 .skyart{height:118px}
 .skyart svg{display:block;width:100%;height:100%}
-.skytx{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 16px 12px}
+.skytx{display:flex;flex-direction:column;gap:2px;padding:10px 16px 12px}
 .skytx b{font-size:16px;font-weight:600;white-space:nowrap}
-.skytx span{font-size:13px;color:var(--muted);text-align:right}
+.skytx span{font-size:13px;color:var(--muted)}
 .sky .tw{animation:tw 2.6s ease-in-out infinite}
 @keyframes tw{0%,100%{opacity:.2}50%{opacity:1}}
 .sky .cl{animation:drift 40s linear infinite}
@@ -325,13 +326,13 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 </style>
 </head>
 <body>
-<div class="bg" id="bg"></div><div class="bgfade"></div>
+<div class="bg" id="bg"></div><div class="bgfade"></div><div class="aura" id="aura"><b></b><b></b><b></b></div>
 
 <div class="page">
  <!-- ДОМ -->
  <section class="view on" id="v-home">
   <div class="top"><h1 class="wm">Lovelense ♡</h1><button class="round" id="bell" type="button" aria-label="Уведомления">%%bell%%</button></div>
-  <div class="couple">
+  <div class="couple"><svg class="thread" id="thread"></svg>
    <div class="ava"><div class="img" id="avMe">♡</div><span class="dot on"></span><span class="bat" id="batMe" style="display:none"></span></div>
    <div class="hbtn" id="hBtn" role="button" aria-label="Зажми сердце вместе с партнёром"><svg class="bigheart" viewBox="0 0 24 24"><path d="M12 21s-8.8-5.9-8.8-11.2A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 3.7C20.8 15.1 12 21 12 21Z" style="fill:var(--acc1)" stroke="#fff" stroke-width="1.2"/></svg></div>
    <div class="ava"><div class="img" id="avPa">♡</div><span class="dot" id="dotPa"></span><span class="bat" id="batPa" style="display:none"></span></div>
@@ -345,6 +346,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
    <div class="card tile"><div class="ic">%%clock%%</div><div class="v" id="tPa">--:--</div><div class="s" id="tPaL">Партнёр</div></div>
   </div>
   <div class="card sky" id="skyCard" style="display:none"><div class="skyart" id="skyArt"></div><div class="skytx"><b id="skyT"></b><span id="skyS"></span></div></div>
+  <div class="stroll" id="stroll"><div class="walker" id="walker"><span class="say"></span><div class="wk"></div></div></div>
   <div class="card row" id="petRow" style="display:none"><div class="petpic" id="petPic"></div><div><div class="rt"><span id="petTitle">Питомец</span> %%heart%%</div><div class="rs"><i></i><span id="petStatus"></span></div></div><span class="chev">%%chev%%</span></div>
  </section>
 
@@ -360,7 +362,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
   <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Музыка</h1><button class="round" id="mFind" type="button" aria-label="Поиск">%%search%%</button></div>
   <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
   <div class="card mnow">
-   <div class="mvid"><div class="mbg" id="mBg"></div><div class="mart" id="mArt"></div><div class="mempty" id="mEmpty">%%note%%<span>Нажми 🔍 и найди песню —<br>она заиграет у вас обоих ♡</span></div><div class="mjoin" id="mJoin">Нажми ▶, чтобы подключиться</div></div>
+   <div class="mvid"><div class="mbg" id="mBg"></div><div class="mart" id="mArt"></div><div class="meq"><i></i><i></i><i></i><i></i><i></i></div><div class="mempty" id="mEmpty"><svg class="sleeve" viewBox="0 0 132 92"><g class="dk"><circle cx="70" cy="46" r="40" fill="#1b1418"/><circle cx="70" cy="46" r="32" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="24" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="13" fill="#F6B8C8"/><circle cx="70" cy="46" r="2.6" fill="#fff"/><path d="M70 14 A32 32 0 0 1 98 30" stroke="rgba(255,255,255,.25)" stroke-width="3" fill="none" stroke-linecap="round"/></g><rect x="2" y="4" width="82" height="84" rx="10" fill="rgba(255,255,255,.92)"/><path d="M43 30 v24 a7 7 0 1 1 -4 -6.3 V30 l14 -3 v20 a7 7 0 1 1 -4 -6.3 V31.5 Z" fill="#E9A7AE"/></svg><span>Нажми 🔍 и найди песню —<br>она заиграет у вас обоих ♡</span></div><div class="mjoin" id="mJoin">Нажми ▶, чтобы подключиться</div></div>
    <div class="mt" id="mTitle">Ничего не играет</div>
    <div class="ma" id="mAuthor">Нажми 🔍 и найди песню</div>
    <div class="mbar"><span id="mCur">0:00</span><input type="range" id="mSeek" min="0" max="100" value="0" step="1"><span id="mDur">0:00</span></div>
@@ -421,7 +423,7 @@ var BGS={},BG_GROUPS=[[],["Белые",[]],["Чёрные",[]],["Светло-г
 ].forEach(function(x){BGS[x[1]]={n:x[2],css:x[3],tone:x[4],dark:!!x[5]};BG_GROUPS[x[0]][1].push(x[1])});
 BG_GROUPS.shift();
 var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лаванда"],["blue","#8FB5DE","Голубой"],["mint","#8CC7B0","Мята"],["peach","#E8A97E","Персик"],["graphite","#8A7E85","Графит"]];
-var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on"};
+var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on",night:"system",aura:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
 %%PETJS%%
 var ERR={yandex_geo:"Яндекс Музыка не отдаёт плейлисты за пределами России — вставь список треков текстом",unsupported:"Этот сервис не отдаёт плейлист по ссылке — вставь список треков текстом",bad_playlist:"Не понял ссылку — нужна ссылка на плейлист, альбом или трек",empty_playlist:"Плейлист пустой или закрытый — сделай его публичным",import_failed:"Не получилось открыть плейлист, попробуй ещё раз",search_failed:"Поиск сейчас не отвечает",bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже",not_owned:"Этот наряд ещё не открыт",already_owned:"Этот наряд уже ваш ♡",invoice_failed:"Не получилось открыть оплату",bad_item:"Такого наряда нет"};
@@ -463,12 +465,13 @@ function batTxt(b){if(!b||typeof b.level!=="number")return "";return (b.charging
 function prefs(){var p={};try{p=JSON.parse(ls("ll_prefs")||"{}")||{}}catch(e){}var o={};for(var k in PREF_DEF)o[k]=p[k]!=null?p[k]:PREF_DEF[k];if(!p.bg&&ls("ll_bg"))o.bg=ls("ll_bg");if(!BGS[o.bg])o.bg=PREF_DEF.bg;return o}
 function setPref(k,v){var p=prefs();p[k]=v;ls("ll_prefs",JSON.stringify(p));applyLook()}
 function applyLook(){
- var p=prefs(),b=BGS[p.bg],h=document.documentElement;
+ var p=prefs(),b=nightBg(p)||BGS[p.bg],h=document.documentElement;
  $("bg").style.background=b.css;
  h.setAttribute("data-tone",b.tone);
  h.setAttribute("data-cards",p.cards==="auto"?(b.dark?"dark":"light"):p.cards);
  h.setAttribute("data-acc",p.acc);h.setAttribute("data-glass",p.glass);h.setAttribute("data-logo",p.logo);
- h.setAttribute("data-bat",p.bat);h.setAttribute("data-beat",p.beat);
+ h.setAttribute("data-bat",p.bat);h.setAttribute("data-beat",p.beat);h.setAttribute("data-aura",p.aura);
+ if(b.__night)h.setAttribute("data-cards","dark");
  var hc=b.dark?"#141114":"#FDE8E4";try{TG&&TG.setHeaderColor&&TG.setHeaderColor(hc);TG&&TG.setBackgroundColor&&TG.setBackgroundColor(hc)}catch(e){}
  h.style.background=hc;
 }
@@ -498,7 +501,7 @@ function render(){
  else{$("daysLab").textContent="Вы вместе";$("daysN").innerHTML='<small>укажите дату ♡</small>'}
  var d=(pos.me||S.my_loc)&&S.partner_loc&&S.partner_active!==false?fmtKm(km(pos.me||S.my_loc,S.partner_loc)):"—";
  $("dist").textContent=d;
- safe(together);safe(sky);safe(meetCard);safe(touchHint);
+ safe(together);safe(sky);safe(meetCard);safe(touchHint);safe(fxRender);
  $("tPaL").textContent=pa?name(pa):"Партнёр";
  ticks();
  $("pName").textContent=me?(me.first_name||me.username||"Ты"):"Ты";
@@ -510,6 +513,7 @@ function render(){
  if(cur&&cur.live)cur.live();
 }
 %%LDRJS%%
+%%FXJS%%
 function ticks(){$("tMe").textContent=clock();$("tPa").textContent=S&&S.partner_tz?clock(S.partner_tz):"--:--"}
 setInterval(ticks,15000);
 function night(){var h=new Date().getHours();return h>=23||h<7}
@@ -545,9 +549,7 @@ function draw(map,key){
  if(p.b)L.marker([p.b.lat,p.b.lng],{icon:mkIcon(S.partner,true),interactive:true,zIndexOffset:500}).on("click",function(){openPing()}).addTo(g);
  if(p.a&&p.b){
   var sat=prefs().map!=="plan";
-  if(sat)L.polyline([[p.a.lat,p.a.lng],[p.b.lat,p.b.lng]],{color:"#F3B6C0",weight:7,opacity:.45,lineCap:"round",interactive:false}).addTo(g);
-  L.polyline([[p.a.lat,p.a.lng],[p.b.lat,p.b.lng]],{color:sat?"#fff":"#D89494",weight:3,dashArray:"7 9",lineCap:"round",interactive:false}).addTo(g);
-  L.marker([(p.a.lat+p.b.lat)/2,(p.a.lng+p.b.lng)/2],{icon:heartIcon(),interactive:false}).addTo(g);
+  fxRoute(g,p,sat,key);
  }
  g.addTo(map);layers[key]=g;
 }
@@ -691,6 +693,7 @@ var SHEETS={
    '<div class="opt"><div class="lab">Карточки</div><div class="seg" id="cCards"></div></div>'+
    '<div class="opt"><div class="lab">Стекло</div><div class="seg" id="cGlass"></div></div>'+
    '<div class="opt"><div class="lab">Логотип</div><div class="seg" id="cLogo"></div></div>'+
+   '<div class="opt"><div class="lab">Ночная тема</div><div class="seg" id="cNight"></div></div>'+
    '<div class="opt" id="cTg"></div>'+
    '<button class="btn sec" id="cReset" type="button">Сбросить оформление</button>');
   ACCENTS.forEach(function(a){var x=node('<button type="button" aria-label="'+a[2]+'" class="'+(p.acc===a[0]?"on":"")+'"></button>');x.style.background=a[1];
@@ -700,7 +703,8 @@ var SHEETS={
   seg("cCards","cards",[["auto","Авто"],["light","Светлые"],["dark","Тёмные"]]);
   seg("cGlass","glass",[["matte","Матовое"],["glass","Прозрачное"]]);
   seg("cLogo","logo",[["serif","Классика"],["sans","Современный"]]);
-  [["bat","Заряд под аватарками","Показывать проценты батареи"],["beat","Бьющееся сердце","Анимация сердца между вами"]].forEach(function(it){
+  seg("cNight","night",[["off","Выкл"],["time","Вечером"],["system","Как в системе"]]);
+  [["bat","Заряд под аватарками","Показывать проценты батареи"],["beat","Бьющееся сердце","Анимация сердца между вами"],["aura","Живой фон","Плывущие цвета и искорки, меняются по времени суток"]].forEach(function(it){
    var r=node('<div class="tg"><div class="t"><b>'+it[1]+'</b><span>'+it[2]+'</span></div><button type="button" class="sw'+(prefs()[it[0]]==="on"?" on":"")+'" aria-label="'+it[1]+'"></button></div>');
    var sw=r.querySelector(".sw");sw.onclick=function(){var on=!sw.classList.contains("on");sw.classList.toggle("on",on);haptic();setPref(it[0],on?"on":"off")};$("cTg").appendChild(r);
   });
@@ -1104,6 +1108,7 @@ function start(){
  locate();poll();poller=setInterval(poll,10000);
  setInterval(function(){safe(sky);safe(meetCard)},30000);
  initTouch();
+ fxInit();
  setInterval(function(){lastPut=0;put()},30000);
  if(navigator.getBattery){navigator.getBattery().then(function(b){
   var send=function(){call("/v2/update",{level:Math.round(b.level*100),charging:b.charging}).catch(function(){})};

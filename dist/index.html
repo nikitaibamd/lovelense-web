@@ -51,6 +51,99 @@ button{font:inherit;color:inherit}
 .ava .bat{position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);padding:2px 9px;border-radius:999px;background:var(--card);font-size:12px;font-weight:600;white-space:nowrap;color:var(--ink);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 4px 10px rgba(111,76,100,.12)}
 .bigheart{width:56px;height:56px;flex:none;filter:drop-shadow(0 6px 12px rgba(216,148,148,.45));animation:beat 2.4s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.12)}24%{transform:scale(1)}36%{transform:scale(1.08)}}
+/* ===== визуальные эффекты (fx) ===== */
+/* 1. живой фон: плывущие цветовые пятна и искорки, палитра по времени суток */
+html{--a1:#FFD3C2;--a2:#F6B8C8;--a3:#FFE6D6}
+html[data-dph=day]{--a1:#FBC6CF;--a2:#F7D2E0;--a3:#FFE2D2}
+html[data-dph=eve]{--a1:#EBB5D3;--a2:#CDBDF2;--a3:#F8C6C4}
+html[data-dph=night]{--a1:#B7A8EA;--a2:#8F86D6;--a3:#D7A9D8}
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aura b{position:absolute;border-radius:50%;filter:blur(60px);opacity:.42;animation:auraFloat 28s ease-in-out infinite alternate;transition:background 3s}
+.aura b:nth-child(1){width:70vmax;height:70vmax;left:-28vmax;top:-22vmax;background:var(--a1)}
+.aura b:nth-child(2){width:58vmax;height:58vmax;right:-26vmax;top:28vh;background:var(--a2);animation-duration:34s;animation-delay:-9s}
+.aura b:nth-child(3){width:52vmax;height:52vmax;left:4vw;bottom:-28vmax;background:var(--a3);animation-duration:41s;animation-delay:-17s}
+@keyframes auraFloat{0%{transform:translate(0,0) scale(1)}50%{transform:translate(7vw,-5vh) scale(1.1)}100%{transform:translate(-6vw,6vh) scale(.94)}}
+.aura i{position:absolute;bottom:-12px;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px rgba(255,255,255,.75);opacity:0;animation:auraSpark 16s linear infinite}
+@keyframes auraSpark{0%{transform:translate(0,0);opacity:0}12%{opacity:.85}85%{opacity:.5}100%{transform:translate(28px,-104vh);opacity:0}}
+html[data-cards=dark] .aura b{opacity:.26}
+html[data-aura=off] .aura{display:none}
+
+/* 2. нить между вами */
+.couple{position:relative}
+.couple>.ava,.couple>.hbtn{z-index:1}
+.thread{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}
+.thread .tl{fill:none;stroke:url(#thrG);stroke-width:3;stroke-linecap:round;stroke-dasharray:2 9;animation:thrDash 1.1s linear infinite;opacity:.9}
+.thread .tg{fill:none;stroke:url(#thrG);stroke-width:10;stroke-linecap:round;opacity:.22;filter:blur(3px)}
+.thread circle{fill:#fff;filter:drop-shadow(0 0 4px #F06E8C)}
+.thread.off .tl{opacity:.35;animation-duration:3.5s}
+.thread.off .tg,.thread.off circle{opacity:0}
+@keyframes thrDash{to{stroke-dashoffset:-22}}
+
+/* 3. аватарки: свой цвет у каждого и сияние у партнёра онлайн */
+#avMe{background-image:linear-gradient(160deg,#FFD2B8,#F2A08E)}
+#avPa{background-image:linear-gradient(160deg,#D8CCF6,#A595D8)}
+.ava.live::before{content:"";position:absolute;inset:-8px;border-radius:50%;background:conic-gradient(from 0deg,#F7A8B8,#C9B8F0,#FFD3B5,#F7A8B8);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));animation:spin 4s linear infinite;pointer-events:none}
+.ava.live::after{content:"";position:absolute;inset:-14px;border-radius:50%;box-shadow:0 0 30px 6px rgba(201,184,240,.45);animation:auraPulse 2.6s ease-in-out infinite;pointer-events:none}
+@keyframes auraPulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* 4. круглые даты: искры вокруг «вы вместе» */
+.days{position:relative;overflow:visible}
+.days.round{box-shadow:0 0 0 2px rgba(255,214,107,.7),0 0 26px rgba(255,214,107,.55)}
+.spk{position:absolute;font-style:normal;font-size:16px;pointer-events:none;animation:spk 1.6s ease-out forwards}
+@keyframes spk{0%{transform:translate(0,0) scale(.3);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1);opacity:0}}
+
+/* 5. пружинистые карточки и появление лесенкой */
+.card{transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .2s}
+.days:active,.tile:active,.row:active,.meet:active,.sky:active,.mnow:active{transform:scale(.965)}
+.stg>.card,.stg>.couple,.stg>.thint,.stg>.stroll,.stg .tiles>.card{animation:cardIn .55s cubic-bezier(.2,.9,.3,1.15) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+
+/* 6. переходы между вкладками и заглушки при загрузке */
+.view.slide{animation:viewIn .38s cubic-bezier(.2,.9,.3,1) both}
+@keyframes viewIn{from{opacity:0;transform:translateX(var(--vx,24px))}to{opacity:1;transform:none}}
+html.ll-load .tile .v,html.ll-load .days .n{color:transparent!important;display:block;width:72%;margin-left:auto;margin-right:auto;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,.25) 25%,rgba(255,255,255,.85) 50%,rgba(255,255,255,.25) 75%);background-size:300% 100%;animation:shim 1.3s linear infinite}
+html.ll-load .ava .img{color:transparent;animation:shim 1.3s linear infinite;background-image:linear-gradient(90deg,#f3dede 25%,#fff3f3 50%,#f3dede 75%)!important;background-size:300% 100%!important}
+@keyframes shim{from{background-position:100% 0}to{background-position:0 0}}
+
+/* 7. виниловая пластинка и эквалайзер */
+.mart.on{border-radius:50%;animation:vspin 7s linear infinite;animation-play-state:paused;transition:none}
+.mart.on.pl{animation-play-state:running}
+.mart.on::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 25deg,transparent 0 8%,rgba(255,255,255,.14) 12%,transparent 18% 50%,rgba(255,255,255,.14) 62%,transparent 68%),repeating-radial-gradient(circle,rgba(255,255,255,.07) 0 1px,transparent 1px 4px),radial-gradient(circle,transparent 0 31%,#171115 31.5% 100%)}
+.mart.on::after{content:"";position:absolute;left:50%;top:50%;width:7%;height:7%;margin:-3.5% 0 0 -3.5%;border-radius:50%;background:#F7EDEF;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25)}
+@keyframes vspin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.meq{position:absolute;left:14px;bottom:12px;display:flex;align-items:flex-end;gap:3px;height:22px;opacity:0;transition:opacity .4s}
+.meq i{width:4px;border-radius:2px;background:#fff;height:30%;animation:eq .9s ease-in-out infinite}
+.meq i:nth-child(2){animation-delay:-.3s}.meq i:nth-child(3){animation-delay:-.6s}.meq i:nth-child(4){animation-delay:-.15s}.meq i:nth-child(5){animation-delay:-.45s}
+@keyframes eq{0%,100%{height:25%}50%{height:100%}}
+.mart.pl~.meq{opacity:.9}
+.mempty svg.sleeve{width:150px;height:105px}
+.sleeve .dk{animation:dk 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes dk{0%,100%{transform:translateX(0) rotate(0)}50%{transform:translateX(22px) rotate(120deg)}}
+
+/* 8. маршрут на карте */
+.route{stroke-dasharray:8 10;animation:routeDash 1.2s linear infinite}
+@keyframes routeDash{to{stroke-dashoffset:-18}}
+.plane{font-size:22px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));transition:transform .08s linear}
+.kmpill{display:inline-block;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.95);color:#493B45;font:600 13px/1 -apple-system,BlinkMacSystemFont,sans-serif;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.25);transform:translate(-50%,-50%)}
+.mk.tap{animation:mkPulse 2s ease-in-out infinite}
+
+/* 10. питомец гуляет по главному экрану */
+.stroll{position:relative;height:104px;margin-top:12px;display:none}
+.stroll.on{display:block}
+.walker{position:absolute;left:0;bottom:0;width:86px;height:96px;cursor:pointer;will-change:transform}
+.walker .wk{width:100%;height:100%;--f:1;transform:scaleX(var(--f))}
+.walker .wk svg{width:100%;height:100%;display:block}
+.walker.walk .wk{animation:walkHop .42s ease-in-out infinite}
+@keyframes walkHop{0%,100%{transform:scaleX(var(--f)) translateY(0)}50%{transform:scaleX(var(--f)) translateY(-6px)}}
+.walker.hop .wk{animation:bigHop .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes bigHop{0%,100%{transform:scaleX(var(--f)) translateY(0)}40%{transform:scaleX(var(--f)) translateY(-28px) scale(1.05,.95)}}
+.walker .say{position:absolute;left:50%;top:-6px;transform:translateX(-50%);padding:4px 9px;border-radius:12px;background:var(--card);font-size:12px;white-space:nowrap;box-shadow:var(--shadow);opacity:0;transition:opacity .3s;pointer-events:none}
+.walker .say.on{opacity:1}
+.stroll .fh{bottom:60px}
+
+/* бережём тех, кто просит меньше движения */
+@media (prefers-reduced-motion:reduce){.aura b,.aura i,.thread .tl,.ava.live::before,.ava.live::after,.stg>*,.view.slide,.mart.on,.meq i,.route{animation:none!important}}
+
 /* касание сердца */
 .hbtn{position:relative;width:56px;height:56px;flex:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .hbtn .bigheart{display:block;pointer-events:none}
@@ -68,9 +161,9 @@ button{font:inherit;color:inherit}
 .sky{margin-top:16px;padding:0!important;overflow:hidden}
 .skyart{height:118px}
 .skyart svg{display:block;width:100%;height:100%}
-.skytx{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 16px 12px}
+.skytx{display:flex;flex-direction:column;gap:2px;padding:10px 16px 12px}
 .skytx b{font-size:16px;font-weight:600;white-space:nowrap}
-.skytx span{font-size:13px;color:var(--muted);text-align:right}
+.skytx span{font-size:13px;color:var(--muted)}
 .sky .tw{animation:tw 2.6s ease-in-out infinite}
 @keyframes tw{0%,100%{opacity:.2}50%{opacity:1}}
 .sky .cl{animation:drift 40s linear infinite}
@@ -325,13 +418,13 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 </style>
 </head>
 <body>
-<div class="bg" id="bg"></div><div class="bgfade"></div>
+<div class="bg" id="bg"></div><div class="bgfade"></div><div class="aura" id="aura"><b></b><b></b><b></b></div>
 
 <div class="page">
  <!-- ДОМ -->
  <section class="view on" id="v-home">
   <div class="top"><h1 class="wm">Lovelense ♡</h1><button class="round" id="bell" type="button" aria-label="Уведомления"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></g></svg></button></div>
-  <div class="couple">
+  <div class="couple"><svg class="thread" id="thread"></svg>
    <div class="ava"><div class="img" id="avMe">♡</div><span class="dot on"></span><span class="bat" id="batMe" style="display:none"></span></div>
    <div class="hbtn" id="hBtn" role="button" aria-label="Зажми сердце вместе с партнёром"><svg class="bigheart" viewBox="0 0 24 24"><path d="M12 21s-8.8-5.9-8.8-11.2A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 3.7C20.8 15.1 12 21 12 21Z" style="fill:var(--acc1)" stroke="#fff" stroke-width="1.2"/></svg></div>
    <div class="ava"><div class="img" id="avPa">♡</div><span class="dot" id="dotPa"></span><span class="bat" id="batPa" style="display:none"></span></div>
@@ -345,6 +438,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
    <div class="card tile"><div class="ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></g></svg></div><div class="v" id="tPa">--:--</div><div class="s" id="tPaL">Партнёр</div></div>
   </div>
   <div class="card sky" id="skyCard" style="display:none"><div class="skyart" id="skyArt"></div><div class="skytx"><b id="skyT"></b><span id="skyS"></span></div></div>
+  <div class="stroll" id="stroll"><div class="walker" id="walker"><span class="say"></span><div class="wk"></div></div></div>
   <div class="card row" id="petRow" style="display:none"><div class="petpic" id="petPic"></div><div><div class="rt"><span id="petTitle">Питомец</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.8c0 5.1-8.8 11-8.8 11s-8.8-5.9-8.8-11A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z"/></g></svg></div><div class="rs"><i></i><span id="petStatus"></span></div></div><span class="chev"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g></svg></span></div>
  </section>
 
@@ -360,7 +454,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
   <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Музыка</h1><button class="round" id="mFind" type="button" aria-label="Поиск"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.2 4.2"/></g></svg></button></div>
   <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
   <div class="card mnow">
-   <div class="mvid"><div class="mbg" id="mBg"></div><div class="mart" id="mArt"></div><div class="mempty" id="mEmpty"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></g></svg><span>Нажми 🔍 и найди песню —<br>она заиграет у вас обоих ♡</span></div><div class="mjoin" id="mJoin">Нажми ▶, чтобы подключиться</div></div>
+   <div class="mvid"><div class="mbg" id="mBg"></div><div class="mart" id="mArt"></div><div class="meq"><i></i><i></i><i></i><i></i><i></i></div><div class="mempty" id="mEmpty"><svg class="sleeve" viewBox="0 0 132 92"><g class="dk"><circle cx="70" cy="46" r="40" fill="#1b1418"/><circle cx="70" cy="46" r="32" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="24" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="13" fill="#F6B8C8"/><circle cx="70" cy="46" r="2.6" fill="#fff"/><path d="M70 14 A32 32 0 0 1 98 30" stroke="rgba(255,255,255,.25)" stroke-width="3" fill="none" stroke-linecap="round"/></g><rect x="2" y="4" width="82" height="84" rx="10" fill="rgba(255,255,255,.92)"/><path d="M43 30 v24 a7 7 0 1 1 -4 -6.3 V30 l14 -3 v20 a7 7 0 1 1 -4 -6.3 V31.5 Z" fill="#E9A7AE"/></svg><span>Нажми 🔍 и найди песню —<br>она заиграет у вас обоих ♡</span></div><div class="mjoin" id="mJoin">Нажми ▶, чтобы подключиться</div></div>
    <div class="mt" id="mTitle">Ничего не играет</div>
    <div class="ma" id="mAuthor">Нажми 🔍 и найди песню</div>
    <div class="mbar"><span id="mCur">0:00</span><input type="range" id="mSeek" min="0" max="100" value="0" step="1"><span id="mDur">0:00</span></div>
@@ -421,7 +515,7 @@ var BGS={},BG_GROUPS=[[],["Белые",[]],["Чёрные",[]],["Светло-г
 ].forEach(function(x){BGS[x[1]]={n:x[2],css:x[3],tone:x[4],dark:!!x[5]};BG_GROUPS[x[0]][1].push(x[1])});
 BG_GROUPS.shift();
 var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лаванда"],["blue","#8FB5DE","Голубой"],["mint","#8CC7B0","Мята"],["peach","#E8A97E","Персик"],["graphite","#8A7E85","Графит"]];
-var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on"};
+var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on",night:"system",aura:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
 // ---------- питомцы: милые SVG-зверьки ----------
 var PET_LOOK={
@@ -556,12 +650,13 @@ function batTxt(b){if(!b||typeof b.level!=="number")return "";return (b.charging
 function prefs(){var p={};try{p=JSON.parse(ls("ll_prefs")||"{}")||{}}catch(e){}var o={};for(var k in PREF_DEF)o[k]=p[k]!=null?p[k]:PREF_DEF[k];if(!p.bg&&ls("ll_bg"))o.bg=ls("ll_bg");if(!BGS[o.bg])o.bg=PREF_DEF.bg;return o}
 function setPref(k,v){var p=prefs();p[k]=v;ls("ll_prefs",JSON.stringify(p));applyLook()}
 function applyLook(){
- var p=prefs(),b=BGS[p.bg],h=document.documentElement;
+ var p=prefs(),b=nightBg(p)||BGS[p.bg],h=document.documentElement;
  $("bg").style.background=b.css;
  h.setAttribute("data-tone",b.tone);
  h.setAttribute("data-cards",p.cards==="auto"?(b.dark?"dark":"light"):p.cards);
  h.setAttribute("data-acc",p.acc);h.setAttribute("data-glass",p.glass);h.setAttribute("data-logo",p.logo);
- h.setAttribute("data-bat",p.bat);h.setAttribute("data-beat",p.beat);
+ h.setAttribute("data-bat",p.bat);h.setAttribute("data-beat",p.beat);h.setAttribute("data-aura",p.aura);
+ if(b.__night)h.setAttribute("data-cards","dark");
  var hc=b.dark?"#141114":"#FDE8E4";try{TG&&TG.setHeaderColor&&TG.setHeaderColor(hc);TG&&TG.setBackgroundColor&&TG.setBackgroundColor(hc)}catch(e){}
  h.style.background=hc;
 }
@@ -591,7 +686,7 @@ function render(){
  else{$("daysLab").textContent="Вы вместе";$("daysN").innerHTML='<small>укажите дату ♡</small>'}
  var d=(pos.me||S.my_loc)&&S.partner_loc&&S.partner_active!==false?fmtKm(km(pos.me||S.my_loc,S.partner_loc)):"—";
  $("dist").textContent=d;
- safe(together);safe(sky);safe(meetCard);safe(touchHint);
+ safe(together);safe(sky);safe(meetCard);safe(touchHint);safe(fxRender);
  $("tPaL").textContent=pa?name(pa):"Партнёр";
  ticks();
  $("pName").textContent=me?(me.first_name||me.username||"Ты"):"Ты";
@@ -719,6 +814,165 @@ function touchHint(){
  else{t.textContent="Зажми сердце — "+name(pa)+" почувствует 💓";t.className="thint"}
 }
 
+// ===================== визуальные эффекты (fx) =====================
+var fx={counted:false,distCounted:false,walkT:null,routeT:{},roundDay:""};
+var REDUCED=false;try{REDUCED=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+
+// ---------- 1. живой фон: искорки и палитра по времени суток ----------
+function dayPhase(h){return h>=6&&h<11?"morn":h>=11&&h<18?"day":h>=18&&h<22?"eve":"night"}
+function fxAura(){
+ var h=new Date().getHours();document.documentElement.setAttribute("data-dph",dayPhase(h));
+ var a=$("aura");if(!a||a.getAttribute("data-s"))return;a.setAttribute("data-s","1");
+ for(var i=0;i<9;i++){var s=document.createElement("i");s.style.left=(5+i*11+Math.random()*6)+"%";s.style.animationDelay=(-Math.random()*16).toFixed(1)+"s";s.style.animationDuration=(13+Math.random()*8).toFixed(1)+"s";a.appendChild(s)}
+}
+
+// ---------- 9. ночная тема: вечером или как в системе ----------
+function isNightNow(p){
+ if(p.night==="time"){var h=new Date().getHours();return h>=21||h<7}
+ if(p.night==="system"){try{return matchMedia("(prefers-color-scheme: dark)").matches||(TG&&TG.colorScheme==="dark")}catch(e){return false}}
+ return false;
+}
+function nightBg(p){
+ var b=BGS[p.bg];if(!b||b.dark||!isNightNow(p))return null;
+ var n=BGS["night-rose"]||BGS["black"];if(!n)return null;
+ var o={};for(var k in n)o[k]=n[k];o.__night=true;return o;
+}
+
+// ---------- 2. нить между вами ----------
+function fxThread(){
+ var t=$("thread"),cp=t&&t.parentNode,me=$("avMe"),pa=$("avPa");if(!t||!me||!pa)return;
+ if(!S||!S.partner){t.innerHTML="";return}
+ var c=cp.getBoundingClientRect(),a=me.getBoundingClientRect(),b=pa.getBoundingClientRect();
+ if(!c.width)return;
+ var ax=a.right-c.left-18,ay=a.top-c.top+22,bx=b.left-c.left+18,by=b.top-c.top+22,cx=(ax+bx)/2,cy=Math.min(ay,by)-62;
+ var d="M"+ax.toFixed(1)+" "+ay.toFixed(1)+" Q"+cx.toFixed(1)+" "+cy.toFixed(1)+" "+bx.toFixed(1)+" "+by.toFixed(1);
+ var on=online();
+ if(t.getAttribute("data-d")!==d){
+  t.setAttribute("data-d",d);
+  var dot=function(dur,begin,rev){return '<circle r="'+(rev?2.6:3.4)+'"><animateMotion dur="'+dur+'s" begin="'+begin+'s" repeatCount="indefinite" path="'+d+'"'+(rev?' keyPoints="1;0" keyTimes="0;1" calcMode="linear"':'')+'/></circle>'};
+  t.innerHTML='<defs><linearGradient id="thrG" x1="0" x2="1"><stop offset="0" stop-color="#F7A08E"/><stop offset=".5" stop-color="#F06E8C"/><stop offset="1" stop-color="#A595D8"/></linearGradient></defs><path class="tg" d="'+d+'"/><path class="tl" d="'+d+'"/>'+(REDUCED?"":dot(2.4,0)+dot(2.4,-1.2)+dot(3.1,-0.6,true));
+ }
+ t.classList.toggle("off",!on);
+ pa.parentNode.classList.toggle("live",on);
+}
+
+// ---------- 4. оживающие цифры и искры на круглых датах ----------
+function countUp(el,to,fmt,ms){
+ if(REDUCED||!el){if(el)el.innerHTML=fmt(to);return}
+ var t0=performance.now();
+ (function f(t){var k=Math.min(1,(t-t0)/(ms||1100)),e=1-Math.pow(1-k,3);el.innerHTML=fmt(Math.round(to*e));if(k<1)requestAnimationFrame(f)})(t0);
+}
+function sparkle(card,n){
+ for(var i=0;i<(n||10);i++)(function(i){setTimeout(function(){
+  var s=document.createElement("i");s.className="spk";s.textContent=i%3?"✨":"⭐";
+  s.style.left=(15+Math.random()*70)+"%";s.style.top=(20+Math.random()*50)+"%";
+  s.style.setProperty("--dx",((Math.random()-.5)*120).toFixed(0)+"px");s.style.setProperty("--dy",(-30-Math.random()*60).toFixed(0)+"px");
+  card.appendChild(s);setTimeout(function(){s.remove()},1700);
+ },i*120)})(i);
+}
+function fxNumbers(){
+ var dn=$("daysN"),m=dn&&dn.textContent.match(/^(\d+)/);
+ if(m){
+  var n=Number(m[1]);
+  if(!fx.counted){fx.counted=true;countUp(dn,n,function(v){return v+' <small>'+plural(v,"день","дня","дней")+'</small>'})}
+  var round=n>0&&(n%100===0||n%365===0||n===30||n===50),dc=$("daysCard"),k=iso(new Date());
+  dc.classList.toggle("round",round);
+  if(round&&fx.roundDay!==k){fx.roundDay=k;setTimeout(function(){sparkle(dc,14)},1200)}
+ }
+ var de=$("dist"),dm=de&&de.textContent.match(/^([\d\s ]+)\s*(км|м)$/);
+ if(dm&&!fx.distCounted){fx.distCounted=true;var v=Number(dm[1].replace(/\D/g,"")),u=dm[2];countUp(de,v,function(x){return x.toLocaleString("ru-RU")+" "+u},1300)}
+}
+
+// ---------- 5–6. появление лесенкой и переходы между вкладками ----------
+var TABS=["home","map","music","prof"],curTab="home";
+function stagger(view){
+ if(REDUCED||!view)return;
+ var items=[];Array.prototype.forEach.call(view.children,function(c){if(c.classList.contains("tiles"))Array.prototype.forEach.call(c.children,function(x){items.push(x)});else if(!c.classList.contains("top"))items.push(c)});
+ view.classList.remove("stg");void view.offsetWidth;
+ items.forEach(function(c,i){c.style.animationDelay=(i*55)+"ms"});
+ view.classList.add("stg");
+ setTimeout(function(){view.classList.remove("stg");items.forEach(function(c){c.style.animationDelay=""})},items.length*55+700);
+}
+function fxTabs(){
+ Array.prototype.forEach.call(document.querySelectorAll(".nav button"),function(b){
+  b.addEventListener("click",function(){
+   var t=b.getAttribute("data-tab"),v=$("v-"+t);if(!v||t===curTab)return;
+   var dir=TABS.indexOf(t)>TABS.indexOf(curTab)?1:-1;curTab=t;
+   v.style.setProperty("--vx",(dir*28)+"px");v.classList.remove("slide");void v.offsetWidth;v.classList.add("slide");
+   stagger(v);
+   if(t==="home")setTimeout(fxThread,50);
+  });
+ });
+}
+
+// ---------- 8. маршрут на карте: дуга, самолётик и расстояние ----------
+function arcPts(a,b,n){
+ var out=[],dx=b.lng-a.lng,dy=b.lat-a.lat,cx=(a.lng+b.lng)/2-dy*.22,cy=(a.lat+b.lat)/2+dx*.22;
+ for(var i=0;i<=n;i++){var t=i/n,u=1-t;out.push([u*u*a.lat+2*u*t*cy+t*t*b.lat,u*u*a.lng+2*u*t*cx+t*t*b.lng])}
+ return out;
+}
+function fxRoute(g,p,sat,key){
+ clearInterval(fx.routeT[key]);
+ var d=km(p.a,p.b),pts=d<0.3?[[p.a.lat,p.a.lng],[p.b.lat,p.b.lng]]:arcPts(p.a,p.b,90);
+ if(sat)L.polyline(pts,{color:"#F3B6C0",weight:8,opacity:.4,lineCap:"round",interactive:false}).addTo(g);
+ L.polyline(pts,{color:sat?"#fff":"#D89494",weight:3,lineCap:"round",interactive:false,className:"route"}).addTo(g);
+ var mid=pts[Math.floor(pts.length/2)];
+ L.marker(mid,{icon:L.divIcon({html:'<span class="kmpill">💞 '+(d<0.3?"рядом":fmtKm(d))+'</span>',className:"",iconSize:[0,0]}),interactive:false,zIndexOffset:300}).addTo(g);
+ if(d<0.3||REDUCED||pts.length<3)return;
+ var pl=L.marker(pts[0],{icon:L.divIcon({html:'<div class="plane">✈️</div>',className:"",iconSize:[24,24],iconAnchor:[12,12]}),interactive:false,zIndexOffset:400}).addTo(g);
+ var i=0;
+ fx.routeT[key]=setInterval(function(){
+  i=(i+1)%pts.length;var q=pts[i],nx=pts[Math.min(i+1,pts.length-1)];
+  pl.setLatLng(q);
+  var el=pl.getElement&&pl.getElement();if(el){var ang=Math.atan2(-(nx[0]-q[0]),nx[1]-q[1])*180/Math.PI+45;var pe=el.querySelector(".plane");if(pe)pe.style.transform="rotate("+ang.toFixed(0)+"deg)"}
+ },80);
+}
+
+// ---------- 10. питомец гуляет по главному экрану ----------
+function fxWalker(){
+ var st=$("stroll"),w=$("walker");if(!st||!w)return;
+ var p=S&&S.pet;st.classList.toggle("on",!!p);if(!p)return;
+ var mood=moodOf(p),key=p.kind+"|"+mood+"|"+(p.wear||"")+"|"+p.stage;
+ if(w.getAttribute("data-k")!==key){w.setAttribute("data-k",key);w.querySelector(".wk").innerHTML=petSvg(p.kind,mood,p)}
+ if(!fx.walkT&&!REDUCED)walkStep();
+}
+function walkStep(){
+ var st=$("stroll"),w=$("walker");if(!st||!w)return;
+ var p=S&&S.pet,sleep=!p||moodOf(p)==="sleep"||!st.offsetWidth;
+ var next=4000+Math.random()*5000;
+ if(!sleep){
+  var max=Math.max(0,st.offsetWidth-w.offsetWidth),cur=Number(w.getAttribute("data-x")||max/2),to=Math.round(Math.random()*max),dist=Math.abs(to-cur);
+  if(dist>30){
+   var dur=dist/45;w.querySelector(".wk").style.setProperty("--f",to<cur?-1:1);
+   w.classList.add("walk");w.style.transition="transform "+dur.toFixed(2)+"s linear";w.style.transform="translateX("+to+"px)";w.setAttribute("data-x",to);
+   setTimeout(function(){w.classList.remove("walk")},dur*1000);next+=dur*1000;
+  }
+ }
+ fx.walkT=setTimeout(function(){fx.walkT=null;walkStep()},next);
+}
+function walkerTap(){
+ var w=$("walker"),p=S&&S.pet;if(!w||!p)return;
+ w.classList.remove("hop");void w.offsetWidth;w.classList.add("hop");
+ var say=w.querySelector(".say");say.textContent=["Мурр 🤍","Ещё! ✨","Люблю вас 💞","Хи-хи 😊"][Math.floor(Math.random()*4)];say.classList.add("on");setTimeout(function(){say.classList.remove("on")},1400);
+ var st=$("stroll");for(var i=0;i<4;i++){var h=node('<span class="fh">♥</span>');h.style.left=(Number(w.getAttribute("data-x")||0)+30+Math.random()*30)+"px";h.style.animationDelay=(Math.random()*.3)+"s";st.appendChild(h);(function(h){setTimeout(function(){h.remove()},1900)})(h)}
+ petAct("pet");
+}
+
+// ---------- запуск и хуки ----------
+function fxRender(){
+ document.documentElement.classList.remove("ll-load");
+ fxAura();fxThread();fxNumbers();fxWalker();
+}
+function fxInit(){
+ fxAura();fxTabs();
+ var w=$("walker");if(w)w.addEventListener("click",walkerTap);
+ window.addEventListener("resize",function(){var t=$("thread");if(t)t.removeAttribute("data-d");fxThread()});
+ setInterval(function(){fxAura();applyLook()},5*60000);
+ try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyLook)}catch(e){}
+ stagger($("v-home"));
+}
+document.documentElement.classList.add("ll-load");
+
 function ticks(){$("tMe").textContent=clock();$("tPa").textContent=S&&S.partner_tz?clock(S.partner_tz):"--:--"}
 setInterval(ticks,15000);
 function night(){var h=new Date().getHours();return h>=23||h<7}
@@ -754,9 +1008,7 @@ function draw(map,key){
  if(p.b)L.marker([p.b.lat,p.b.lng],{icon:mkIcon(S.partner,true),interactive:true,zIndexOffset:500}).on("click",function(){openPing()}).addTo(g);
  if(p.a&&p.b){
   var sat=prefs().map!=="plan";
-  if(sat)L.polyline([[p.a.lat,p.a.lng],[p.b.lat,p.b.lng]],{color:"#F3B6C0",weight:7,opacity:.45,lineCap:"round",interactive:false}).addTo(g);
-  L.polyline([[p.a.lat,p.a.lng],[p.b.lat,p.b.lng]],{color:sat?"#fff":"#D89494",weight:3,dashArray:"7 9",lineCap:"round",interactive:false}).addTo(g);
-  L.marker([(p.a.lat+p.b.lat)/2,(p.a.lng+p.b.lng)/2],{icon:heartIcon(),interactive:false}).addTo(g);
+  fxRoute(g,p,sat,key);
  }
  g.addTo(map);layers[key]=g;
 }
@@ -900,6 +1152,7 @@ var SHEETS={
    '<div class="opt"><div class="lab">Карточки</div><div class="seg" id="cCards"></div></div>'+
    '<div class="opt"><div class="lab">Стекло</div><div class="seg" id="cGlass"></div></div>'+
    '<div class="opt"><div class="lab">Логотип</div><div class="seg" id="cLogo"></div></div>'+
+   '<div class="opt"><div class="lab">Ночная тема</div><div class="seg" id="cNight"></div></div>'+
    '<div class="opt" id="cTg"></div>'+
    '<button class="btn sec" id="cReset" type="button">Сбросить оформление</button>');
   ACCENTS.forEach(function(a){var x=node('<button type="button" aria-label="'+a[2]+'" class="'+(p.acc===a[0]?"on":"")+'"></button>');x.style.background=a[1];
@@ -909,7 +1162,8 @@ var SHEETS={
   seg("cCards","cards",[["auto","Авто"],["light","Светлые"],["dark","Тёмные"]]);
   seg("cGlass","glass",[["matte","Матовое"],["glass","Прозрачное"]]);
   seg("cLogo","logo",[["serif","Классика"],["sans","Современный"]]);
-  [["bat","Заряд под аватарками","Показывать проценты батареи"],["beat","Бьющееся сердце","Анимация сердца между вами"]].forEach(function(it){
+  seg("cNight","night",[["off","Выкл"],["time","Вечером"],["system","Как в системе"]]);
+  [["bat","Заряд под аватарками","Показывать проценты батареи"],["beat","Бьющееся сердце","Анимация сердца между вами"],["aura","Живой фон","Плывущие цвета и искорки, меняются по времени суток"]].forEach(function(it){
    var r=node('<div class="tg"><div class="t"><b>'+it[1]+'</b><span>'+it[2]+'</span></div><button type="button" class="sw'+(prefs()[it[0]]==="on"?" on":"")+'" aria-label="'+it[1]+'"></button></div>');
    var sw=r.querySelector(".sw");sw.onclick=function(){var on=!sw.classList.contains("on");sw.classList.toggle("on",on);haptic();setPref(it[0],on?"on":"off")};$("cTg").appendChild(r);
   });
@@ -1313,6 +1567,7 @@ function start(){
  locate();poll();poller=setInterval(poll,10000);
  setInterval(function(){safe(sky);safe(meetCard)},30000);
  initTouch();
+ fxInit();
  setInterval(function(){lastPut=0;put()},30000);
  if(navigator.getBattery){navigator.getBattery().then(function(b){
   var send=function(){call("/v2/update",{level:Math.round(b.level*100),charging:b.charging}).catch(function(){})};
