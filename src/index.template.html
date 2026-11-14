@@ -675,6 +675,14 @@ var SHEETS={
    }).catch(function(){toast("Не получилось открыть оплату")})};$("donA").appendChild(b)});
   var d=box(B,'<div class="lab">iPhone-приложение</div><div class="hint" style="margin-top:0">Передаёт заряд и геопозицию в фоне, показывает виджеты и питомца в Dynamic Island. Привяжите его кодом:</div><div id="devW"></div>');
   devRender();devLoad();
+  box(B,'<div class="lab">Мои данные</div><div class="hint" style="margin-top:0">Удалим профиль, геопозицию, заряд, привязанные iPhone, пару и ваши записи в «Мы». Партнёр перестанет вас видеть. Отменить нельзя.</div><button class="btn danger" id="abDel" type="button">Удалить мои данные</button>');
+  $("abDel").onclick=function(){confirmAsk("Удалить все ваши данные из Lovelense? Это нельзя отменить.",function(){
+   var b=$("abDel");b.disabled=true;
+   call("/v2/me/delete",{confirm:true}).then(function(){
+    clearInterval(poller);haptic("heavy");toast("Данные удалены");
+    setTimeout(function(){try{if(TG&&TG.close){TG.close();return}}catch(e){}location.reload()},1200);
+   }).catch(function(){b.disabled=false;toast("Не получилось удалить, попробуйте ещё раз")});
+  })};
  }},
  pet:{t:"Питомец",r:function(B){renderPet(B)}}
 };
