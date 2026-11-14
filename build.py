@@ -30,7 +30,7 @@ def put(name, data, ext):
     open(os.path.join(A, fn), 'wb').write(data)
     return 'a/' + fn
 bg = {}
-t = t.replace('%%BG%%', json.dumps(bg)).replace('%%ICONS%%', '{}').replace('%%PETJS%%', open(P('src', 'pet.js'), encoding='utf-8').read())
+t = t.replace('%%BG%%', json.dumps(bg)).replace('%%ICONS%%', '{}').replace('%%PETJS%%', open(P('src', 'pet.js'), encoding='utf-8').read()).replace('%%LDRJS%%', open(P('src', 'ldr.js'), encoding='utf-8').read())
 assert not re.findall(r'%%[A-Za-z]+%%', t)
 os.makedirs(P('dist'), exist_ok=True)
 open(P('dist', 'index.html'), 'w', encoding='utf-8').write(t)
