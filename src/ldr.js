@@ -16,8 +16,9 @@ function skySvg(h){
  return {ph:ph,svg:o};
 }
 function sky(){
- var c=$("skyCard");if(!c)return;
- var tz=S&&S.partner&&S.partner_active!==false&&S.partner_tz,h=tz?tzHour(tz):null;
+ var c=$("skyCard"),tz=S&&S.partner&&S.partner_active!==false&&S.partner_tz,h=tz?tzHour(tz):null;
+ var pe=$("tPaE");if(pe)pe.textContent=h==null?"":(h<5||h>=22?"🌙":h<8?"🌅":h<18?"☀️":"🌇");
+ if(!c)return;
  if(h==null){c.style.display="none";return}
  c.style.display="";
  var r=skySvg(h),key=r.ph+"|"+Math.round(h*4);

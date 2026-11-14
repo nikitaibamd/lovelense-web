@@ -144,6 +144,15 @@ html.ll-load .ava .img{color:transparent;animation:shim 1.3s linear infinite;bac
 /* бережём тех, кто просит меньше движения */
 @media (prefers-reduced-motion:reduce){.aura b,.aura i,.thread .tl,.ava.live::before,.ava.live::after,.stg>*,.view.slide,.mart.on,.meq i,.route{animation:none!important}}
 
+/* главный: время над аватарками, расстояние между ними */
+.ctimes{display:flex;justify-content:space-between;margin:2px 0 8px}
+.ct{width:132px;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.1}
+.ct b{font-size:21px;font-weight:600;color:var(--title);letter-spacing:.3px;text-shadow:0 1px 8px rgba(111,76,100,.18)}
+.ct small{font-size:12px;color:var(--muted);white-space:nowrap;max-width:132px;overflow:hidden;text-overflow:ellipsis}
+html[data-tone=dark] .ct small{color:rgba(255,255,255,.7)}
+.cdist{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);z-index:2;padding:5px 12px;border-radius:999px;border:1px solid var(--border);background:var(--card);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font:600 13px/1.2 -apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);white-space:nowrap;box-shadow:0 4px 12px rgba(111,76,100,.15);cursor:pointer}
+.cdist:active{transform:translateX(-50%) scale(.95)}
+
 /* ===== игры на двоих ===== */
 .gcard{margin-top:16px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer}
 .gcard .gic{display:flex;gap:2px;font-size:24px}
@@ -494,7 +503,8 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
  <!-- ДОМ -->
  <section class="view on" id="v-home">
   <div class="top"><h1 class="wm">Lovelense ♡</h1><button class="round" id="bell" type="button" aria-label="Уведомления"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></g></svg></button></div>
-  <div class="couple"><svg class="thread" id="thread"></svg>
+  <div class="ctimes"><div class="ct"><b id="tMe">--:--</b><small>ты</small></div><div class="ct"><b id="tPa">--:--</b><small><span id="tPaE"></span> <span id="tPaL">партнёр</span></small></div></div>
+  <div class="couple"><svg class="thread" id="thread"></svg><button class="cdist" id="tDist" type="button" style="display:none"><span id="dist">—</span></button>
    <div class="ava"><div class="img" id="avMe">♡</div><span class="dot on"></span><span class="bat" id="batMe" style="display:none"></span></div>
    <div class="hbtn" id="hBtn" role="button" aria-label="Зажми сердце вместе с партнёром"><svg class="bigheart" viewBox="0 0 24 24"><path d="M12 21s-8.8-5.9-8.8-11.2A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 3.7C20.8 15.1 12 21 12 21Z" style="fill:var(--acc1)" stroke="#fff" stroke-width="1.2"/></svg></div>
    <div class="ava"><div class="img" id="avPa">♡</div><span class="dot" id="dotPa"></span><span class="bat" id="batPa" style="display:none"></span></div>
@@ -502,12 +512,8 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
   <div class="thint" id="tHint"></div>
   <div class="card days" id="daysCard"><div class="l"><svg viewBox="0 0 24 24"><path d="M12 20s-8-5.4-8-10.2A4.4 4.4 0 0 1 12 7.4a4.4 4.4 0 0 1 8 2.4C20 14.6 12 20 12 20Z" style="fill:var(--acc)"/></svg> <span id="daysLab">Вы вместе</span></div><div class="n" id="daysN">—</div></div>
   <div class="card meet" id="meetCard" style="display:none"></div>
-  <div class="tiles">
-   <div class="card tile" id="tDist"><div class="ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5.2-8 11-8 11S4 15.2 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></g></svg></div><div class="v" id="dist">—</div><div class="s">между вами</div></div>
-   <div class="card tile"><div class="ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></g></svg></div><div class="v" id="tMe">--:--</div><div class="s">Вы</div></div>
-   <div class="card tile"><div class="ic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></g></svg></div><div class="v" id="tPa">--:--</div><div class="s" id="tPaL">Партнёр</div></div>
-  </div>
-  <div class="card sky" id="skyCard" style="display:none"><div class="skyart" id="skyArt"></div><div class="skytx"><b id="skyT"></b><span id="skyS"></span></div></div>
+  <div class="stroll" id="stroll"><div class="walker" id="walker"><span class="say"></span><div class="wk"></div></div></div>
+  <div class="card row" id="petRow" style="display:none"><div class="petpic" id="petPic"></div><div><div class="rt"><span id="petTitle">Питомец</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.8c0 5.1-8.8 11-8.8 11s-8.8-5.9-8.8-11A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z"/></g></svg></div><div class="rs"><i></i><span id="petStatus"></span></div></div><span class="chev"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g></svg></span></div>
  </section>
 
  <!-- КАРТА -->
@@ -533,9 +539,6 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
    <div class="mctl"><button type="button" id="mStop" aria-label="Убрать трек"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M9.5 7V4.8h5V7M6.5 7l.8 12.2a1.2 1.2 0 0 0 1.2 1.1h7a1.2 1.2 0 0 0 1.2-1.1L17.5 7M10 11v6M14 11v6"/></g></svg></button><button type="button" class="big" id="mPlay" aria-label="Играть"><svg viewBox="0 0 24 24"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6Z" fill="currentColor"/></svg></button><button type="button" id="mNext" aria-label="Следующий"><svg viewBox="0 0 24 24"><path d="M5 6.2v11.6a.9.9 0 0 0 1.4.75L15 12.75a.9.9 0 0 0 0-1.5L6.4 5.45A.9.9 0 0 0 5 6.2Z" fill="currentColor"/><rect x="16.5" y="5.5" width="2.6" height="13" rx="1.2" fill="currentColor"/></svg></button></div>
   </div>
   <div class="card box"><div class="mh"><span>Дальше в очереди <small id="mQn"></small></span><button type="button" id="mClear">Очистить</button></div><div id="mQ"></div></div>
-  <div class="tsec" id="petSec" style="display:none">🐾 Питомец</div>
-  <div class="stroll" id="stroll"><div class="walker" id="walker"><span class="say"></span><div class="wk"></div></div></div>
-  <div class="card row" id="petRow" style="display:none"><div class="petpic" id="petPic"></div><div><div class="rt"><span id="petTitle">Питомец</span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.8c0 5.1-8.8 11-8.8 11s-8.8-5.9-8.8-11A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z"/></g></svg></div><div class="rs"><i></i><span id="petStatus"></span></div></div><span class="chev"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g></svg></span></div>
  </section>
 
  <!-- ПРОФИЛЬ -->
@@ -762,7 +765,7 @@ function render(){
  var d=(pos.me||S.my_loc)&&S.partner_loc&&S.partner_active!==false?fmtKm(km(pos.me||S.my_loc,S.partner_loc)):"—";
  $("dist").textContent=d;
  safe(together);safe(sky);safe(meetCard);safe(touchHint);safe(fxRender);safe(gamesCard);
- $("tPaL").textContent=pa?name(pa):"Партнёр";
+ $("tPaL").textContent=pa?name(pa):"партнёр";
  ticks();
  $("pName").textContent=me?(me.first_name||me.username||"Ты"):"Ты";
  $("pUid").textContent=me?me.id:"—";
@@ -790,8 +793,9 @@ function skySvg(h){
  return {ph:ph,svg:o};
 }
 function sky(){
- var c=$("skyCard");if(!c)return;
- var tz=S&&S.partner&&S.partner_active!==false&&S.partner_tz,h=tz?tzHour(tz):null;
+ var c=$("skyCard"),tz=S&&S.partner&&S.partner_active!==false&&S.partner_tz,h=tz?tzHour(tz):null;
+ var pe=$("tPaE");if(pe)pe.textContent=h==null?"":(h<5||h>=22?"🌙":h<8?"🌅":h<18?"☀️":"🌇");
+ if(!c)return;
  if(h==null){c.style.display="none";return}
  c.style.display="";
  var r=skySvg(h),key=r.ph+"|"+Math.round(h*4);
@@ -954,6 +958,7 @@ function fxNumbers(){
   dc.classList.toggle("round",round);
   if(round&&fx.roundDay!==k){fx.roundDay=k;setTimeout(function(){sparkle(dc,14)},1200)}
  }
+ var td=$("tDist");if(td)td.style.display=$("dist").textContent.trim()==="—"?"none":"";
  var de=$("dist"),dm=de&&de.textContent.match(/^([\d\s ]+)\s*(км|м)$/);
  if(dm&&!fx.distCounted){fx.distCounted=true;var v=Number(dm[1].replace(/\D/g,"")),u=dm[2];countUp(de,v,function(x){return x.toLocaleString("ru-RU")+" "+u},1300)}
 }

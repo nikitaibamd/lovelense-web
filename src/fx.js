@@ -63,6 +63,7 @@ function fxNumbers(){
   dc.classList.toggle("round",round);
   if(round&&fx.roundDay!==k){fx.roundDay=k;setTimeout(function(){sparkle(dc,14)},1200)}
  }
+ var td=$("tDist");if(td)td.style.display=$("dist").textContent.trim()==="—"?"none":"";
  var de=$("dist"),dm=de&&de.textContent.match(/^([\d\s ]+)\s*(км|м)$/);
  if(dm&&!fx.distCounted){fx.distCounted=true;var v=Number(dm[1].replace(/\D/g,"")),u=dm[2];countUp(de,v,function(x){return x.toLocaleString("ru-RU")+" "+u},1300)}
 }

@@ -333,7 +333,8 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
  <!-- ДОМ -->
  <section class="view on" id="v-home">
   <div class="top"><h1 class="wm">Lovelense ♡</h1><button class="round" id="bell" type="button" aria-label="Уведомления">%%bell%%</button></div>
-  <div class="couple"><svg class="thread" id="thread"></svg>
+  <div class="ctimes"><div class="ct"><b id="tMe">--:--</b><small>ты</small></div><div class="ct"><b id="tPa">--:--</b><small><span id="tPaE"></span> <span id="tPaL">партнёр</span></small></div></div>
+  <div class="couple"><svg class="thread" id="thread"></svg><button class="cdist" id="tDist" type="button" style="display:none"><span id="dist">—</span></button>
    <div class="ava"><div class="img" id="avMe">♡</div><span class="dot on"></span><span class="bat" id="batMe" style="display:none"></span></div>
    <div class="hbtn" id="hBtn" role="button" aria-label="Зажми сердце вместе с партнёром"><svg class="bigheart" viewBox="0 0 24 24"><path d="M12 21s-8.8-5.9-8.8-11.2A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 3.7C20.8 15.1 12 21 12 21Z" style="fill:var(--acc1)" stroke="#fff" stroke-width="1.2"/></svg></div>
    <div class="ava"><div class="img" id="avPa">♡</div><span class="dot" id="dotPa"></span><span class="bat" id="batPa" style="display:none"></span></div>
@@ -341,12 +342,8 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
   <div class="thint" id="tHint"></div>
   <div class="card days" id="daysCard"><div class="l">%%heartfill%% <span id="daysLab">Вы вместе</span></div><div class="n" id="daysN">—</div></div>
   <div class="card meet" id="meetCard" style="display:none"></div>
-  <div class="tiles">
-   <div class="card tile" id="tDist"><div class="ic">%%pin%%</div><div class="v" id="dist">—</div><div class="s">между вами</div></div>
-   <div class="card tile"><div class="ic">%%clock%%</div><div class="v" id="tMe">--:--</div><div class="s">Вы</div></div>
-   <div class="card tile"><div class="ic">%%clock%%</div><div class="v" id="tPa">--:--</div><div class="s" id="tPaL">Партнёр</div></div>
-  </div>
-  <div class="card sky" id="skyCard" style="display:none"><div class="skyart" id="skyArt"></div><div class="skytx"><b id="skyT"></b><span id="skyS"></span></div></div>
+  <div class="stroll" id="stroll"><div class="walker" id="walker"><span class="say"></span><div class="wk"></div></div></div>
+  <div class="card row" id="petRow" style="display:none"><div class="petpic" id="petPic"></div><div><div class="rt"><span id="petTitle">Питомец</span> %%heart%%</div><div class="rs"><i></i><span id="petStatus"></span></div></div><span class="chev">%%chev%%</span></div>
  </section>
 
  <!-- КАРТА -->
@@ -372,9 +369,6 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
    <div class="mctl"><button type="button" id="mStop" aria-label="Убрать трек">%%mstop%%</button><button type="button" class="big" id="mPlay" aria-label="Играть">%%mplay%%</button><button type="button" id="mNext" aria-label="Следующий">%%mnext%%</button></div>
   </div>
   <div class="card box"><div class="mh"><span>Дальше в очереди <small id="mQn"></small></span><button type="button" id="mClear">Очистить</button></div><div id="mQ"></div></div>
-  <div class="tsec" id="petSec" style="display:none">🐾 Питомец</div>
-  <div class="stroll" id="stroll"><div class="walker" id="walker"><span class="say"></span><div class="wk"></div></div></div>
-  <div class="card row" id="petRow" style="display:none"><div class="petpic" id="petPic"></div><div><div class="rt"><span id="petTitle">Питомец</span> %%heart%%</div><div class="rs"><i></i><span id="petStatus"></span></div></div><span class="chev">%%chev%%</span></div>
  </section>
 
  <!-- ПРОФИЛЬ -->
@@ -508,7 +502,7 @@ function render(){
  var d=(pos.me||S.my_loc)&&S.partner_loc&&S.partner_active!==false?fmtKm(km(pos.me||S.my_loc,S.partner_loc)):"—";
  $("dist").textContent=d;
  safe(together);safe(sky);safe(meetCard);safe(touchHint);safe(fxRender);safe(gamesCard);
- $("tPaL").textContent=pa?name(pa):"Партнёр";
+ $("tPaL").textContent=pa?name(pa):"партнёр";
  ticks();
  $("pName").textContent=me?(me.first_name||me.username||"Ты"):"Ты";
  $("pUid").textContent=me?me.id:"—";
