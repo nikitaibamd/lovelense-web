@@ -141,9 +141,9 @@ function roomRender(B){
  setPhoto($("rmMe"),S&&S.me);setPhoto($("rmPa"),S&&S.partner);
  ROOM_EMO.forEach(function(em){var b=node('<button type="button">'+em+'</button>');b.onclick=function(){haptic();roomFly(em,true);call("/v2/pair/room",{action:"react",emoji:em,since:ROOM.since}).then(roomApply).catch(function(e){if(e.message!=="too_fast")gErr(e)})};$("rmEmo").appendChild(b)});
  $("rmCall").onclick=function(){var b=this;b.disabled=true;call("/v2/pair/room",{action:"call",since:ROOM.since}).then(function(x){roomApply(x);toast(x.called?"Позвали — бот напишет "+name(S&&S.partner)+" 💌":(x.partner_here?name(S&&S.partner)+" уже здесь ♡":"Уже звали недавно — подожди немного"))}).catch(gErr).then(function(){setTimeout(function(){b.disabled=false},3000)})};
- ROOM.since=0;ROOM.here=false;roomPoll();gLoop("h_room",roomPoll,2000);
+ ROOM.since=0;ROOM.here=false;ROOM.ready=false;roomPoll();gLoop("h_room",roomPoll,2000);
 }
-function roomPoll(){call("/v2/pair/room",{action:"get",since:ROOM.since}).then(roomApply).catch(function(){})}
+function roomPoll(){var init=!ROOM.ready;call("/v2/pair/room",{action:"get",since:ROOM.since,init:init}).then(function(x){ROOM.ready=true;roomApply(x)}).catch(function(){})}
 function roomApply(x){
  if(!$("rmScene"))return;var pn=name(S&&S.partner);
  if(x.partner_here&&!ROOM.here){haptic("medium");roomFly("👋",false)}
