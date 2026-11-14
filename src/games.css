@@ -67,3 +67,5 @@ canvas.view{display:block;width:100%;border-radius:16px;background:#fff;box-shad
 .nbadge{position:absolute;top:2px;right:calc(50% + 8px);min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#F06E8C;color:#fff;font:700 11px/18px -apple-system,sans-serif;font-style:normal;display:none;box-shadow:0 0 0 2px rgba(255,255,255,.9)}
 .nbadge.on{display:block}
 #v-music .stroll{margin-top:0}
+
+#v-music .meet{margin-top:10px}

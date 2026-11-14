@@ -1,0 +1,30 @@
+/* ===== питомец, который гуляет по всему приложению ===== */
+.roam{position:fixed;left:0;top:0;width:66px;height:74px;z-index:45;pointer-events:none;will-change:transform;display:none}
+.roam.on{display:block}
+.roam .rb{position:absolute;inset:0;pointer-events:auto;cursor:pointer;--f:1;transform:scaleX(var(--f));transform-origin:50% 100%;transition:clip-path .45s ease,transform .1s}
+.roam .rb svg{width:100%;height:100%;display:block;overflow:visible}
+.roam.walk .rb{animation:rWalk .38s ease-in-out infinite}
+@keyframes rWalk{0%,100%{transform:scaleX(var(--f)) translateY(0)}50%{transform:scaleX(var(--f)) translateY(-5px) rotate(-2deg)}}
+.roam.air .rb{transform:scaleX(var(--f)) scale(.94,1.08)}
+.roam.fall .rb{transform:scaleX(var(--f)) scale(.9,1.12) rotate(14deg)}
+.roam.land .rb{animation:rLand .35s cubic-bezier(.3,1.6,.5,1)}
+@keyframes rLand{0%{transform:scaleX(var(--f)) scale(1.25,.72)}100%{transform:scaleX(var(--f))}}
+.roam.dizzy .rb{animation:rDizzy 1.4s ease-in-out}
+@keyframes rDizzy{0%,100%{transform:scaleX(var(--f)) rotate(0)}20%{transform:scaleX(var(--f)) rotate(-18deg) translateY(4px)}40%{transform:scaleX(var(--f)) rotate(12deg)}60%{transform:scaleX(var(--f)) rotate(-8deg)}80%{transform:scaleX(var(--f)) rotate(4deg)}}
+.roam.hop .rb{animation:rHop .65s cubic-bezier(.3,1.5,.5,1)}
+@keyframes rHop{0%,100%{transform:scaleX(var(--f)) translateY(0)}40%{transform:scaleX(var(--f)) translateY(-34px) scale(1.06,.94)}}
+.roam.play .rb{animation:rPlay .5s ease-in-out 3}
+@keyframes rPlay{0%,100%{transform:scaleX(var(--f)) rotate(0)}25%{transform:scaleX(var(--f)) rotate(-12deg) translateY(-10px)}75%{transform:scaleX(var(--f)) rotate(12deg) translateY(-10px)}}
+/* прячется за карточку: торчат только ушки и глаза */
+.roam.hide .rb{clip-path:inset(0 0 52% 0);transform:scaleX(var(--f)) translateY(36px)}
+.roam.hide .rb{animation:rPeek 2.2s ease-in-out infinite}
+@keyframes rPeek{0%,100%{transform:scaleX(var(--f)) translateY(38px)}50%{transform:scaleX(var(--f)) translateY(30px)}}
+.roam .say{position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%) scale(.6);opacity:0;padding:6px 11px;border-radius:14px;background:var(--card);border:1px solid var(--border);color:var(--ink);font:600 13px/1.2 -apple-system,BlinkMacSystemFont,sans-serif;white-space:nowrap;box-shadow:0 6px 16px rgba(111,76,100,.2);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:opacity .25s,transform .3s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.roam .say::after{content:"";position:absolute;left:50%;top:100%;margin-left:-6px;border:6px solid transparent;border-top-color:var(--card)}
+.roam .say.on{opacity:1;transform:translateX(-50%) scale(1)}
+.roam .say.ask{pointer-events:auto;cursor:pointer;animation:auraPulse 1.2s ease-in-out infinite}
+.roam .stars{position:absolute;left:50%;top:-6px;width:44px;margin-left:-22px;text-align:center;font-size:13px;opacity:0;pointer-events:none}
+.roam.dizzy .stars{opacity:1;animation:rStars .7s linear infinite}
+@keyframes rStars{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.roam .rh{position:absolute;left:24px;bottom:50px;font-size:18px;color:#F06E8C;pointer-events:none;animation:fly 1.4s ease-out forwards}
+@media (prefers-reduced-motion:reduce){.roam .rb{animation:none!important}}
