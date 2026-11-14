@@ -187,6 +187,14 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 .kinds{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .kinds button{width:48px;height:48px;border-radius:16px;border:1px solid var(--line);background:var(--inbg);font-size:24px;cursor:pointer}
 .kinds button.on{background:var(--acc1);border-color:var(--acc)}
+.wardrobe{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.wardrobe button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 10px;border-radius:16px;border:1px solid var(--line);background:var(--inbg);color:var(--ink);cursor:pointer;font:inherit}
+.wardrobe button.on{background:var(--acc1);border-color:var(--acc)}
+.wardrobe button.lock .wi{opacity:.45}
+.wardrobe .wi{width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--muted)}
+.wardrobe .wi svg{width:64px;height:64px}
+.wardrobe b{font-size:12px;font-weight:600;text-align:center;line-height:1.2}
+.wardrobe small{font-size:11px;color:var(--muted)}
 .mnow{padding:14px}
 .mvid{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,var(--acc1),var(--acc))}
 .mvid{aspect-ratio:4/3!important}
@@ -372,7 +380,7 @@ var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лава
 var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
 %%PETJS%%
-var ERR={yandex_geo:"Яндекс Музыка не отдаёт плейлисты за пределами России — вставь список треков текстом",unsupported:"Этот сервис не отдаёт плейлист по ссылке — вставь список треков текстом",bad_playlist:"Не понял ссылку — нужна ссылка на плейлист, альбом или трек",empty_playlist:"Плейлист пустой или закрытый — сделай его публичным",import_failed:"Не получилось открыть плейлист, попробуй ещё раз",search_failed:"Поиск сейчас не отвечает",bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже"};
+var ERR={yandex_geo:"Яндекс Музыка не отдаёт плейлисты за пределами России — вставь список треков текстом",unsupported:"Этот сервис не отдаёт плейлист по ссылке — вставь список треков текстом",bad_playlist:"Не понял ссылку — нужна ссылка на плейлист, альбом или трек",empty_playlist:"Плейлист пустой или закрытый — сделай его публичным",import_failed:"Не получилось открыть плейлист, попробуй ещё раз",search_failed:"Поиск сейчас не отвечает",bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже",not_owned:"Этот наряд ещё не открыт",already_owned:"Этот наряд уже ваш ♡",invoice_failed:"Не получилось открыть оплату",bad_item:"Такого наряда нет"};
 var $=function(id){return document.getElementById(id)};
 var S=null,pos={},lastPut=0,poller=null,started=false;
 
@@ -452,7 +460,7 @@ function render(){
  $("pUid").textContent=me?me.id:"—";
  var p=S.pet;
  $("petRow").style.display=p?"":"none";
- if(p){$("petTitle").textContent=p.name;$("petStatus").textContent=petStatus(p);var pk=p.kind+"|"+moodOf(p);if($("petPic").getAttribute("data-k")!==pk){$("petPic").setAttribute("data-k",pk);$("petPic").innerHTML=petSvg(p.kind,moodOf(p))}}
+ if(p){$("petTitle").textContent=p.name+(S.streak&&S.streak.n?" · 🔥 "+S.streak.n:"");$("petStatus").textContent=petStatus(p);var pk=p.kind+"|"+moodOf(p)+"|"+(p.wear||"")+"|"+p.stage;if($("petPic").getAttribute("data-k")!==pk){$("petPic").setAttribute("data-k",pk);$("petPic").innerHTML=petSvg(p.kind,moodOf(p),p)}}
  try{updateMini()}catch(e){console.error(e)}
  if(cur&&cur.live)cur.live();
 }
@@ -654,7 +662,7 @@ var SHEETS={
  }},
  notify:{t:"Уведомления",r:function(B){
   var b=box(B,'<div class="hint" style="margin-top:0">Бот Lovelense присылает сообщения, когда партнёр что-то делает.</div><div id="ntf" style="margin-top:6px"><div class="hint">Загрузка…</div></div>');
-  var items=[["pet","Питомец","Партнёр покормил, поиграл или позаботился"],["hungry","Голодный питомец","Напоминание покормить"],["meet","Встречи","Партнёр назначил дату встречи"],["ping","Эмодзи от партнёра","Партнёр отправил эмодзи с карты"],["music","Музыка","Партнёр включил трек"],["movie","Кино","Партнёр выбрал фильм (в iPhone-приложении)"],["us","Раздел «Мы»","Воспоминания, письма, вопрос дня (в iPhone-приложении)"]];
+  var items=[["pet","Питомец","Партнёр покормил, поиграл или позаботился"],["hungry","Голодный питомец","Напоминание покормить"],["meet","Встречи","Партнёр назначил дату встречи"],["ping","Эмодзи от партнёра","Партнёр отправил эмодзи с карты"],["music","Музыка","Партнёр включил трек"],["movie","Кино","Партнёр выбрал фильм (в iPhone-приложении)"],["us","Раздел «Мы»","Воспоминания, письма, вопрос дня (в iPhone-приложении)"],["streak","Серия дней","Напоминание в 20:00, если огонёк вот-вот погаснет"]];
   call("/v2/pair/notify").then(function(x){
    var n=x.notify||{},w=$("ntf");if(!w)return;w.innerHTML="";
    items.forEach(function(it){
@@ -702,7 +710,9 @@ function renderPartner(B){
   $("ppUn").onclick=function(){confirmAsk("Отвязать партнёра? Вы перестанете видеть друг друга.",function(){act("/v2/unlink",{})})};
   return;
  }
- var b=box(B,'<div class="lab">Найдите партнёра по нику в Telegram</div><input class="in" id="ppQ" placeholder="@никнейм" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"><button class="btn" id="ppGo" type="button">Найти</button>'+(pMsg?'<div class="hint" style="color:var(--acc2)">'+esc(pMsg)+'</div>':'')+'<div id="ppRes"></div>');
+ box(B,'<div class="lab">Пригласите партнёра ссылкой</div><div class="hint" style="margin-top:0">Отправьте ссылку — партнёр откроет её в Telegram, и вы сразу станете парой</div><button class="btn" id="ppInv" type="button">Пригласить партнёра ♡</button>');
+ $("ppInv").onclick=function(){haptic();call("/v2/invite").then(function(x){openLink("https://t.me/share/url?url="+encodeURIComponent(x.link)+"&text="+encodeURIComponent("Давай будем вместе в Lovelense ♡ Нажми на ссылку, и мы станем парой"))}).catch(function(e){toast(ERR[e.message]||"Не получилось создать ссылку")})};
+ var b=box(B,'<div class="lab">Или найдите партнёра по нику в Telegram</div><input class="in" id="ppQ" placeholder="@никнейм" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"><button class="btn" id="ppGo" type="button">Найти</button>'+(pMsg?'<div class="hint" style="color:var(--acc2)">'+esc(pMsg)+'</div>':'')+'<div id="ppRes"></div>');
  var q=$("ppQ");q.onkeydown=function(e){if(e.key==="Enter")search()};$("ppGo").onclick=search;
  if(found){var r=node('<div class="prow"><div class="pav"></div><div class="pnm"><b>'+esc(name(found))+'</b><span>'+esc(found.username?"@"+found.username:"")+'</span></div><button class="chip pri" type="button">Добавить</button></div>');setPhoto(r.querySelector(".pav"),found);
   r.querySelector("button").onclick=function(){act("/v2/request",{id:found.id},function(x){pMsg=x.accepted?"Готово, вы теперь пара ♡":"Запрос отправлен";found=undefined})};$("ppRes").appendChild(r)}
@@ -746,6 +756,8 @@ function renderPet(B){
   '<div class="bar"><div class="bl"><span>Радость</span><span id="pHv"></span></div><i><b id="pH"></b></i></div><div class="hint" id="pLast"></div>');
  var a=node('<div class="acts"><button type="button" data-a="feed"><span>🍖</span>Кормить</button><button type="button" data-a="play"><span>🎾</span>Играть</button><button type="button" data-a="pet"><span>🤍</span>Гладить</button><button type="button" data-a="care"><span>🫧</span>Уход</button></div>');
  B.appendChild(a);Array.prototype.forEach.call(a.querySelectorAll("button"),function(b){b.onclick=function(){petAct(b.getAttribute("data-a"))}});
+ box(B,'<div class="lab">🔥 Серия дней</div><div id="pStreak"></div>');
+ box(B,'<div class="lab">Гардероб</div><div class="hint" style="margin-top:0">Наряды открываются на 5, 10 и 20 уровне или покупаются за звёзды — навсегда для вас двоих</div><div class="wardrobe" id="pW"></div>');
  var c=box(B,'<div class="lab">Кто это</div><div class="kinds" id="pK"></div><div class="lab" style="margin-top:14px">Имя</div><input class="in" id="pName" maxlength="16"><button class="btn sec" id="pNameS" type="button">Сохранить имя</button>');
  Object.keys(PET_LOOK).forEach(function(k){var x=node('<button type="button" aria-label="'+PET_NAMES[k]+'" class="'+(k===p.kind?"on":"")+'">'+petSvg(k,"idle")+'</button>');x.onclick=function(){call("/v2/pet/setup",{kind:k}).then(function(r){S.pet=r.pet;renderPet(B);render()}).catch(function(){})};$("pK").appendChild(x)});
  $("pName").value=p.name;
@@ -754,12 +766,13 @@ function renderPet(B){
 }
 function fillPet(){
  var p=S&&S.pet;if(!p||!$("pN"))return;
- $("pN").textContent=p.name;$("pL").textContent="ур. "+(p.level||1);$("pS").textContent=petStatus(p);
+ $("pN").textContent=p.name;$("pL").textContent="ур. "+(p.level||1)+(p.stage?" · "+p.stage:"");$("pS").textContent=petStatus(p);
  var xp=((p.xp||0)%100);$("pX").style.width=xp+"%";$("pXv").textContent=xp+"/100";
  $("pF").style.width=(100-p.hunger)+"%";$("pFv").textContent=(100-p.hunger)+"%";
  $("pH").style.width=p.love+"%";$("pHv").textContent=p.love+"%";
  $("pBd").textContent=night()?"💤":(PET_BADGE[p.mood]||"✨");
- var pv=$("petSvg"),pk=p.kind+"|"+moodOf(p);if(pv&&pv.getAttribute("data-k")!==pk){pv.setAttribute("data-k",pk);pv.innerHTML=petSvg(p.kind,moodOf(p))}
+ var pv=$("petSvg"),pk=p.kind+"|"+moodOf(p)+"|"+(p.wear||"")+"|"+p.stage;if(pv&&pv.getAttribute("data-k")!==pk){pv.setAttribute("data-k",pk);pv.innerHTML=petSvg(p.kind,moodOf(p),p)}
+ fillStreak();fillWardrobe();
  if(p.last){var who=p.last.mine?"Ты":name(S.partner);$("pLast").textContent=who+" "+({feed:"покормил(а)",pet:"погладил(а)",play:"поиграл(а) с ним",care:"позаботился(ась) о нём"}[p.last.type]||"заходил(а)")+" · "+ago(p.last.at)}
 }
 var petBusy=false;
@@ -767,10 +780,32 @@ function petAct(a){
  if(petBusy)return;petBusy=true;haptic();
  var im=$("petSvg");if(im){im.classList.remove("bounce");void im.offsetWidth;im.classList.add("bounce")}
  call("/v2/pair/pet",{action:a}).then(function(x){
-  S.pet=x.pet;fillPet();render();
+  S.pet=x.pet;if(x.streak)S.streak=x.streak;fillPet();render();
   toast({feed:"Ням! Спасибо 😋",play:"Как весело! ✨",care:"Чистенький и довольный 🫧",pet:"Мурр 🤍"}[a]);
   for(var i=0;i<(a==="pet"?3:6);i++)hearts();
  }).catch(function(e){toast(ERR[e.message]||"Не получилось, попробуй ещё раз")}).then(function(){setTimeout(function(){petBusy=false},400)});
+}
+function fillStreak(){
+ var w=$("pStreak"),s=S&&S.streak;if(!w||!s)return;var pn=esc(name(S.partner));
+ w.innerHTML='<div style="font-size:22px;font-weight:600">'+(s.n?"🔥 "+s.n+" "+esc(s.word):"Начните серию сегодня")+'</div><div class="hint" style="margin-top:4px">'+
+  (s.today?"Сегодня засчитано — вы молодцы ♡":"Сегодня: "+(s.me?"✓ ты":"○ ты")+" · "+(s.partner?"✓ ":"○ ")+pn+". День засчитается, когда вы оба позаботитесь о питомце или пришлёте эмодзи")+'</div>';
+}
+function fillWardrobe(){
+ var w=$("pW"),p=S&&S.pet;if(!w||!p||!p.shop)return;w.innerHTML="";
+ var none=node('<button type="button" class="'+(!p.wear?"on":"")+'"><span class="wi">✕</span><b>Без наряда</b><small>'+(!p.wear?"Сейчас":"Снять")+'</small></button>');none.onclick=function(){if(p.wear)wearSkin(null)};w.appendChild(none);
+ p.shop.forEach(function(it){
+  var b=node('<button type="button" class="'+(p.wear===it.id?"on":"")+(it.owned?"":" lock")+'"><span class="wi">'+petSvg(p.kind,"idle",{wear:it.id,level:20})+'</span><b>'+esc(it.name)+'</b><small>'+(it.owned?(p.wear===it.id?"Надето":"Надеть"):it.lvl?"🔒 ур. "+it.lvl:"⭐ "+it.stars)+'</small></button>');
+  b.onclick=function(){if(it.owned){if(p.wear!==it.id)wearSkin(it.id);return}if(it.lvl){toast("Откроется на "+it.lvl+" уровне");return}buySkin(it)};
+  w.appendChild(b);
+ });
+}
+function wearSkin(id){haptic();call("/v2/pair/shop",{action:"wear",item:id}).then(function(x){S.pet=x.pet;fillPet();render()}).catch(function(e){toast(ERR[e.message]||"Не получилось")})}
+function buySkin(it){
+ haptic();
+ call("/v2/pair/shop",{action:"buy",item:it.id}).then(function(x){
+  var done=function(st){if(st==="paid"){haptic("heavy");toast("Обновка для питомца! 🎁");setTimeout(function(){poll(function(){fillPet();render()})},1500)}};
+  if(TG&&TG.openInvoice)TG.openInvoice(x.url,done);else openLink(x.url);
+ }).catch(function(e){toast(ERR[e.message]||"Не получилось открыть оплату")});
 }
 function hearts(){var r=document.querySelector(".room");if(!r)return;var h=node('<span class="fh">♥</span>');h.style.left=(30+Math.random()*40)+"%";h.style.animationDelay=(Math.random()*.3)+"s";r.appendChild(h);setTimeout(function(){h.remove()},1900)}
 

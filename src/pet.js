@@ -15,7 +15,7 @@ function moodOf(p){
  if(p.mood==="joy"||p.mood==="fed"||p.mood==="love")return "happy";
  return "idle";
 }
-function petSvg(kind,mood){
+function petSvg(kind,mood,opt){
  var L=PET_LOOK[kind]||PET_LOOK.cat,ink="#4A3B42";
  var ln=function(w){return 'stroke="'+ink+'" stroke-width="'+(w||3.2)+'" stroke-linecap="round" stroke-linejoin="round" fill="none"'};
  var o=function(fill){return 'fill="'+fill+'" stroke="'+L.s+'" stroke-width="3"'};
@@ -63,7 +63,16 @@ function petSvg(kind,mood){
  // висячие уши щенка — поверх головы
  if(kind==="dog")front='<ellipse cx="46" cy="96" rx="16" ry="32" fill="'+L.in+'" transform="rotate(18 46 96)"/><ellipse cx="154" cy="96" rx="16" ry="32" fill="'+L.in+'" transform="rotate(-18 154 96)"/>';
  var z=mood==="sleep"?'<g class="zz"><text x="150" y="44" font-size="20" font-weight="700" fill="#A99BD6">z</text><text x="166" y="28" font-size="14" font-weight="700" fill="#A99BD6">z</text></g>':"";
- return '<svg class="pet-svg mood-'+mood+'" viewBox="0 -16 200 226" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="200" rx="58" ry="7" fill="rgba(74,59,66,.12)"/><g class="bob">'+tail+body+ears+head+face+front+'</g>'+z+'</svg>';
+ // наряды (opt.wear) и рост по уровням (opt.level): малыш меньше, взрослый — в полный рост
+ var W=opt&&opt.wear,lv=(opt&&opt.level)||1,sc=opt?(lv<5?.84:lv<10?.93:1):1,acc="",wg="";
+ if(W==="wings")wg='<path d="M58 150 C20 118 6 160 30 178 C42 187 56 177 62 168 Z" fill="#F7F3FF" stroke="#B9A6EA" stroke-width="3"/><path d="M142 150 C180 118 194 160 170 178 C158 187 144 177 138 168 Z" fill="#F7F3FF" stroke="#B9A6EA" stroke-width="3"/>';
+ if(W==="bow")acc='<g transform="translate(134 50) rotate(18)"><path d="M0 0 L-17 -11 L-17 11 Z M0 0 L17 -11 L17 11 Z" fill="#F27C95" stroke="#D85A77" stroke-width="2" stroke-linejoin="round"/><circle r="5" fill="#D85A77"/></g>';
+ if(W==="scarf")acc='<path d="M58 144 Q100 164 142 144 L143 155 Q100 177 57 155 Z" fill="#E86F7E" stroke="#C9566A" stroke-width="2"/><rect x="116" y="152" width="14" height="30" rx="5" fill="#E86F7E" stroke="#C9566A" stroke-width="2" transform="rotate(-12 123 152)"/>';
+ if(W==="crown")acc='<path d="M74 54 L76 26 L90 42 L100 18 L110 42 L124 26 L126 54 Z" fill="#FFD36E" stroke="#E0A93B" stroke-width="2.5" stroke-linejoin="round"/><circle cx="100" cy="44" r="4" fill="#F27C95"/><circle cx="85" cy="48" r="3" fill="#8FD3F0"/><circle cx="115" cy="48" r="3" fill="#8FD3F0"/>';
+ if(W==="tophat")acc='<rect x="70" y="40" width="60" height="9" rx="4" fill="#3E3639"/><rect x="79" y="2" width="42" height="42" rx="5" fill="#3E3639"/><rect x="79" y="30" width="42" height="7" fill="#E86F7E"/>';
+ if(W==="hearts"){var hp=function(x){return '<path d="M'+x+' 112 C'+(x-18)+' 99 '+(x-10)+' 85 '+x+' 95 C'+(x+10)+' 85 '+(x+18)+' 99 '+x+' 112 Z" fill="#FF6B8A" fill-opacity=".82" stroke="'+ink+'" stroke-width="2.4" stroke-linejoin="round"/>'};acc=hp(77)+hp(123)+'<path d="M93 97 Q100 93 107 97" '+ln(2.4)+'/>'}
+ if(W==="wreath"){acc='<path d="M50 72 Q100 30 150 72" stroke="#9CCB86" stroke-width="3.5" fill="none" stroke-linecap="round"/>';[[54,68,"#F6A9B6"],[68,54,"#FFE08A"],[84,46,"#CDB8F0"],[100,43,"#F6A9B6"],[116,46,"#FFE08A"],[132,54,"#CDB8F0"],[146,68,"#F6A9B6"]].forEach(function(f){acc+='<circle cx="'+f[0]+'" cy="'+f[1]+'" r="7.5" fill="'+f[2]+'" stroke="#fff" stroke-width="2"/><circle cx="'+f[0]+'" cy="'+f[1]+'" r="2.6" fill="#fff"/>'})}
+ return '<svg class="pet-svg mood-'+mood+'" viewBox="0 -16 200 226" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="200" rx="'+Math.round(58*sc)+'" ry="7" fill="rgba(74,59,66,.12)"/><g transform="translate(100 200) scale('+sc+') translate(-100 -200)"><g class="bob">'+wg+tail+body+ears+head+face+front+acc+'</g></g>'+z+'</svg>';
 }
 
 // ---------- комнаты питомца ----------
