@@ -69,3 +69,10 @@ canvas.view{display:block;width:100%;border-radius:16px;background:#fff;box-shad
 #v-music .stroll{margin-top:0}
 
 #v-music .meet{margin-top:10px}
+
+/* раскраска на двоих */
+.clw{border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+canvas.clv{display:block;width:100%}
+.cltools{justify-content:center}
+.cltools .tb{min-width:48px;height:40px;font-size:20px}
+.cltools .tb.on{background:var(--acc1);border-color:var(--acc);color:#fff}

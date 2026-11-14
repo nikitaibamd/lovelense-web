@@ -47,7 +47,7 @@ function makePad(wrap,aspect,onChange,guide){
 }
 
 // ---------- список игр (во вкладке «Вместе» и в отдельном окне) ----------
-var GAMES=[["chess","♟️","Шахматы","Партия по ходам — бот позовёт, когда твой ход"],["guess","✏️","Рисуем и угадываем","Один рисует загаданное слово, второй угадывает"],["duo","🎨","Рисуем вдвоём","Каждый рисует свою половину, не видя чужую — потом склеиваем"]];
+var GAMES=[["chess","♟️","Шахматы","Партия по ходам — бот позовёт, когда твой ход"],["guess","✏️","Рисуем и угадываем","Один рисует загаданное слово, второй угадывает"],["duo","🎨","Рисуем вдвоём","Раскраска на двоих: у каждого своя половина картинки"]];
 function gameList(list){
  if(!list)return;list.innerHTML="";
  GAMES.forEach(function(g){var r=node('<button type="button" class="card gitem"><span class="gi">'+g[1]+'</span><span class="gt"><b>'+g[2]+'</b><small>'+g[3]+'</small></span><span class="gb" data-b="'+g[0]+'"></span></button>');r.onclick=function(){haptic();openSheet("g_"+g[0])};list.appendChild(r)});
@@ -132,35 +132,119 @@ function chPromo(go){
  ["q","r","b","n"].forEach(function(k){var b=node('<button type="button"><span class="pc '+c+'" style="font-size:32px">'+GLYPH[k]+'</span></button>');b.querySelector(".pc").style.cssText+=c==="w"?";color:#fff;text-shadow:0 0 1px #3E3639,0 0 1px #3E3639,0 0 2px #3E3639":";color:#3E3639";b.onclick=function(){w.innerHTML="";go(k)};w.querySelector(".promo").appendChild(b)});
 }
 
-// ---------- рисуем вдвоём: каждый свою половину ----------
-function duoGuide(top){return function(ctx,w,h){
- var y=top?h-1:1;ctx.save();ctx.setLineDash([7,7]);ctx.strokeStyle="rgba(216,148,148,.8)";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();ctx.setLineDash([]);
- [.3,.5,.7].forEach(function(k){ctx.fillStyle="rgba(216,148,148,.9)";ctx.beginPath();ctx.arc(w*k,y,5,0,7);ctx.fill()});ctx.restore();
-}}
+// ---------- рисуем вдвоём: раскраска на двоих, у каждого своя половина ----------
+var CR=600; // рабочее разрешение раскраски (одинаковое у обоих — заливка совпадает пиксель в пиксель)
+var COLOR_FILL=["#F4A0A8","#F7B267","#F6D86B","#9ED98A","#8ECDF0","#B9A6EA","#E9536F","#B97A57","#8A7E85","#3E3639","#FFFFFF","#FFE3EC"];
+var CL={};// кэш: разметка областей для каждой картинки
+function clLabels(id){
+ if(CL[id])return CL[id];
+ var cv=document.createElement("canvas");cv.width=cv.height=CR;var x=cv.getContext("2d");
+ x.fillStyle="#fff";x.fillRect(0,0,CR,CR);x.scale(CR/1000,CR/1000);x.lineWidth=11;x.lineCap="round";x.lineJoin="round";x.strokeStyle="#000";
+ (COLOR_PICS[id]||COLOR_PICS.capy).d.forEach(function(d){x.stroke(new Path2D(d))});
+ x.lineWidth=5;x.beginPath();x.moveTo(500,0);x.lineTo(500,1000);x.stroke(); // шов между половинами
+ var px=x.getImageData(0,0,CR,CR).data,lab=new Int32Array(CR*CR),n=0,st=new Int32Array(CR*CR);
+ for(var i=0;i<CR*CR;i++)if(px[i*4]<170)lab[i]=-1; // линии
+ for(var s0=0;s0<CR*CR;s0++){if(lab[s0]!==0)continue;n++;var sp=0;st[sp++]=s0;lab[s0]=n;
+  while(sp){var k=st[--sp],kx=k%CR,ky=(k/CR)|0;
+   if(kx>0&&lab[k-1]===0){lab[k-1]=n;st[sp++]=k-1}if(kx<CR-1&&lab[k+1]===0){lab[k+1]=n;st[sp++]=k+1}
+   if(ky>0&&lab[k-CR]===0){lab[k-CR]=n;st[sp++]=k-CR}if(ky<CR-1&&lab[k+CR]===0){lab[k+CR]=n;st[sp++]=k+CR}}}
+ return CL[id]=lab;
+}
+function clLabelAt(lab,x,y){ // ближайшая область к точке (если попали прямо в линию)
+ var cx=Math.round(x/1000*(CR-1)),cy=Math.round(y/1000*(CR-1));
+ for(var r=0;r<8;r++)for(var dy=-r;dy<=r;dy++)for(var dx=-r;dx<=r;dx++){var X=cx+dx,Y=cy+dy;if(X<0||Y<0||X>=CR||Y>=CR)continue;var l=lab[Y*CR+X];if(l>0)return l}
+ return 0;
+}
+function hexRgb(h){var n=parseInt(h.slice(1),16);return [n>>16&255,n>>8&255,n&255]}
+// рисует одну половину: заливки и мазки строго по порядку, только в своей половине
+function clPaint(ctx,id,ops,side){
+ if(!ops||!ops.length)return;var lab=clLabels(id),x0=side==="left"?0:CR/2;
+ ops.forEach(function(o){
+  if(o.f){var l=clLabelAt(lab,o.p[0],o.p[1]);if(!l)return;var img=ctx.getImageData(0,0,CR,CR),d=img.data,c=hexRgb(COLOR_FILL[o.c]||COLOR_FILL[0]);
+   for(var i=0;i<CR*CR;i++)if(lab[i]===l){d[i*4]=c[0];d[i*4+1]=c[1];d[i*4+2]=c[2];d[i*4+3]=255}ctx.putImageData(img,0,0);return}
+  ctx.save();ctx.beginPath();ctx.rect(x0,0,CR/2,CR);ctx.clip();
+  ctx.strokeStyle=COLOR_FILL[o.c]||COLOR_FILL[0];ctx.lineWidth=[0,4,9,18,32][o.w]||9;ctx.lineCap="round";ctx.lineJoin="round";
+  var p=o.p;ctx.beginPath();ctx.moveTo(p[0]/1000*CR,p[1]/1000*CR);if(p.length===2)ctx.lineTo(p[0]/1000*CR+.1,p[1]/1000*CR);
+  for(var j=2;j<p.length;j+=2)ctx.lineTo(p[j]/1000*CR,p[j+1]/1000*CR);ctx.stroke();ctx.restore();
+ });
+}
+// холст раскраски: обе половины + бледный контур поверх + пунктир шва
+function Coloring(wrap,G,editable,onChange){
+ wrap.innerHTML='<div class="clw"><canvas class="clv"></canvas></div>'+(editable?'<div class="tools cltools"><button type="button" class="tb on" data-m="fill" aria-label="Заливка">🪣</button><button type="button" class="tb" data-m="brush" aria-label="Кисть">🖌️</button><button type="button" class="tb" data-a="w" aria-label="Толщина">●</button><button type="button" class="tb" data-a="u" aria-label="Отменить">↶</button></div><div class="tools"><div class="cols"></div></div>':"");
+ var cv=wrap.querySelector("canvas"),work=document.createElement("canvas");work.width=work.height=CR;var wx=work.getContext("2d");
+ var me={ops:(G.mine||[]).slice(),c:0,w:2,mode:"fill",cur:null},other=G.partner||[],side=G.side,id=G.pic,done=!!G.done;
+ var size=function(){var w=Math.max(220,cv.parentNode.clientWidth||320),dpr=window.devicePixelRatio||1;cv.style.height=w+"px";cv.width=Math.round(w*dpr);cv.height=Math.round(w*dpr);return w};
+ var W=size(),ctx=cv.getContext("2d");
+ var outline=new Image();outline.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><g fill="none" stroke="#3E3639" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">'+(COLOR_PICS[id]||COLOR_PICS.capy).d.map(function(d){return '<path d="'+d+'"/>'}).join("")+'</g></svg>');
+ var draw=function(){
+  wx.setTransform(1,0,0,1,0,0);wx.fillStyle="#fff";wx.fillRect(0,0,CR,CR);
+  clPaint(wx,id,other,side==="left"?"right":"left");clPaint(wx,id,me.ops,side);
+  // шов закрашиваем цветом соседних половинок, чтобы картинка была цельной
+  var h=CR/2;wx.drawImage(work,h-9,0,5,CR,h-4,0,5,CR);wx.drawImage(work,h+4,0,5,CR,h,0,5,CR);
+  ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(work,0,0,cv.width,cv.height);
+  ctx.globalAlpha=done?.85:.3;if(outline.complete)ctx.drawImage(outline,0,0,cv.width,cv.height);ctx.globalAlpha=1;
+  if(!done){ctx.save();ctx.setLineDash([8,8]);ctx.strokeStyle="rgba(216,148,148,.9)";ctx.lineWidth=2*(window.devicePixelRatio||1);ctx.beginPath();ctx.moveTo(cv.width/2,0);ctx.lineTo(cv.width/2,cv.height);ctx.stroke();ctx.restore();
+   ctx.fillStyle="rgba(240,110,140,.07)";ctx.fillRect(side==="left"?cv.width/2:0,0,cv.width/2,cv.height)}
+ };
+ outline.onload=draw;
+ var pt=function(e){var r=cv.getBoundingClientRect();return [Math.round(Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*1000),Math.round(Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))*1000)]};
+ var mineSide=function(x){return side==="left"?x<500:x>=500};
+ if(editable){
+  cv.style.touchAction="none";
+  cv.addEventListener("pointerdown",function(e){e.preventDefault();var q=pt(e);
+   if(!mineSide(q[0])){toast("Эту половину раскрашивает "+name(S&&S.partner)+" 🙂");return}
+   if(me.mode==="fill"){me.ops.push({f:1,c:me.c,w:1,p:q});haptic();draw();onChange&&onChange();return}
+   swipes(true);try{cv.setPointerCapture(e.pointerId)}catch(x){}me.cur={c:me.c,w:me.w,p:q};me.ops.push(me.cur);draw()});
+  cv.addEventListener("pointermove",function(e){if(!me.cur)return;var q=pt(e),p=me.cur.p;if(Math.abs(q[0]-p[p.length-2])+Math.abs(q[1]-p[p.length-1])<5)return;p.push(q[0],q[1]);draw()});
+  var end=function(){if(!me.cur)return;me.cur=null;swipes(false);onChange&&onChange()};
+  cv.addEventListener("pointerup",end);cv.addEventListener("pointercancel",end);
+  var cols=wrap.querySelector(".cols");
+  COLOR_FILL.forEach(function(col,i){var b=node('<button type="button" class="cl'+(i===0?" on":"")+'" aria-label="Цвет"></button>');b.style.background=col;b.onclick=function(){me.c=i;haptic();Array.prototype.forEach.call(cols.children,function(x){x.classList.toggle("on",x===b)})};cols.appendChild(b)});
+  Array.prototype.forEach.call(wrap.querySelectorAll(".cltools .tb"),function(b){b.onclick=function(){haptic();
+   var m=b.getAttribute("data-m"),a=b.getAttribute("data-a");
+   if(m){me.mode=m;Array.prototype.forEach.call(wrap.querySelectorAll("[data-m]"),function(x){x.classList.toggle("on",x===b)})}
+   if(a==="w"){me.w=me.w%4+1;b.style.fontSize=(8+me.w*4)+"px"}
+   if(a==="u"&&me.ops.length){me.ops.pop();draw();onChange&&onChange()}
+  }});
+ }
+ draw();
+ return {ops:function(){return me.ops},setPartner:function(o){other=o||[];draw()},setDone:function(d){done=d;draw()},redraw:draw};
+}
 SHEETS.g_duo={t:"Рисуем вдвоём",r:function(B){
- B.innerHTML='<div id="duoW"></div>';GM.duo=null;
+ B.innerHTML='<div id="duoW"></div>';GM.duo=null;GM.col=null;GM.cdirty=false;GM.duoKey="";
  gcall("duo","get").then(duoSet).catch(gErr);
- gLoop("g_duo",function(){var D=GM.duo;if(D&&D.mine&&!D.done)gcall("duo","get").then(function(x){if(x.game&&x.game.done){duoSet(x);haptic("heavy")}}).catch(function(){})},3000);
+ gLoop("g_duo",function(){var D=GM.duo;if(!D)return;
+  if(GM.cdirty&&GM.col&&!D.me_done){GM.cdirty=false;gcall("duo","draw",{strokes:GM.col.ops()}).then(duoMerge).catch(function(){})}
+  else gcall("duo","get").then(duoMerge).catch(function(){});
+ },1500);
 }};
-function duoSet(x){GM.duo=x.game;duoDraw()}
-function duoNew(){gcall("duo","new").then(function(x){haptic("medium");duoSet(x)}).catch(gErr)}
+function duoNew(){gcall("duo","new").then(function(x){haptic("medium");GM.duoKey="";duoSet(x)}).catch(gErr)}
+function duoKey(D){return D?D.n+"|"+D.pic+"|"+D.me_done+"|"+D.done:"none"}
+function duoSet(x){GM.duo=x.game;GM.duoKey=duoKey(x.game);duoDraw()}
+function duoMerge(x){ // обновляем половину партнёра, не сбивая свою раскраску
+ var D=x.game,prev=GM.duo;GM.duo=D;
+ if(duoKey(D)!==GM.duoKey){GM.duoKey=duoKey(D);duoDraw();if(D&&D.done&&prev&&!prev.done){fireworks();haptic("heavy")}return}
+ if(GM.col&&D){GM.col.setPartner(D.partner);var st=$("duoSt");if(st)st.innerHTML=duoStatus(D)}
+}
+function duoStatus(D){var pn=esc(name(S&&S.partner));return D.partner_done?"✓ "+pn+" закончил(а) свою половину":pn+" раскрашивает "+(D.side==="left"?"правую":"левую")+" половину — видно вживую"}
 function duoDraw(){
- var w=$("duoW"),D=GM.duo;if(!w)return;
+ var w=$("duoW"),D=GM.duo;if(!w)return;GM.col=null;
  var pn=esc(name(S&&S.partner));
- if(!D){w.innerHTML='<div class="card box gintro"><div class="gbig">🎨</div><b>Одна картинка на двоих</b><div class="hint">Вы получите, что рисовать. Один рисует верхнюю половину, другой — нижнюю, не видя чужую. Потом половинки склеятся — обычно выходит очень смешно!</div><button class="btn" id="duoGo" type="button">Начать</button></div>';$("duoGo").onclick=duoNew;return}
+ if(!D){w.innerHTML='<div class="card box gintro"><div class="gbig">🎨</div><b>Раскраска на двоих</b><div class="hint">Вам обоим откроется одна картинка с бледными контурами. Ты раскрашиваешь свою половину, '+pn+' — другую. Видно друг друга вживую!</div><button class="btn" id="duoGo" type="button">Открыть картинку</button></div>';$("duoGo").onclick=duoNew;return}
+ var nm=esc(D.name),half=D.side==="left"?"левую":"правую";
  if(D.done){
-  w.innerHTML='<div class="gstat"><b>Что получилось: «'+esc(D.thing)+'» 🎉</b><span>Верх и низ рисовали разные люди</span></div><div class="duoRes"><canvas id="duoT"></canvas><canvas id="duoB"></canvas></div><button class="btn" id="duoGo" type="button">Нарисовать ещё</button>';
-  viewCanvas($("duoT"),2,D.half==="top"?D.mine:D.partner);viewCanvas($("duoB"),2,D.half==="top"?D.partner:D.mine);
-  $("duoGo").onclick=duoNew;return;
+  w.innerHTML='<div class="gstat"><b>Готово: «'+nm+'» 🎉</b><span>Раскрасили вместе</span></div><div id="duoC"></div><button class="btn" id="duoGo" type="button">Новая картинка</button>';
+  GM.col=Coloring($("duoC"),D,false);$("duoGo").onclick=duoNew;return;
  }
- var top=D.half==="top";
- if(D.mine){
-  w.innerHTML='<div class="gstat"><b>Твоя половина готова ✓</b><span>«'+esc(D.thing)+'» — '+(top?"верх":"низ")+'</span></div><canvas class="view" id="duoMine"></canvas><div class="gwait"><span class="hb">💗</span>Ждём, когда '+pn+' нарисует свою половину…<br>Как только будет готово — картинка склеится</div>';
-  viewCanvas($("duoMine"),2,D.mine,duoGuide(top));return;
+ if(D.me_done){
+  w.innerHTML='<div class="gstat"><b>Твоя половина готова ✓</b><span id="duoSt">'+duoStatus(D)+'</span></div><div id="duoC"></div><div class="gwait"><span class="hb">💗</span>Когда '+pn+' закончит, картинка соберётся целиком</div>';
+  GM.col=Coloring($("duoC"),D,false);return;
  }
- w.innerHTML='<div class="gstat you"><b>Нарисуй '+(top?"верхнюю":"нижнюю")+' половину: «'+esc(D.thing)+'»</b><span>'+(D.partner_done?pn+" уже нарисовал(а) свою часть ✓":"Что нарисует "+pn+", увидишь в конце")+' · доведи линии до пунктира</span></div><div id="duoPad"></div><button class="btn" id="duoSend" type="button">Готово</button>';
- var pad=makePad($("duoPad"),2,null,duoGuide(top));
- $("duoSend").onclick=function(){if(!pad.strokes.length){toast("Сначала нарисуй что-нибудь ✏️");return}var b=this;b.disabled=true;gcall("duo","submit",{strokes:pad.strokes}).then(function(x){haptic("heavy");duoSet(x);if(x.game&&x.game.done)fireworks()}).catch(function(e){b.disabled=false;gErr(e)})};
+ w.innerHTML='<div class="gstat you"><b>Раскрась '+half+' половину: «'+nm+'»</b><span id="duoSt">'+duoStatus(D)+'</span></div><div id="duoC"></div><div class="hint" style="text-align:center">🪣 — залить область, 🖌️ — рисовать кистью</div><button class="btn" id="duoSend" type="button">Готово</button><button class="btn sec" id="duoNew2" type="button">Другая картинка</button>';
+ GM.col=Coloring($("duoC"),D,true,function(){GM.cdirty=true});
+ $("duoSend").onclick=function(){var ops=GM.col.ops();if(!ops.length){toast("Сначала раскрась хоть что-нибудь 🎨");return}var b=this;b.disabled=true;
+  gcall("duo","submit",{strokes:ops}).then(function(x){haptic("heavy");GM.duoKey="";duoSet(x);if(x.game&&x.game.done)fireworks()}).catch(function(e){b.disabled=false;gErr(e)})};
+ $("duoNew2").onclick=function(){confirmAsk("Открыть другую картинку? Текущая раскраска у вас обоих сотрётся.",duoNew)};
 }
 
 // ---------- рисуем и угадываем ----------
