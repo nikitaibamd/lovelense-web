@@ -58,3 +58,12 @@ canvas.view{display:block;width:100%;border-radius:16px;background:#fff;box-shad
 .glog span{padding:5px 10px;border-radius:999px;background:var(--chip);font-size:13px}
 .glog span.ok{background:#7CCF8A;color:#fff;font-weight:700}
 .gok{text-align:center;padding:6px 0}.gok .gword{font-size:30px;animation:pcPop .5s cubic-bezier(.3,1.6,.5,1)}
+/* вкладка «Вместе» */
+.tsec{margin:22px 4px 10px;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+#v-music .top+.nowtog+.tsec,#v-music .top+.tsec{margin-top:6px}
+.nowtog{display:flex;align-items:center;gap:10px;margin:0 0 4px;padding:12px 14px;border-radius:18px;background:linear-gradient(135deg,rgba(240,110,140,.16),rgba(169,155,214,.18));border:1px solid var(--border);cursor:pointer;animation:fadein .4s ease}
+.nowtog b{font-size:22px}.nowtog span{flex:1;font-size:14px;font-weight:600}.nowtog i{font-style:normal;font-size:22px;color:var(--muted)}
+.nav button{position:relative}
+.nbadge{position:absolute;top:2px;right:calc(50% + 8px);min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#F06E8C;color:#fff;font:700 11px/18px -apple-system,sans-serif;font-style:normal;display:none;box-shadow:0 0 0 2px rgba(255,255,255,.9)}
+.nbadge.on{display:block}
+#v-music .stroll{margin-top:0}

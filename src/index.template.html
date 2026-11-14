@@ -341,15 +341,12 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
   <div class="thint" id="tHint"></div>
   <div class="card days" id="daysCard"><div class="l">%%heartfill%% <span id="daysLab">Вы вместе</span></div><div class="n" id="daysN">—</div></div>
   <div class="card meet" id="meetCard" style="display:none"></div>
-  <div class="card gcard" id="gamesCard" style="display:none"><div class="gic">♟️✏️🎨</div><div class="gtx"><b>Игры вдвоём</b><span id="gamesSub">Шахматы, рисовалки, угадайка</span></div><span class="gbadge" id="gamesBadge"></span><span class="chev">%%chev%%</span></div>
   <div class="tiles">
    <div class="card tile" id="tDist"><div class="ic">%%pin%%</div><div class="v" id="dist">—</div><div class="s">между вами</div></div>
    <div class="card tile"><div class="ic">%%clock%%</div><div class="v" id="tMe">--:--</div><div class="s">Вы</div></div>
    <div class="card tile"><div class="ic">%%clock%%</div><div class="v" id="tPa">--:--</div><div class="s" id="tPaL">Партнёр</div></div>
   </div>
   <div class="card sky" id="skyCard" style="display:none"><div class="skyart" id="skyArt"></div><div class="skytx"><b id="skyT"></b><span id="skyS"></span></div></div>
-  <div class="stroll" id="stroll"><div class="walker" id="walker"><span class="say"></span><div class="wk"></div></div></div>
-  <div class="card row" id="petRow" style="display:none"><div class="petpic" id="petPic"></div><div><div class="rt"><span id="petTitle">Питомец</span> %%heart%%</div><div class="rs"><i></i><span id="petStatus"></span></div></div><span class="chev">%%chev%%</span></div>
  </section>
 
  <!-- КАРТА -->
@@ -361,7 +358,11 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 
  <!-- МУЗЫКА -->
  <section class="view" id="v-music">
-  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Музыка</h1><button class="round" id="mFind" type="button" aria-label="Поиск">%%search%%</button></div>
+  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Вместе</h1><button class="round" id="mFind" type="button" aria-label="Поиск">%%search%%</button></div>
+  <div class="nowtog" id="nowTog" style="display:none"></div>
+  <div class="tsec">🎮 Игры</div>
+  <div class="glist" id="togGames"></div>
+  <div class="tsec">🎧 Музыка</div>
   <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
   <div class="card mnow">
    <div class="mvid"><div class="mbg" id="mBg"></div><div class="mart" id="mArt"></div><div class="meq"><i></i><i></i><i></i><i></i><i></i></div><div class="mempty" id="mEmpty"><svg class="sleeve" viewBox="0 0 132 92"><g class="dk"><circle cx="70" cy="46" r="40" fill="#1b1418"/><circle cx="70" cy="46" r="32" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="24" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="13" fill="#F6B8C8"/><circle cx="70" cy="46" r="2.6" fill="#fff"/><path d="M70 14 A32 32 0 0 1 98 30" stroke="rgba(255,255,255,.25)" stroke-width="3" fill="none" stroke-linecap="round"/></g><rect x="2" y="4" width="82" height="84" rx="10" fill="rgba(255,255,255,.92)"/><path d="M43 30 v24 a7 7 0 1 1 -4 -6.3 V30 l14 -3 v20 a7 7 0 1 1 -4 -6.3 V31.5 Z" fill="#E9A7AE"/></svg><span>Нажми 🔍 и найди песню —<br>она заиграет у вас обоих ♡</span></div><div class="mjoin" id="mJoin">Нажми ▶, чтобы подключиться</div></div>
@@ -371,6 +372,9 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
    <div class="mctl"><button type="button" id="mStop" aria-label="Убрать трек">%%mstop%%</button><button type="button" class="big" id="mPlay" aria-label="Играть">%%mplay%%</button><button type="button" id="mNext" aria-label="Следующий">%%mnext%%</button></div>
   </div>
   <div class="card box"><div class="mh"><span>Дальше в очереди <small id="mQn"></small></span><button type="button" id="mClear">Очистить</button></div><div id="mQ"></div></div>
+  <div class="tsec" id="petSec" style="display:none">🐾 Питомец</div>
+  <div class="stroll" id="stroll"><div class="walker" id="walker"><span class="say"></span><div class="wk"></div></div></div>
+  <div class="card row" id="petRow" style="display:none"><div class="petpic" id="petPic"></div><div><div class="rt"><span id="petTitle">Питомец</span> %%heart%%</div><div class="rs"><i></i><span id="petStatus"></span></div></div><span class="chev">%%chev%%</span></div>
  </section>
 
  <!-- ПРОФИЛЬ -->
@@ -393,7 +397,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 <nav class="card nav">
  <button type="button" class="on" data-tab="home">%%home%%Дом</button>
  <button type="button" data-tab="map">%%pin%%Карта</button>
- <button type="button" data-tab="music">%%note%%Музыка</button>
+ <button type="button" data-tab="music">%%heart%%Вместе<i class="nbadge" id="navBadge"></i></button>
  <button type="button" data-tab="prof">%%user%%Профиль</button>
 </nav>
 
@@ -524,7 +528,6 @@ function petStatus(p){
  return {hungry:"Хочет кушать",lonely:"Скучает, погладь его",love:"Вы рядом — он счастлив",joy:"Мурлычет от удовольствия",fed:"Спасибо за вкусняшку!"}[p.mood]||"Всё хорошо";
 }
 $("daysCard").onclick=function(){haptic();openSheet(S&&S.partner?"me":"partner")};
-$("gamesCard").onclick=function(){haptic();openSheet("games")};
 $("meetCard").onclick=function(){haptic();if(this.classList.contains("today"))fireworks();else openSheet("partner")};
 $("bell").onclick=function(){haptic();openSheet("notify")};
 $("gear").onclick=function(){haptic();openSheet("look")};

@@ -46,21 +46,40 @@ function makePad(wrap,aspect,onChange,guide){
  redraw();return pad;
 }
 
-// ---------- меню игр ----------
+// ---------- список игр (во вкладке «Вместе» и в отдельном окне) ----------
 var GAMES=[["chess","♟️","Шахматы","Партия по ходам — бот позовёт, когда твой ход"],["guess","✏️","Рисуем и угадываем","Один рисует загаданное слово, второй угадывает"],["duo","🎨","Рисуем вдвоём","Каждый рисует свою половину, не видя чужую — потом склеиваем"]];
+function gameList(list){
+ if(!list)return;list.innerHTML="";
+ GAMES.forEach(function(g){var r=node('<button type="button" class="card gitem"><span class="gi">'+g[1]+'</span><span class="gt"><b>'+g[2]+'</b><small>'+g[3]+'</small></span><span class="gb" data-b="'+g[0]+'"></span></button>');r.onclick=function(){haptic();openSheet("g_"+g[0])};list.appendChild(r)});
+ if(GM.sum)gameMarks(list,GM.sum);
+}
+function gameMarks(list,games){(games||[]).forEach(function(g){var e=list&&list.querySelector('[data-b="'+g.kind+'"]');if(e){e.textContent=g.text;e.classList.toggle("you",!!g.you)}})}
 SHEETS.games={t:"Игры вдвоём",r:function(B){
  if(!S||!S.partner){box(B,'<div class="hint" style="margin-top:0">Игры появятся, когда вы добавите партнёра ♡</div>');return}
- var list=node('<div class="glist"></div>');B.appendChild(list);
- GAMES.forEach(function(g){var r=node('<button type="button" class="card gitem"><span class="gi">'+g[1]+'</span><span class="gt"><b>'+g[2]+'</b><small>'+g[3]+'</small></span><span class="gb" data-b="'+g[0]+'"></span></button>');r.onclick=function(){haptic();openSheet("g_"+g[0])};list.appendChild(r)});
- call("/v2/pair/games").then(function(x){(x.games||[]).forEach(function(g){var e=list.querySelector('[data-b="'+g.kind+'"]');if(e){e.textContent=g.text;e.classList.toggle("you",!!g.you)}})}).catch(function(){});
+ var list=node('<div class="glist"></div>');B.appendChild(list);gameList(list);
+ call("/v2/pair/games").then(function(x){GM.sum=x.games;gameMarks(list,x.games)}).catch(function(){});
 }};
-// карточка «Игры вдвоём» на главном: сколько игр ждут твоего хода
+// вкладка «Вместе»: игры, значок «тебя ждут», строка «сейчас вместе»
+var GAME_NOW={chess:["♟️","сейчас в шахматах — заходи!"],guess:["✏️","рисует или угадывает — присоединяйся!"],duo:["🎨","рисует свою половину картинки"]};
 function gamesCard(){
- var c=$("gamesCard");if(!c)return;
- c.style.display=S&&S.partner?"":"none";if(!S||!S.partner)return;
- if(Date.now()-GM.cardT<30000)return;GM.cardT=Date.now();
- call("/v2/pair/games").then(function(x){var n=(x.games||[]).filter(function(g){return g.you}).length,b=$("gamesBadge");b.textContent=n;b.classList.toggle("on",n>0);$("gamesSub").textContent=n?"Тебя ждут в "+n+" "+plural(n,"игре","играх","играх"):"Шахматы, рисовалки, угадайка"}).catch(function(){});
+ var tg=$("togGames"),has=!!(S&&S.partner);
+ if(tg&&!tg.children.length&&has)gameList(tg);
+ if(tg&&!has)tg.innerHTML='<div class="card box"><div class="hint" style="margin:0">Игры появятся, когда вы добавите партнёра ♡</div></div>';
+ var ps=$("petSec");if(ps)ps.style.display=S&&S.pet?"":"none";
+ var nt=$("nowTog"),pn=name(S&&S.partner),pg=S&&S.partner_game,mh=S&&S.music&&S.music.partner_here;
+ if(nt){
+  if(has&&pg&&GAME_NOW[pg]){nt.innerHTML='<b>'+GAME_NOW[pg][0]+'</b><span>'+esc(pn)+' '+GAME_NOW[pg][1]+'</span><i>›</i>';nt.onclick=function(){haptic();openSheet("g_"+pg)};nt.style.display=""}
+  else if(has&&mh){nt.innerHTML='<b>🎧</b><span>'+esc(pn)+' слушает музыку — подключайся</span><i>›</i>';nt.onclick=function(){haptic();var m=document.querySelector(".mnow");if(m)m.scrollIntoView({behavior:"smooth",block:"center"})};nt.style.display=""}
+  else nt.style.display="none";
+ }
+ if(!has||Date.now()-GM.cardT<20000)return;GM.cardT=Date.now();
+ call("/v2/pair/games").then(function(x){
+  GM.sum=x.games;gameMarks(tg,x.games);
+  var n=(x.games||[]).filter(function(g){return g.you}).length,b=$("navBadge");if(b){b.textContent=n;b.classList.toggle("on",n>0)}
+ }).catch(function(){});
 }
+// при входе во вкладку «Вместе» сразу обновляем статусы игр
+(function(){var nb=document.querySelector('.nav button[data-tab="music"]');if(nb)nb.addEventListener("click",function(){GM.cardT=0;safe(gamesCard)})})();
 
 // ---------- шахматы ----------
 var GLYPH={k:"♚︎",q:"♛︎",r:"♜︎",b:"♝︎",n:"♞︎",p:"♟︎"};
