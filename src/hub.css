@@ -13,8 +13,6 @@
 .hubnav button{flex:1;position:relative;border:0;background:transparent;border-radius:22px;padding:7px 0 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;font-size:12px;color:var(--ink);cursor:pointer}
 .hubnav button .hi{font-size:22px;line-height:1.1}
 .hubnav button.on{background:var(--navon);color:var(--acc2);font-weight:600}
-.hubnav .hbd{position:absolute;top:4px;right:calc(50% - 22px);width:9px;height:9px;border-radius:50%;background:#F06E8C;display:none;box-shadow:0 0 0 2px #fff}
-.hubnav .hbd.on{display:block}
 .sb.hubin>*{animation:fadein .3s ease both}
 .hubmusic #mFind{margin:0 0 12px}
 .hubmusic .mhere{margin:0 0 12px}

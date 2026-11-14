@@ -13,7 +13,7 @@ function hubOpen(kind,sub){
  SHEETS.hub={t:H.t,r:function(){}};openSheet("hub");HUB.returnTo=null;HUB.kind=kind;
  $("sheet").classList.add("hub");
  var nav=node('<div class="hubnav" id="hubNav"></div>');
- H.tabs.forEach(function(t){var b=node('<button type="button" data-s="'+t[0]+'"><span class="hi">'+t[1]+'</span><span>'+t[2]+'</span><i class="hbd"></i></button>');b.onclick=function(){if(HUB.sub!==t[0]){haptic();hubSub(t[0])}};nav.appendChild(b)});
+ H.tabs.forEach(function(t){var b=node('<button type="button" data-s="'+t[0]+'"><span class="hi">'+t[1]+'</span><span>'+t[2]+'</span></button>');b.onclick=function(){if(HUB.sub!==t[0]){haptic();hubSub(t[0])}};nav.appendChild(b)});
  $("sheet").appendChild(nav);
  hubSub(sub||H.tabs[0][0]);hubBadges();
 }
@@ -29,7 +29,6 @@ function hubSub(sub){
 // значки «тебя ждут» на нижних вкладках игр и на кнопках во «Вместе»
 function hubBadges(){
  var sum=GM.sum||[],you={};sum.forEach(function(g){if(g.you)you[g.kind]=g.text});
- var nav=$("hubNav");if(nav&&HUB.kind==="games")Array.prototype.forEach.call(nav.children,function(b){b.querySelector(".hbd").classList.toggle("on",!!you[b.getAttribute("data-s")])});
  var n=Object.keys(you).length,gb=$("hubGamesBadge"),gs=$("hubGamesSub");
  if(gb){gb.textContent=n;gb.classList.toggle("on",n>0)}
  if(gs){var NM={chess:"в шахматах",guess:"в угадайке",duo:"в раскраске"};gs.textContent=n?"Тебя ждут "+Object.keys(you).map(function(k){return NM[k]}).join(", "):"Шахматы · Угадайка · Раскраска"}
