@@ -52,6 +52,7 @@ button{font:inherit;color:inherit}
 .bigheart{width:56px;height:56px;flex:none;filter:drop-shadow(0 6px 12px rgba(216,148,148,.45));animation:beat 2.4s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.12)}24%{transform:scale(1)}36%{transform:scale(1.08)}}
 %%FXCSS%%
+%%GAMESCSS%%
 /* касание сердца */
 .hbtn{position:relative;width:56px;height:56px;flex:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .hbtn .bigheart{display:block;pointer-events:none}
@@ -340,6 +341,7 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
   <div class="thint" id="tHint"></div>
   <div class="card days" id="daysCard"><div class="l">%%heartfill%% <span id="daysLab">Вы вместе</span></div><div class="n" id="daysN">—</div></div>
   <div class="card meet" id="meetCard" style="display:none"></div>
+  <div class="card gcard" id="gamesCard" style="display:none"><div class="gic">♟️✏️🎨</div><div class="gtx"><b>Игры вдвоём</b><span id="gamesSub">Шахматы, рисовалки, угадайка</span></div><span class="gbadge" id="gamesBadge"></span><span class="chev">%%chev%%</span></div>
   <div class="tiles">
    <div class="card tile" id="tDist"><div class="ic">%%pin%%</div><div class="v" id="dist">—</div><div class="s">между вами</div></div>
    <div class="card tile"><div class="ic">%%clock%%</div><div class="v" id="tMe">--:--</div><div class="s">Вы</div></div>
@@ -426,7 +428,7 @@ var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лава
 var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on",night:"system",aura:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
 %%PETJS%%
-var ERR={yandex_geo:"Яндекс Музыка не отдаёт плейлисты за пределами России — вставь список треков текстом",unsupported:"Этот сервис не отдаёт плейлист по ссылке — вставь список треков текстом",bad_playlist:"Не понял ссылку — нужна ссылка на плейлист, альбом или трек",empty_playlist:"Плейлист пустой или закрытый — сделай его публичным",import_failed:"Не получилось открыть плейлист, попробуй ещё раз",search_failed:"Поиск сейчас не отвечает",bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже",not_owned:"Этот наряд ещё не открыт",already_owned:"Этот наряд уже ваш ♡",invoice_failed:"Не получилось открыть оплату",bad_item:"Такого наряда нет"};
+var ERR={yandex_geo:"Яндекс Музыка не отдаёт плейлисты за пределами России — вставь список треков текстом",unsupported:"Этот сервис не отдаёт плейлист по ссылке — вставь список треков текстом",bad_playlist:"Не понял ссылку — нужна ссылка на плейлист, альбом или трек",empty_playlist:"Плейлист пустой или закрытый — сделай его публичным",import_failed:"Не получилось открыть плейлист, попробуй ещё раз",search_failed:"Поиск сейчас не отвечает",bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже",not_owned:"Этот наряд ещё не открыт",already_owned:"Этот наряд уже ваш ♡",invoice_failed:"Не получилось открыть оплату",bad_item:"Такого наряда нет",not_your_turn:"Сейчас ход партнёра",bad_move:"Так ходить нельзя",game_over:"Партия уже закончилась",conflict:"Партнёр сходил одновременно — обновляю",bad_game:"Такой игры нет"};
 var $=function(id){return document.getElementById(id)};
 var S=null,pos={},lastPut=0,poller=null,started=false;
 
@@ -501,7 +503,7 @@ function render(){
  else{$("daysLab").textContent="Вы вместе";$("daysN").innerHTML='<small>укажите дату ♡</small>'}
  var d=(pos.me||S.my_loc)&&S.partner_loc&&S.partner_active!==false?fmtKm(km(pos.me||S.my_loc,S.partner_loc)):"—";
  $("dist").textContent=d;
- safe(together);safe(sky);safe(meetCard);safe(touchHint);safe(fxRender);
+ safe(together);safe(sky);safe(meetCard);safe(touchHint);safe(fxRender);safe(gamesCard);
  $("tPaL").textContent=pa?name(pa):"Партнёр";
  ticks();
  $("pName").textContent=me?(me.first_name||me.username||"Ты"):"Ты";
@@ -522,6 +524,7 @@ function petStatus(p){
  return {hungry:"Хочет кушать",lonely:"Скучает, погладь его",love:"Вы рядом — он счастлив",joy:"Мурлычет от удовольствия",fed:"Спасибо за вкусняшку!"}[p.mood]||"Всё хорошо";
 }
 $("daysCard").onclick=function(){haptic();openSheet(S&&S.partner?"me":"partner")};
+$("gamesCard").onclick=function(){haptic();openSheet("games")};
 $("meetCard").onclick=function(){haptic();if(this.classList.contains("today"))fireworks();else openSheet("partner")};
 $("bell").onclick=function(){haptic();openSheet("notify")};
 $("gear").onclick=function(){haptic();openSheet("look")};
@@ -713,7 +716,7 @@ var SHEETS={
  }},
  notify:{t:"Уведомления",r:function(B){
   var b=box(B,'<div class="hint" style="margin-top:0">Бот Lovelense присылает сообщения, когда партнёр что-то делает.</div><div id="ntf" style="margin-top:6px"><div class="hint">Загрузка…</div></div>');
-  var items=[["pet","Питомец","Партнёр покормил, поиграл или позаботился"],["hungry","Голодный питомец","Напоминание покормить"],["meet","Встречи","Партнёр назначил дату встречи"],["ping","Эмодзи от партнёра","Партнёр отправил эмодзи с карты"],["music","Музыка","Партнёр включил трек"],["movie","Кино","Партнёр выбрал фильм (в iPhone-приложении)"],["us","Раздел «Мы»","Воспоминания, письма, вопрос дня (в iPhone-приложении)"],["streak","Серия дней","Напоминание в 20:00, если огонёк вот-вот погаснет"]];
+  var items=[["pet","Питомец","Партнёр покормил, поиграл или позаботился"],["hungry","Голодный питомец","Напоминание покормить"],["meet","Встречи","Партнёр назначил дату встречи"],["ping","Эмодзи от партнёра","Партнёр отправил эмодзи с карты"],["music","Музыка","Партнёр включил трек"],["movie","Кино","Партнёр выбрал фильм (в iPhone-приложении)"],["us","Раздел «Мы»","Воспоминания, письма, вопрос дня (в iPhone-приложении)"],["streak","Серия дней","Напоминание в 20:00, если огонёк вот-вот погаснет"],["games","Игры","Твой ход в шахматах, новая картинка или слово"]];
   call("/v2/pair/notify").then(function(x){
    var n=x.notify||{},w=$("ntf");if(!w)return;w.innerHTML="";
    items.forEach(function(it){
@@ -745,6 +748,8 @@ var SHEETS={
  }},
  pet:{t:"Питомец",r:function(B){renderPet(B)}}
 };
+%%CHESSJS%%
+%%GAMESJS%%
 function openLink(u){try{if(TG&&TG.openTelegramLink)TG.openTelegramLink(u);else window.open(u,"_blank")}catch(e){window.open(u,"_blank")}}
 
 // --- партнёр ---

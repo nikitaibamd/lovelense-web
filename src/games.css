@@ -1,0 +1,60 @@
+/* ===== игры на двоих ===== */
+.gcard{margin-top:16px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer}
+.gcard .gic{display:flex;gap:2px;font-size:24px}
+.gcard .gtx{flex:1;min-width:0}.gcard .gtx b{display:block;font-size:17px}.gcard .gtx span{font-size:13px;color:var(--muted)}
+.gbadge{min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#F06E8C;color:#fff;font-size:12px;font-weight:700;display:none;align-items:center;justify-content:center;animation:auraPulse 1.6s ease-in-out infinite}
+.gbadge.on{display:flex}
+.glist{display:flex;flex-direction:column;gap:10px}
+.gitem{display:flex;align-items:center;gap:14px;padding:14px 16px;border:0;text-align:left;font:inherit;color:var(--ink);cursor:pointer;width:100%}
+.gitem .gi{width:52px;height:52px;border-radius:16px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:28px;flex:none}
+.gitem .gt{flex:1;min-width:0}.gitem .gt b{display:block;font-size:16px}.gitem .gt small{font-size:13px;color:var(--muted)}
+.gitem .gb{font-size:12px;color:var(--muted);white-space:nowrap}
+.gitem .gb.you{color:#fff;background:#F06E8C;padding:4px 9px;border-radius:999px;font-weight:700}
+.gintro{text-align:center}.gintro .gbig{font-size:54px;margin:4px 0 6px}
+.gstat{display:flex;flex-direction:column;align-items:center;gap:2px;margin:2px 0 10px;text-align:center}
+.gstat b{font-size:18px}.gstat span{font-size:13px;color:var(--muted)}
+.gstat.you b{color:var(--acc2)}
+/* шахматы */
+.board{display:grid;grid-template-columns:repeat(8,1fr);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.board .sq{aspect-ratio:1;border:0;padding:0;margin:0;background:#F8E6E3;position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.board .sq.d{background:#D9A1A7}
+.board .sq.last{box-shadow:inset 0 0 0 100px rgba(255,214,107,.42)}
+.board .sq.sel{box-shadow:inset 0 0 0 100px rgba(240,110,140,.45)}
+.board .sq.chk{box-shadow:inset 0 0 0 100px rgba(230,60,80,.6)}
+.board .sq.mv::after{content:"";width:28%;height:28%;border-radius:50%;background:rgba(73,59,69,.32)}
+.board .sq.cap::after{content:"";position:absolute;inset:6%;border-radius:50%;border:3px solid rgba(73,59,69,.35)}
+.board .pc{font-size:min(9.4vw,40px);line-height:1;position:relative;z-index:1;transition:transform .15s}
+.board .pc.w{color:#fff;text-shadow:0 0 1px #3E3639,0 0 1px #3E3639,0 1px 2px rgba(0,0,0,.45),0 0 2px #3E3639}
+.board .pc.b{color:#3E3639;text-shadow:0 1px 1px rgba(255,255,255,.4)}
+.board .sq.sel .pc{transform:scale(1.15)}
+.board .sq.pop .pc{animation:pcPop .35s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pcPop{from{transform:scale(.4)}to{transform:none}}
+.promo{display:flex;gap:8px;justify-content:center;margin-top:8px}
+.promo button{width:52px;height:52px;border-radius:14px;border:1px solid var(--line);background:var(--inbg);font-size:32px;cursor:pointer}
+.gbtns{display:flex;gap:10px}.gbtns .btn{margin-top:12px}
+/* холст */
+.padw{position:relative}
+canvas.pad{display:block;width:100%;border-radius:16px;background:#fff;box-shadow:var(--shadow);touch-action:none}
+canvas.view{display:block;width:100%;border-radius:16px;background:#fff;box-shadow:var(--shadow)}
+.tools{display:flex;align-items:center;gap:6px;margin-top:10px;flex-wrap:wrap}
+.tools .cols{display:flex;gap:6px;flex:1;flex-wrap:wrap}
+.tools .cl{width:28px;height:28px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.tools .cl.on{box-shadow:0 0 0 3px var(--acc2)}
+.tools .tb{min-width:38px;height:34px;border-radius:12px;border:1px solid var(--line);background:var(--inbg);font-size:16px;cursor:pointer;color:var(--ink)}
+.duoRes{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.duoRes canvas{display:block;width:100%}
+.duoRes canvas:first-child{animation:duoTop .9s cubic-bezier(.2,.9,.3,1.1) both}
+.duoRes canvas:last-child{animation:duoBot .9s cubic-bezier(.2,.9,.3,1.1) both}
+@keyframes duoTop{from{transform:translateY(-40%);opacity:0}to{transform:none;opacity:1}}
+@keyframes duoBot{from{transform:translateY(40%);opacity:0}to{transform:none;opacity:1}}
+.gwait{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 0 6px;color:var(--muted);font-size:14px;text-align:center}
+.gwait .hb{font-size:34px;animation:beat2 1.2s ease-in-out infinite}
+.gword{font-size:26px;font-weight:700;color:var(--acc2);letter-spacing:.5px}
+.gslots{display:flex;gap:5px;justify-content:center;margin:2px 0 10px}
+.gslots i{width:18px;height:3px;border-radius:2px;background:var(--muted);opacity:.6}
+.gguess{display:flex;gap:8px;margin-top:10px}
+.gguess .in{flex:1}.gguess .btn{width:auto;margin:0;padding:12px 18px}
+.glog{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.glog span{padding:5px 10px;border-radius:999px;background:var(--chip);font-size:13px}
+.glog span.ok{background:#7CCF8A;color:#fff;font-weight:700}
+.gok{text-align:center;padding:6px 0}.gok .gword{font-size:30px;animation:pcPop .5s cubic-bezier(.3,1.6,.5,1)}
