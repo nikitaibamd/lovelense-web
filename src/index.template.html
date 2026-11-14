@@ -54,6 +54,7 @@ button{font:inherit;color:inherit}
 %%FXCSS%%
 %%GAMESCSS%%
 %%ROAMCSS%%
+%%HUBCSS%%
 /* касание сердца */
 .hbtn{position:relative;width:56px;height:56px;flex:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .hbtn .bigheart{display:block;pointer-events:none}
@@ -354,21 +355,23 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 
  <!-- МУЗЫКА -->
  <section class="view" id="v-music">
-  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Вместе</h1><button class="round" id="mFind" type="button" aria-label="Поиск">%%search%%</button></div>
+  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Вместе</h1></div>
   <div class="nowtog" id="nowTog" style="display:none"></div>
   <div class="card meet" id="meetCard" style="display:none"></div>
-  <div class="tsec">🎮 Игры</div>
-  <div class="glist" id="togGames"></div>
-  <div class="tsec">🎧 Музыка</div>
-  <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
-  <div class="card mnow">
+  <button class="card hubc" id="hubMedia" type="button"><span class="hic">🎬<i>🎧</i></span><span class="htx"><b>Смотрим и слушаем</b><small id="hubMediaSub">Кино · Музыка · Общая комната</small></span><span class="chev">%%chev%%</span></button>
+  <button class="card hubc" id="hubGames" type="button"><span class="hic">🎮</span><span class="htx"><b>Игры</b><small id="hubGamesSub">Шахматы · Угадайка · Раскраска</small></span><span class="gbadge" id="hubGamesBadge"></span><span class="chev">%%chev%%</span></button>
+  <div id="musicHold" style="display:none">
+   <button class="btn sec" id="mFind" type="button">🔍 Найти песню или плейлист</button>
+   <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
+   <div class="card mnow" id="mNowCard">
    <div class="mvid"><div class="mbg" id="mBg"></div><div class="mart" id="mArt"></div><div class="meq"><i></i><i></i><i></i><i></i><i></i></div><div class="mempty" id="mEmpty"><svg class="sleeve" viewBox="0 0 132 92"><g class="dk"><circle cx="70" cy="46" r="40" fill="#1b1418"/><circle cx="70" cy="46" r="32" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="24" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="13" fill="#F6B8C8"/><circle cx="70" cy="46" r="2.6" fill="#fff"/><path d="M70 14 A32 32 0 0 1 98 30" stroke="rgba(255,255,255,.25)" stroke-width="3" fill="none" stroke-linecap="round"/></g><rect x="2" y="4" width="82" height="84" rx="10" fill="rgba(255,255,255,.92)"/><path d="M43 30 v24 a7 7 0 1 1 -4 -6.3 V30 l14 -3 v20 a7 7 0 1 1 -4 -6.3 V31.5 Z" fill="#E9A7AE"/></svg><span>Нажми 🔍 и найди песню —<br>она заиграет у вас обоих ♡</span></div><div class="mjoin" id="mJoin">Нажми ▶, чтобы подключиться</div></div>
    <div class="mt" id="mTitle">Ничего не играет</div>
    <div class="ma" id="mAuthor">Нажми 🔍 и найди песню</div>
    <div class="mbar"><span id="mCur">0:00</span><input type="range" id="mSeek" min="0" max="100" value="0" step="1"><span id="mDur">0:00</span></div>
    <div class="mctl"><button type="button" id="mStop" aria-label="Убрать трек">%%mstop%%</button><button type="button" class="big" id="mPlay" aria-label="Играть">%%mplay%%</button><button type="button" id="mNext" aria-label="Следующий">%%mnext%%</button></div>
   </div>
-  <div class="card box"><div class="mh"><span>Дальше в очереди <small id="mQn"></small></span><button type="button" id="mClear">Очистить</button></div><div id="mQ"></div></div>
+   <div class="card box" id="mQCard"><div class="mh"><span>Дальше в очереди <small id="mQn"></small></span><button type="button" id="mClear">Очистить</button></div><div id="mQ"></div></div>
+  </div>
  </section>
 
  <!-- ПРОФИЛЬ -->
@@ -645,9 +648,9 @@ var cur=null;
 function backBtn(on){try{if(TG&&TG.BackButton){on?TG.BackButton.show():TG.BackButton.hide()}}catch(e){}}
 try{TG&&TG.BackButton&&TG.BackButton.onClick(function(){closeSheet()})}catch(e){}
 $("back").onclick=closeSheet;
-function closeSheet(){$("sheet").classList.remove("on");cur=null;backBtn(false)}
+function closeSheet(){hubCleanup();$("sheet").classList.remove("on");cur=null;backBtn(false);if(HUB.returnTo){var r=HUB.returnTo;HUB.returnTo=null;hubOpen(r[0],r[1])}}
 function openSheet(k){
- var def=SHEETS[k];if(!def)return;
+ var def=SHEETS[k];if(!def)return;hubCleanup();
  cur={k:k,live:null};$("shT").textContent=def.t;$("shB").innerHTML="";$("sheet").classList.add("on");$("shB").scrollTop=0;backBtn(true);
  def.r($("shB"));
 }
@@ -751,6 +754,7 @@ var SHEETS={
 %%CHESSJS%%
 %%PICSJS%%
 %%GAMESJS%%
+%%HUBJS%%
 function openLink(u){try{if(TG&&TG.openTelegramLink)TG.openTelegramLink(u);else window.open(u,"_blank")}catch(e){window.open(u,"_blank")}}
 
 // --- партнёр ---
@@ -1011,7 +1015,9 @@ $("mNext").onclick=function(){haptic();if(M&&M.vid)mAct("next",{rev:M.rev}).catc
 $("mStop").onclick=function(){haptic();if(M&&M.vid){auStop();mAct("stop").catch(function(){})}};
 $("mSeek").oninput=function(){mSeeking=true;$("mCur").textContent=mfmt(+this.value);this.style.setProperty("--p",(100*this.value/Math.max(1,this.max))+"%")};
 $("mSeek").onchange=function(){mSeeking=false;mSeekTo(+this.value)};
-$("mFind").onclick=function(){haptic();openSheet("msearch")};
+$("mFind").onclick=function(){haptic();if(HUB.kind==="media")HUB.returnTo=["media","music"];openSheet("msearch")};
+$("hubMedia").onclick=function(){haptic();hubOpen("media",S&&S.music&&S.music.vid?"music":"movie")};
+$("hubGames").onclick=function(){haptic();var y=(GM.sum||[]).filter(function(g){return g.you})[0];hubOpen("games",y?y.kind:"chess")};
 $("mEmpty").onclick=function(){haptic();openSheet("msearch")};
 $("mClear").onclick=function(){haptic();mAct("clear").catch(function(){})};
 // включаем трек сразу по нажатию, не дожидаясь ответа сервера

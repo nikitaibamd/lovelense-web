@@ -68,13 +68,14 @@ function gamesCard(){
  var ps=$("petSec");if(ps)ps.style.display=S&&S.pet?"":"none";
  var nt=$("nowTog"),pn=name(S&&S.partner),pg=S&&S.partner_game,mh=S&&S.music&&S.music.partner_here;
  if(nt){
-  if(has&&pg&&GAME_NOW[pg]){nt.innerHTML='<b>'+GAME_NOW[pg][0]+'</b><span>'+esc(pn)+' '+GAME_NOW[pg][1]+'</span><i>›</i>';nt.onclick=function(){haptic();openSheet("g_"+pg)};nt.style.display=""}
-  else if(has&&mh){nt.innerHTML='<b>🎧</b><span>'+esc(pn)+' слушает музыку — подключайся</span><i>›</i>';nt.onclick=function(){haptic();var m=document.querySelector(".mnow");if(m)m.scrollIntoView({behavior:"smooth",block:"center"})};nt.style.display=""}
+  if(has&&pg&&GAME_NOW[pg]){nt.innerHTML='<b>'+GAME_NOW[pg][0]+'</b><span>'+esc(pn)+' '+GAME_NOW[pg][1]+'</span><i>›</i>';nt.onclick=function(){haptic();hubOpen("games",pg)};nt.style.display=""}
+  else if(has&&mh){nt.innerHTML='<b>🎧</b><span>'+esc(pn)+' слушает музыку — подключайся</span><i>›</i>';nt.onclick=function(){haptic();hubOpen("media","music")};nt.style.display=""}
   else nt.style.display="none";
  }
+ hubBadges();
  if(!has||Date.now()-GM.cardT<20000)return;GM.cardT=Date.now();
  call("/v2/pair/games").then(function(x){
-  GM.sum=x.games;gameMarks(tg,x.games);
+  GM.sum=x.games;gameMarks(tg,x.games);hubBadges();
   var n=(x.games||[]).filter(function(g){return g.you}).length,b=$("navBadge");if(b){b.textContent=n;b.classList.toggle("on",n>0)}
  }).catch(function(){});
 }

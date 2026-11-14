@@ -263,6 +263,55 @@ canvas.clv{display:block;width:100%}
 .roam .rh{position:absolute;left:24px;bottom:50px;font-size:18px;color:#F06E8C;pointer-events:none;animation:fly 1.4s ease-out forwards}
 @media (prefers-reduced-motion:reduce){.roam .rb{animation:none!important}}
 
+/* ===== «Вместе»: кнопки-разделы и страницы с нижними вкладками ===== */
+.hubc{display:flex;align-items:center;gap:14px;width:100%;margin-top:14px;padding:18px 16px;border:0;text-align:left;font:inherit;color:var(--ink);cursor:pointer;position:relative;overflow:hidden}
+.hubc::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(240,110,140,.12),rgba(169,155,214,.14));pointer-events:none}
+.hubc .hic{position:relative;width:62px;height:62px;flex:none;border-radius:20px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:32px}
+.hubc .hic i{position:absolute;right:-4px;bottom:-4px;font-style:normal;font-size:22px}
+.hubc .htx{flex:1;min-width:0;position:relative}.hubc .htx b{display:block;font-size:18px}
+.hubc .htx small{display:block;font-size:13px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hubc .chev{position:relative}
+.hubc.live .hic{animation:auraPulse 1.6s ease-in-out infinite}
+.hubc .gbadge{position:relative}
+.sheet.hub .sb{padding-bottom:calc(110px + var(--bot))}
+.hubnav{position:absolute;left:50%;bottom:calc(12px + var(--bot));transform:translateX(-50%);width:min(440px,calc(100% - 28px));display:flex;gap:6px;padding:6px;border-radius:28px;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);z-index:5;animation:up .3s ease}
+.hubnav button{flex:1;position:relative;border:0;background:transparent;border-radius:22px;padding:7px 0 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;font-size:12px;color:var(--ink);cursor:pointer}
+.hubnav button .hi{font-size:22px;line-height:1.1}
+.hubnav button.on{background:var(--navon);color:var(--acc2);font-weight:600}
+.hubnav .hbd{position:absolute;top:4px;right:calc(50% - 22px);width:9px;height:9px;border-radius:50%;background:#F06E8C;display:none;box-shadow:0 0 0 2px #fff}
+.hubnav .hbd.on{display:block}
+.sb.hubin>*{animation:fadein .3s ease both}
+.hubmusic #mFind{margin:0 0 12px}
+.hubmusic .mhere{margin:0 0 12px}
+/* кино */
+.mvhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:2px 2px 12px}
+.mvhead b{font-size:18px}.mvhead span{font-size:13px;color:#4FAF6A;font-weight:600}
+.mvp{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#141114;box-shadow:var(--shadow)}
+.mvp iframe,.mvp video,#mvSlot{position:absolute;inset:0;width:100%;height:100%;border:0}
+.mvjoin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:12px 18px;border:0;border-radius:999px;background:rgba(240,110,140,.95);color:#fff;font:600 15px/1 inherit;cursor:pointer;z-index:3;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.mvinfo{margin:12px 2px 0}.mvinfo b{display:block;font-size:17px}.mvinfo span{font-size:13px;color:var(--muted)}
+.mvempty{text-align:center}.mvempty .gbig{font-size:50px}
+.mvrow{display:flex;gap:10px;align-items:center;width:100%;margin-top:10px;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--inbg);text-align:left;font:inherit;color:var(--ink);cursor:pointer}
+.mvrow img{width:96px;height:54px;border-radius:10px;object-fit:cover;flex:none;background:#ddd}
+.mvrow span{min-width:0}.mvrow b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px}.mvrow small{font-size:12px;color:var(--muted)}
+/* общая комната */
+.rroom{position:relative;width:100%;aspect-ratio:360/260;border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+.rroom .rsvg{position:absolute;inset:0;width:100%;height:100%}
+.rseat{position:absolute;bottom:31%;width:24%;display:flex;flex-direction:column;align-items:center;gap:3px;transition:opacity .5s,transform .5s cubic-bezier(.3,1.5,.5,1)}
+.rseat.me{left:30%;transform:translateX(-50%)}.rseat.pa{left:70%;transform:translateX(-50%) scale(.85);opacity:.35;filter:grayscale(1)}
+.rseat.pa.here{transform:translateX(-50%);opacity:1;filter:none}
+.rseat .rav{width:100%;aspect-ratio:1;border-radius:50%;border:3px solid #fff;background:linear-gradient(160deg,#FFD2B8,#F2A08E) center/cover;display:flex;align-items:center;justify-content:center;color:#fff;font:600 26px/1 Georgia,serif;box-shadow:0 6px 16px rgba(0,0,0,.2);animation:breathe 3.4s ease-in-out infinite}
+.rseat.pa .rav{background-image:linear-gradient(160deg,#D8CCF6,#A595D8)}
+.rseat small{font-size:11px;font-weight:600;color:#fff;background:rgba(73,59,69,.55);padding:1px 8px;border-radius:999px}
+.rfx{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.rfx i{position:absolute;bottom:30%;font-style:normal;animation:rFly 2.2s ease-out forwards}
+@keyframes rFly{0%{transform:translate(0,0) scale(.5);opacity:0}15%{opacity:1;transform:translate(0,-20px) scale(1.15)}100%{transform:translate(var(--dx),-180px) scale(.9);opacity:0}}
+.rstat{text-align:center;margin-top:12px;font-size:14px;color:var(--muted)}.rstat b{color:var(--acc2);font-size:15px}
+.rnow{text-align:center;margin-top:6px;font-size:13px;color:var(--ink)}
+.remo{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:14px}
+.remo button{aspect-ratio:1;border-radius:14px;border:1px solid var(--line);background:var(--inbg);font-size:22px;cursor:pointer;padding:0}
+.remo button:active{transform:scale(.88)}
+
 /* касание сердца */
 .hbtn{position:relative;width:56px;height:56px;flex:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .hbtn .bigheart{display:block;pointer-events:none}
@@ -563,21 +612,23 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 
  <!-- МУЗЫКА -->
  <section class="view" id="v-music">
-  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Вместе</h1><button class="round" id="mFind" type="button" aria-label="Поиск"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.2 4.2"/></g></svg></button></div>
+  <div class="top"><h1 class="wm dark" style="font-family:inherit;font-weight:500">Вместе</h1></div>
   <div class="nowtog" id="nowTog" style="display:none"></div>
   <div class="card meet" id="meetCard" style="display:none"></div>
-  <div class="tsec">🎮 Игры</div>
-  <div class="glist" id="togGames"></div>
-  <div class="tsec">🎧 Музыка</div>
-  <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
-  <div class="card mnow">
+  <button class="card hubc" id="hubMedia" type="button"><span class="hic">🎬<i>🎧</i></span><span class="htx"><b>Смотрим и слушаем</b><small id="hubMediaSub">Кино · Музыка · Общая комната</small></span><span class="chev"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g></svg></span></button>
+  <button class="card hubc" id="hubGames" type="button"><span class="hic">🎮</span><span class="htx"><b>Игры</b><small id="hubGamesSub">Шахматы · Угадайка · Раскраска</small></span><span class="gbadge" id="hubGamesBadge"></span><span class="chev"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g></svg></span></button>
+  <div id="musicHold" style="display:none">
+   <button class="btn sec" id="mFind" type="button">🔍 Найти песню или плейлист</button>
+   <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
+   <div class="card mnow" id="mNowCard">
    <div class="mvid"><div class="mbg" id="mBg"></div><div class="mart" id="mArt"></div><div class="meq"><i></i><i></i><i></i><i></i><i></i></div><div class="mempty" id="mEmpty"><svg class="sleeve" viewBox="0 0 132 92"><g class="dk"><circle cx="70" cy="46" r="40" fill="#1b1418"/><circle cx="70" cy="46" r="32" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="24" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><circle cx="70" cy="46" r="13" fill="#F6B8C8"/><circle cx="70" cy="46" r="2.6" fill="#fff"/><path d="M70 14 A32 32 0 0 1 98 30" stroke="rgba(255,255,255,.25)" stroke-width="3" fill="none" stroke-linecap="round"/></g><rect x="2" y="4" width="82" height="84" rx="10" fill="rgba(255,255,255,.92)"/><path d="M43 30 v24 a7 7 0 1 1 -4 -6.3 V30 l14 -3 v20 a7 7 0 1 1 -4 -6.3 V31.5 Z" fill="#E9A7AE"/></svg><span>Нажми 🔍 и найди песню —<br>она заиграет у вас обоих ♡</span></div><div class="mjoin" id="mJoin">Нажми ▶, чтобы подключиться</div></div>
    <div class="mt" id="mTitle">Ничего не играет</div>
    <div class="ma" id="mAuthor">Нажми 🔍 и найди песню</div>
    <div class="mbar"><span id="mCur">0:00</span><input type="range" id="mSeek" min="0" max="100" value="0" step="1"><span id="mDur">0:00</span></div>
    <div class="mctl"><button type="button" id="mStop" aria-label="Убрать трек"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M9.5 7V4.8h5V7M6.5 7l.8 12.2a1.2 1.2 0 0 0 1.2 1.1h7a1.2 1.2 0 0 0 1.2-1.1L17.5 7M10 11v6M14 11v6"/></g></svg></button><button type="button" class="big" id="mPlay" aria-label="Играть"><svg viewBox="0 0 24 24"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6Z" fill="currentColor"/></svg></button><button type="button" id="mNext" aria-label="Следующий"><svg viewBox="0 0 24 24"><path d="M5 6.2v11.6a.9.9 0 0 0 1.4.75L15 12.75a.9.9 0 0 0 0-1.5L6.4 5.45A.9.9 0 0 0 5 6.2Z" fill="currentColor"/><rect x="16.5" y="5.5" width="2.6" height="13" rx="1.2" fill="currentColor"/></svg></button></div>
   </div>
-  <div class="card box"><div class="mh"><span>Дальше в очереди <small id="mQn"></small></span><button type="button" id="mClear">Очистить</button></div><div id="mQ"></div></div>
+   <div class="card box" id="mQCard"><div class="mh"><span>Дальше в очереди <small id="mQn"></small></span><button type="button" id="mClear">Очистить</button></div><div id="mQ"></div></div>
+  </div>
  </section>
 
  <!-- ПРОФИЛЬ -->
@@ -1362,9 +1413,9 @@ var cur=null;
 function backBtn(on){try{if(TG&&TG.BackButton){on?TG.BackButton.show():TG.BackButton.hide()}}catch(e){}}
 try{TG&&TG.BackButton&&TG.BackButton.onClick(function(){closeSheet()})}catch(e){}
 $("back").onclick=closeSheet;
-function closeSheet(){$("sheet").classList.remove("on");cur=null;backBtn(false)}
+function closeSheet(){hubCleanup();$("sheet").classList.remove("on");cur=null;backBtn(false);if(HUB.returnTo){var r=HUB.returnTo;HUB.returnTo=null;hubOpen(r[0],r[1])}}
 function openSheet(k){
- var def=SHEETS[k];if(!def)return;
+ var def=SHEETS[k];if(!def)return;hubCleanup();
  cur={k:k,live:null};$("shT").textContent=def.t;$("shB").innerHTML="";$("sheet").classList.add("on");$("shB").scrollTop=0;backBtn(true);
  def.r($("shB"));
 }
@@ -1688,13 +1739,14 @@ function gamesCard(){
  var ps=$("petSec");if(ps)ps.style.display=S&&S.pet?"":"none";
  var nt=$("nowTog"),pn=name(S&&S.partner),pg=S&&S.partner_game,mh=S&&S.music&&S.music.partner_here;
  if(nt){
-  if(has&&pg&&GAME_NOW[pg]){nt.innerHTML='<b>'+GAME_NOW[pg][0]+'</b><span>'+esc(pn)+' '+GAME_NOW[pg][1]+'</span><i>›</i>';nt.onclick=function(){haptic();openSheet("g_"+pg)};nt.style.display=""}
-  else if(has&&mh){nt.innerHTML='<b>🎧</b><span>'+esc(pn)+' слушает музыку — подключайся</span><i>›</i>';nt.onclick=function(){haptic();var m=document.querySelector(".mnow");if(m)m.scrollIntoView({behavior:"smooth",block:"center"})};nt.style.display=""}
+  if(has&&pg&&GAME_NOW[pg]){nt.innerHTML='<b>'+GAME_NOW[pg][0]+'</b><span>'+esc(pn)+' '+GAME_NOW[pg][1]+'</span><i>›</i>';nt.onclick=function(){haptic();hubOpen("games",pg)};nt.style.display=""}
+  else if(has&&mh){nt.innerHTML='<b>🎧</b><span>'+esc(pn)+' слушает музыку — подключайся</span><i>›</i>';nt.onclick=function(){haptic();hubOpen("media","music")};nt.style.display=""}
   else nt.style.display="none";
  }
+ hubBadges();
  if(!has||Date.now()-GM.cardT<20000)return;GM.cardT=Date.now();
  call("/v2/pair/games").then(function(x){
-  GM.sum=x.games;gameMarks(tg,x.games);
+  GM.sum=x.games;gameMarks(tg,x.games);hubBadges();
   var n=(x.games||[]).filter(function(g){return g.you}).length,b=$("navBadge");if(b){b.textContent=n;b.classList.toggle("on",n>0)}
  }).catch(function(){});
 }
@@ -1908,6 +1960,168 @@ function gsUpdate(){
  var lg=$("gsLog");if(lg)lg.innerHTML=gsLog(G);
  var hn=$("gsHint");if(hn)hn.textContent=G.drawer?(G.guesses&&G.guesses.length?"":"Ждём первую догадку…"):(G.hint?"Подсказка: начинается на «"+G.hint+"»":"Слово из "+G.len+" "+plural(G.len,"буквы","букв","букв"));
  var v=$("gsView");if(v&&!G.ok){var k=JSON.stringify(G.strokes).length;if(v.getAttribute("data-k")!==String(k)){v.setAttribute("data-k",k);viewCanvas(v,.8,G.strokes)}}
+}
+
+// ===================== «Вместе»: страницы с нижними вкладками =====================
+var HUB={kind:null,sub:null,returnTo:null};
+var HUBS={
+ media:{t:"Смотрим и слушаем",tabs:[["movie","🎬","Кино"],["music","🎧","Музыка"],["room","🛋","Комната"]]},
+ games:{t:"Игры вдвоём",tabs:[["chess","♟️","Шахматы"],["guess","✏️","Угадайка"],["duo","🎨","Раскраска"]]}
+};
+var MUSIC_IDS=["mFind","mHere","mNowCard","mQCard"];
+function musicHome(){var h=$("musicHold");if(!h)return;MUSIC_IDS.forEach(function(id){var e=$(id);if(e&&e.parentNode!==h)h.appendChild(e)})}
+// уборка перед закрытием или сменой страницы: музыка возвращается на место, видео и комната останавливаются
+function hubCleanup(){musicHome();movieDestroy();var n=$("hubNav");if(n)n.remove();$("sheet").classList.remove("hub");HUB.kind=null;HUB.sub=null}
+function hubOpen(kind,sub){
+ var H=HUBS[kind];if(!H)return;
+ SHEETS.hub={t:H.t,r:function(){}};openSheet("hub");HUB.returnTo=null;HUB.kind=kind;
+ $("sheet").classList.add("hub");
+ var nav=node('<div class="hubnav" id="hubNav"></div>');
+ H.tabs.forEach(function(t){var b=node('<button type="button" data-s="'+t[0]+'"><span class="hi">'+t[1]+'</span><span>'+t[2]+'</span><i class="hbd"></i></button>');b.onclick=function(){if(HUB.sub!==t[0]){haptic();hubSub(t[0])}};nav.appendChild(b)});
+ $("sheet").appendChild(nav);
+ hubSub(sub||H.tabs[0][0]);hubBadges();
+}
+function hubSub(sub){
+ var B=$("shB");musicHome();movieDestroy();clearInterval(GM.timer);GM.timer=null;
+ HUB.sub=sub;Array.prototype.forEach.call($("hubNav").children,function(b){b.classList.toggle("on",b.getAttribute("data-s")===sub)});
+ B.innerHTML="";B.scrollTop=0;B.classList.remove("hubin");void B.offsetWidth;B.classList.add("hubin");
+ if(HUB.kind==="games"){cur={k:"g_"+sub,live:null};SHEETS["g_"+sub].r(B);return}
+ if(sub==="music"){cur={k:"h_music",live:null};var w=node('<div class="hubmusic"></div>');B.appendChild(w);MUSIC_IDS.forEach(function(id){var e=$(id);if(e)w.appendChild(e)});return}
+ if(sub==="movie"){cur={k:"h_movie",live:null};movieRender(B);return}
+ cur={k:"h_room",live:null};roomRender(B);
+}
+// значки «тебя ждут» на нижних вкладках игр и на кнопках во «Вместе»
+function hubBadges(){
+ var sum=GM.sum||[],you={};sum.forEach(function(g){if(g.you)you[g.kind]=g.text});
+ var nav=$("hubNav");if(nav&&HUB.kind==="games")Array.prototype.forEach.call(nav.children,function(b){b.querySelector(".hbd").classList.toggle("on",!!you[b.getAttribute("data-s")])});
+ var n=Object.keys(you).length,gb=$("hubGamesBadge"),gs=$("hubGamesSub");
+ if(gb){gb.textContent=n;gb.classList.toggle("on",n>0)}
+ if(gs){var NM={chess:"в шахматах",guess:"в угадайке",duo:"в раскраске"};gs.textContent=n?"Тебя ждут "+Object.keys(you).map(function(k){return NM[k]}).join(", "):"Шахматы · Угадайка · Раскраска"}
+ var ms=$("hubMediaSub"),M=S&&S.music;
+ if(ms)ms.textContent=M&&M.vid&&M.playing?"🎧 Сейчас играет: "+(M.title||"трек"):"Кино · Музыка · Общая комната";
+ var mc=$("hubMedia");if(mc)mc.classList.toggle("live",!!(M&&M.vid&&M.playing));
+}
+
+// ===================== кино вместе =====================
+var MV={browse:null,st:null,P:null,kind:null,ref:null,rev:null,busy:false,ign:0,jt:null};
+function movieApi(a,ex){var b={action:a};for(var k in ex||{})b[k]=ex[k];return call("/v2/pair/movie",b)}
+function ytLoad(cb){
+ if(window.YT&&window.YT.Player)return cb();
+ (window.__ytq=window.__ytq||[]).push(cb);if(window.__ytl)return;window.__ytl=1;
+ window.onYouTubeIframeAPIReady=function(){var q=window.__ytq||[];window.__ytq=[];q.forEach(function(f){try{f()}catch(e){}})};
+ var s=document.createElement("script");s.src="https://www.youtube.com/iframe_api";s.onerror=function(){toast("YouTube сейчас недоступен")};document.head.appendChild(s);
+}
+function movieDestroy(){clearTimeout(MV.jt);if(MV.P){try{MV.P.kill()}catch(e){}}MV.P=null;MV.kind=null;MV.ref=null;MV.rev=null}
+function movieRender(B){
+ B.innerHTML='<div class="mvhead"><b>🎬 Кино вместе</b><span id="mvHere"></span></div><div id="mvBox"><div class="hint">Загрузка…</div></div>';
+ movieDestroy();
+ movieApi("get").then(function(x){movieApply(x.movie,true)}).catch(gErr);
+ gLoop("h_movie",function(){if(MV.busy)return;movieApi("get").then(function(x){movieApply(x.movie)}).catch(function(){})},2000);
+}
+function movieEmpty(){
+ var box=$("mvBox");if(!box)return;
+ box.innerHTML='<div class="card box mvempty"><div class="gbig">🍿</div><b>Что посмотрим?</b><div class="hint">Найди видео на YouTube или вставь ссылку. Пауза и перемотка общие — смотрите секунда в секунду.</div>'+
+  '<form class="gguess" id="mvForm"><input class="in" id="mvQ" placeholder="Название или ссылка" autocomplete="off" enterkeyhint="search"><button class="btn" type="submit">Найти</button></form><div id="mvRes"></div></div>';
+ $("mvForm").onsubmit=function(e){e.preventDefault();var v=$("mvQ").value.trim();if(!v)return;
+  if(/^https?:\/\//i.test(v)||/youtu\.?be/i.test(v)){movieSet({url:v});return}
+  $("mvRes").innerHTML='<div class="hint">Ищу…</div>';
+  movieApi("search",{q:v}).then(function(x){var r=$("mvRes");if(!r)return;r.innerHTML="";
+   if(!(x.results||[]).length){r.innerHTML='<div class="hint">Ничего не нашлось — попробуй иначе</div>';return}
+   x.results.forEach(function(it){var row=node('<button type="button" class="mvrow"><img alt="" src="'+esc(it.thumb)+'"><span><b>'+esc(it.title)+'</b><small>'+esc(it.author||"")+(it.len?" · "+esc(it.len):"")+'</small></span></button>');
+    row.onclick=function(){haptic();movieSet({vid:it.id,title:it.title,author:it.author})};r.appendChild(row)});
+  }).catch(function(e){var r=$("mvRes");if(r)r.innerHTML='<div class="hint">'+esc(ERR[e.message]||"Поиск не отвечает, попробуй ссылку")+'</div>'});
+ };
+}
+function movieSet(o){MV.browse=null;MV.busy=true;movieApi("set",o).then(function(x){MV.busy=false;haptic("medium");movieApply(x.movie,true)}).catch(function(e){MV.busy=false;gErr(e)})}
+function movieTarget(m){var p=Number(m.pos)||0;if(m.playing)p+=Math.max(0,(m.now-m.at)/1000);return Math.max(0,p)}
+function movieApply(m,first){
+ MV.st=m;var me=S&&S.me&&S.me.id,hereEl=$("mvHere");
+ if(hereEl)hereEl.textContent=m&&m.partner_here?"● "+name(S&&S.partner)+" смотрит с тобой":"";
+ if(!m||!m.ref){MV.browse=null;if(MV.kind!==null||first||!$("mvForm")){movieDestroy();movieEmpty()}return}
+ if(MV.browse&&m.ref===MV.browse)return; // выбираешь другое видео — текущее не перебивает поиск
+ if(m.kind!==MV.kind||m.ref!==MV.ref){movieDestroy();movieBuild(m);return}
+ if(!MV.P||!MV.P.ready||m.rev===MV.rev)return;
+ MV.rev=m.rev;if(m.by===me)return; // своё действие уже применено у себя
+ movieSync(m);
+}
+function movieSync(m){
+ var P=MV.P;if(!P||!P.ready)return;MV.ign=Date.now()+1500;
+ var t=movieTarget(m);try{if(Math.abs(P.time()-t)>1.5)P.seek(t)}catch(e){}
+ if(m.playing){P.play();clearTimeout(MV.jt);MV.jt=setTimeout(function(){var j=$("mvJoin");if(j&&MV.P&&!MV.P.playing())j.style.display=""},1500)}
+ else P.pause();
+}
+function movieSend(a){ // моё действие → партнёру
+ if(Date.now()<MV.ign||!MV.P)return;var pos=0;try{pos=MV.P.time()}catch(e){}
+ MV.busy=true;movieApi(a,{pos:pos}).then(function(x){MV.busy=false;MV.st=x.movie;MV.rev=x.movie.rev}).catch(function(){MV.busy=false});
+}
+function movieBuild(m){
+ var box=$("mvBox");if(!box)return;MV.kind=m.kind;MV.ref=m.ref;MV.rev=null;
+ box.innerHTML='<div class="mvp"><div id="mvSlot"></div><button type="button" class="mvjoin" id="mvJoin" style="display:none">▶ Подключиться к просмотру</button></div>'+
+  '<div class="mvinfo"><b>'+esc(m.title||"Видео")+'</b><span>'+esc(m.author||"")+'</span></div>'+
+  '<div class="gbtns"><button class="btn sec" id="mvChange" type="button">Другое видео</button><button class="btn danger" id="mvStop" type="button">Выключить</button></div>';
+ $("mvStop").onclick=function(){confirmAsk("Выключить видео у вас обоих?",function(){movieApi("stop").then(function(x){movieApply(x.movie,true)}).catch(gErr)})};
+ $("mvChange").onclick=function(){MV.browse=m.ref;movieDestroy();movieEmpty()};
+ $("mvJoin").onclick=function(){this.style.display="none";var s=MV.st;if(s&&MV.P){MV.ign=Date.now()+1500;try{MV.P.seek(movieTarget(s))}catch(e){}MV.P.play()}};
+ var P={ready:false};MV.P=P;
+ var onReady=function(){P.ready=true;MV.rev=m.rev;movieSync(m)};
+ if(m.kind==="yt"){
+  ytLoad(function(){if(MV.P!==P)return;
+   var yt=new YT.Player("mvSlot",{videoId:m.ref,width:"100%",height:"100%",playerVars:{playsinline:1,rel:0,modestbranding:1},events:{
+    onReady:onReady,
+    onStateChange:function(e){if(e.data===1){var j=$("mvJoin");if(j)j.style.display="none";movieSend("play")}else if(e.data===2)movieSend("pause")}}});
+   P.time=function(){return yt.getCurrentTime()||0};P.seek=function(t){yt.seekTo(t,true)};P.play=function(){yt.playVideo()};P.pause=function(){yt.pauseVideo()};
+   P.playing=function(){return yt.getPlayerState&&yt.getPlayerState()===1};P.kill=function(){yt.destroy()};
+  });
+ }else{
+  var v=document.createElement("video");v.src=m.ref;v.controls=true;v.playsInline=true;v.setAttribute("playsinline","");v.preload="metadata";$("mvSlot").appendChild(v);
+  P.time=function(){return v.currentTime||0};P.seek=function(t){v.currentTime=t};P.play=function(){var r=v.play();if(r&&r.catch)r.catch(function(){})};P.pause=function(){v.pause()};
+  P.playing=function(){return !v.paused};P.kill=function(){v.pause();v.removeAttribute("src");v.load()};
+  v.addEventListener("loadedmetadata",onReady,{once:true});v.addEventListener("error",function(){toast("Видео по этой ссылке не открывается")});
+  v.addEventListener("play",function(){var j=$("mvJoin");if(j)j.style.display="none";movieSend("play")});v.addEventListener("pause",function(){movieSend("pause")});
+  v.addEventListener("seeked",function(){if(!v.paused)movieSend("seek")});
+ }
+}
+
+// ===================== общая комната =====================
+var ROOM={since:0,here:false};
+var ROOM_EMO=["❤️","😘","🥰","🤗","🥺","😂","🔥","✨"];
+function roomScene(){
+ var h=new Date().getHours(),night=h<7||h>=21,eve=h>=18&&h<21;
+ var sky=night?["#2B2B57","#4A4370"]:eve?["#F2A08C","#B9A6EA"]:["#9FD3F2","#E3F3FC"];
+ return '<svg class="rsvg" viewBox="0 0 360 260" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+(night?"#5D4E6E":"#F6DCD8")+'"/><stop offset="1" stop-color="'+(night?"#4A3E59":"#EFCFCB")+'"/></linearGradient><linearGradient id="rSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+sky[0]+'"/><stop offset="1" stop-color="'+sky[1]+'"/></linearGradient></defs>'+
+  '<rect width="360" height="260" fill="url(#rWall)"/><rect y="200" width="360" height="60" fill="'+(night?"#3E3349":"#E2B9A8")+'"/>'+
+  '<rect x="120" y="26" width="120" height="86" rx="10" fill="url(#rSky)" stroke="#fff" stroke-width="6"/><path d="M180 26 V112 M120 69 H240" stroke="#fff" stroke-width="4"/>'+
+  (night?'<circle cx="215" cy="50" r="10" fill="#FFF3CF"/><circle cx="220" cy="46" r="9" fill="'+sky[0]+'"/><circle cx="140" cy="45" r="1.6" fill="#fff"/><circle cx="160" cy="90" r="1.3" fill="#fff"/><circle cx="200" cy="85" r="1.6" fill="#fff"/>':'<circle cx="210" cy="52" r="12" fill="#FFE07A"/><ellipse cx="150" cy="88" rx="16" ry="6" fill="#fff" opacity=".9"/>')+
+  '<path d="M300 200 V120" stroke="#8A7E85" stroke-width="4"/><path d="M282 120 L318 120 L308 92 L292 92 Z" fill="'+(night?"#FFD66B":"#F6B8C8")+'"/>'+(night?'<circle cx="300" cy="125" r="40" fill="#FFD66B" opacity=".18"/>':"")+
+  '<rect x="34" y="150" width="34" height="50" rx="6" fill="#C98291"/><path d="M51 150 Q30 120 40 100 Q55 118 51 150 Q60 112 76 104 Q74 132 51 150" fill="#7CCF8A"/>'+
+  '<ellipse cx="180" cy="236" rx="140" ry="14" fill="'+(night?"#56456A":"#F4D2CC")+'"/>'+
+  '<rect x="86" y="158" width="188" height="44" rx="16" fill="#D98C9A"/><rect x="78" y="146" width="28" height="62" rx="12" fill="#C97585"/><rect x="254" y="146" width="28" height="62" rx="12" fill="#C97585"/><rect x="96" y="130" width="168" height="40" rx="14" fill="#E9A7AE"/>'+
+  '<path d="M100 208 v10 M260 208 v10" stroke="#8A6870" stroke-width="5" stroke-linecap="round"/></svg>';
+}
+function roomRender(B){
+ var pn=esc(name(S&&S.partner));
+ B.innerHTML='<div class="rroom" id="rmScene">'+roomScene()+'<div class="rseat me"><div class="rav" id="rmMe"></div><small>ты</small></div><div class="rseat pa" id="rmPaW"><div class="rav" id="rmPa"></div><small id="rmPaN">'+pn+'</small></div><div class="rfx" id="rmFx"></div></div>'+
+  '<div class="rstat" id="rmStat">Ждём '+pn+'…</div><div class="rnow" id="rmNow"></div><div class="remo" id="rmEmo"></div><button class="btn sec" id="rmCall" type="button">Позвать '+pn+' в комнату</button>';
+ setPhoto($("rmMe"),S&&S.me);setPhoto($("rmPa"),S&&S.partner);
+ ROOM_EMO.forEach(function(em){var b=node('<button type="button">'+em+'</button>');b.onclick=function(){haptic();roomFly(em,true);call("/v2/pair/room",{action:"react",emoji:em,since:ROOM.since}).then(roomApply).catch(function(e){if(e.message!=="too_fast")gErr(e)})};$("rmEmo").appendChild(b)});
+ $("rmCall").onclick=function(){var b=this;b.disabled=true;call("/v2/pair/room",{action:"call",since:ROOM.since}).then(function(x){roomApply(x);toast(x.called?"Позвали — бот напишет "+name(S&&S.partner)+" 💌":(x.partner_here?name(S&&S.partner)+" уже здесь ♡":"Уже звали недавно — подожди немного"))}).catch(gErr).then(function(){setTimeout(function(){b.disabled=false},3000)})};
+ ROOM.since=0;ROOM.here=false;roomPoll();gLoop("h_room",roomPoll,2000);
+}
+function roomPoll(){call("/v2/pair/room",{action:"get",since:ROOM.since}).then(roomApply).catch(function(){})}
+function roomApply(x){
+ if(!$("rmScene"))return;var pn=name(S&&S.partner);
+ if(x.partner_here&&!ROOM.here){haptic("medium");roomFly("👋",false)}
+ ROOM.here=!!x.partner_here;$("rmPaW").classList.toggle("here",ROOM.here);
+ $("rmStat").innerHTML=ROOM.here?"<b>Вы в комнате вдвоём 💞</b>":"Ждём "+esc(pn)+"… Позови — бот напишет";
+ $("rmCall").style.display=ROOM.here?"none":"";
+ var now=[];if(x.music)now.push("🎧 "+esc(x.music.title)+(x.music.playing?"":" (пауза)"));if(x.movie)now.push("🎬 "+esc(x.movie.title)+(x.movie.playing?"":" (пауза)"));
+ $("rmNow").innerHTML=now.length?"Сейчас: "+now.join(" · "):"";
+ (x.reacts||[]).forEach(function(r,i){setTimeout(function(){roomFly(r.emoji,false);haptic("light")},i*180)});
+ if(x.cursor!=null){ROOM.since=x.cursor;var seen=Number(ls("ll_ping"))||0;if(x.cursor>seen)ls("ll_ping",String(x.cursor))}
+}
+function roomFly(em,mine){
+ var fx=$("rmFx");if(!fx)return;
+ for(var i=0;i<5;i++){var e=document.createElement("i");e.textContent=em;e.style.left=(mine?18:62)+Math.random()*18+"%";e.style.animationDelay=(i*.12)+"s";e.style.fontSize=(22+Math.random()*14)+"px";e.style.setProperty("--dx",((mine?1:-1)*(20+Math.random()*60)).toFixed(0)+"px");fx.appendChild(e);(function(e){setTimeout(function(){e.remove()},2300)})(e)}
 }
 
 function openLink(u){try{if(TG&&TG.openTelegramLink)TG.openTelegramLink(u);else window.open(u,"_blank")}catch(e){window.open(u,"_blank")}}
@@ -2170,7 +2384,9 @@ $("mNext").onclick=function(){haptic();if(M&&M.vid)mAct("next",{rev:M.rev}).catc
 $("mStop").onclick=function(){haptic();if(M&&M.vid){auStop();mAct("stop").catch(function(){})}};
 $("mSeek").oninput=function(){mSeeking=true;$("mCur").textContent=mfmt(+this.value);this.style.setProperty("--p",(100*this.value/Math.max(1,this.max))+"%")};
 $("mSeek").onchange=function(){mSeeking=false;mSeekTo(+this.value)};
-$("mFind").onclick=function(){haptic();openSheet("msearch")};
+$("mFind").onclick=function(){haptic();if(HUB.kind==="media")HUB.returnTo=["media","music"];openSheet("msearch")};
+$("hubMedia").onclick=function(){haptic();hubOpen("media",S&&S.music&&S.music.vid?"music":"movie")};
+$("hubGames").onclick=function(){haptic();var y=(GM.sum||[]).filter(function(g){return g.you})[0];hubOpen("games",y?y.kind:"chess")};
 $("mEmpty").onclick=function(){haptic();openSheet("msearch")};
 $("mClear").onclick=function(){haptic();mAct("clear").catch(function(){})};
 // включаем трек сразу по нажатию, не дожидаясь ответа сервера
