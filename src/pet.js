@@ -9,7 +9,7 @@ var PET_LOOK={
 };
 var PET_NAMES={cat:"Котик",dog:"Щенок",rabbit:"Зайка",fox:"Лисёнок",bear:"Мишка",panda:"Панда"};
 function moodOf(p){
- if(night())return "sleep";
+ if(asleep())return "sleep";
  if(p.mood==="hungry")return "hungry";
  if(p.mood==="lonely")return "sad";
  if(p.mood==="joy"||p.mood==="fed"||p.mood==="love")return "happy";

@@ -1,15 +1,16 @@
 // ===================== питомец гуляет по всему приложению =====================
 // Ходит по верхним краям карточек, прыгает между ними, падает, мяукает, просит поиграть и прячется.
-var RM={el:null,on:false,x:60,y:0,vx:0,vy:0,f:1,st:"air",pl:null,off:0,tx:0,jump:null,next:0,last:0,key:"",say:0,lastPet:0,fallFrom:0,raf:0};
+var RM={wakeUntil:0,lastTap:0,el:null,on:false,x:60,y:0,vx:0,vy:0,f:1,st:"air",pl:null,off:0,tx:0,jump:null,next:0,last:0,key:"",say:0,lastPet:0,fallFrom:0,raf:0};
 var RM_W=66,RM_H=74,RM_SPEED=55,RM_G=1900;
 var PET_TALK={
- cat:{hi:["Мяу!","Мур-мяу 🐾","Мяяяу?","Мрр…"],ow:"Мяу! 😿 Ой-ой…"},
- dog:{hi:["Гав!","Тяв-тяв 🐾","Гав? 🐶"],ow:"Скуль… 😢"},
- rabbit:{hi:["Фыр-фыр","*шевелит ушками*","Хрум 🥕"],ow:"Ой-ой 😿"},
- fox:{hi:["Фыр!","Ак-ак-ак 🦊","Хи-хи"],ow:"Фыр… больно 😿"},
- bear:{hi:["Ррр 🐻","Уф!","Мёду бы…"],ow:"Ууу… 😿"},
- panda:{hi:["Ням-ням 🎋","Уи!","Обнимашки?"],ow:"Ой… 😿"}
+ cat:{hi:["Мяу!","Мур-мяу 🐾","Мяяяу?","Мрр…"],ow:"Мяу! 😿 Ой-ой…",wake:"Мяу? Уже утро? 😺"},
+ dog:{hi:["Гав!","Тяв-тяв 🐾","Гав? 🐶"],ow:"Скуль… 😢",wake:"Гав! Гулять? 🐶"},
+ rabbit:{hi:["Фыр-фыр","*шевелит ушками*","Хрум 🥕"],ow:"Ой-ой 😿",wake:"*трёт глазки* 🐰"},
+ fox:{hi:["Фыр!","Ак-ак-ак 🦊","Хи-хи"],ow:"Фыр… больно 😿",wake:"Фыр… ну ладно, проснулся 🦊"},
+ bear:{hi:["Ррр 🐻","Уф!","Мёду бы…"],ow:"Ууу… 😿",wake:"Ррр… кто меня будил? 🐻"},
+ panda:{hi:["Ням-ням 🎋","Уи!","Обнимашки?"],ow:"Ой… 😿",wake:"Уи… ещё пять минуточек 🐼"}
 };
+function rmSleeping(){var p=S&&S.pet;return !!(p&&moodOf(p)==="sleep"&&Date.now()>RM.wakeUntil)}
 function rmTalk(){var p=S&&S.pet;return PET_TALK[p&&p.kind]||PET_TALK.cat}
 function rmPick(a){return a[Math.floor(Math.random()*a.length)]}
 
@@ -77,7 +78,7 @@ function rmStep(t){
 // ---------- поведение ----------
 function rmDecide(t){
  var p=S&&S.pet;if(!p)return;
- if(moodOf(p)==="sleep"){RM.next=t+8000;return}
+ if(rmSleeping()){RM.next=t+8000;return}
  var r=Math.random(),xs=rmPlatX(RM.pl),onCard=!!(RM.pl&&RM.pl.el);
  if(r<.32){ // прогулка по карточке
   RM.tx=xs[0]+RM_W/2+Math.random()*Math.max(1,xs[1]-xs[0]-RM_W);rmState("walk");
@@ -100,6 +101,12 @@ function rmQuiet(action){ // засчитать игру/поглаживани�
  call("/v2/pair/pet",{action:action}).then(function(x){if(x&&x.pet){S.pet=x.pet;if(x.streak)S.streak=x.streak;render()}}).catch(function(){});
 }
 function rmTap(){
+ var now=Date.now(),dbl=now-RM.lastTap<450;RM.lastTap=now;
+ if(rmSleeping()){
+  if(!dbl){haptic("light");rmSay("Zzz… 😴",1400);return}
+  RM.wakeUntil=now+15*60000;RM.key="";try{render()}catch(e){}roamRender();haptic("heavy");rmState("sit");rmFx("hop",650);rmSay(rmTalk().wake||"Проснулся! ✨",2400);rmHearts(5);
+  RM.next=performance.now()+2200;RM.lastTap=0;return;
+ }
  haptic("medium");
  if(RM.hidden){RM.hidden=false;rmState("sit");rmFx("hop",650);rmSay("Нашли! 🙈",1800);rmHearts(3);return}
  if(RM.asking){RM.asking=false;rmFx("play",1500);rmSay("Ура! Играем! 🧶",1800);rmHearts(6);rmQuiet("play");return}
@@ -117,7 +124,7 @@ function rmEnter(){
 function roamRender(){
  if(!RM.el)return;var p=S&&S.pet,show=!!p&&!REDUCED;
  RM.on=show;RM.el.classList.toggle("on",show);if(!show)return;
- var mood=RM.el.classList.contains("dizzy")?"sad":moodOf(p),key=p.kind+"|"+mood+"|"+(p.wear||"")+"|"+p.stage;
+ var mood=RM.el.classList.contains("dizzy")?"sad":moodOf(p)==="sleep"&&!rmSleeping()?"idle":moodOf(p),key=p.kind+"|"+mood+"|"+(p.wear||"")+"|"+p.stage;
  if(key!==RM.key){RM.key=key;RM.el.querySelector(".pv").innerHTML=petSvg(p.kind,mood,p)}
 }
 function initRoam(){

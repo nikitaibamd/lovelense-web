@@ -518,8 +518,10 @@ function render(){
 function ticks(){$("tMe").textContent=clock();$("tPa").textContent=S&&S.partner_tz?clock(S.partner_tz):"--:--"}
 setInterval(ticks,15000);
 function night(){var h=new Date().getHours();return h>=23||h<7}
+// ночью питомец спит, если его не разбудили двойным тапом
+function asleep(){return night()&&!(typeof RM!=="undefined"&&RM&&Date.now()<RM.wakeUntil)}
 function petStatus(p){
- if(night())return "Сейчас спит";
+ if(asleep())return "Сейчас спит";
  return {hungry:"Хочет кушать",lonely:"Скучает, погладь его",love:"Вы рядом — он счастлив",joy:"Мурлычет от удовольствия",fed:"Спасибо за вкусняшку!"}[p.mood]||"Всё хорошо";
 }
 $("daysCard").onclick=function(){haptic();openSheet(S&&S.partner?"me":"partner")};
@@ -824,7 +826,7 @@ function fillPet(){
  var xp=((p.xp||0)%100);$("pX").style.width=xp+"%";$("pXv").textContent=xp+"/100";
  $("pF").style.width=(100-p.hunger)+"%";$("pFv").textContent=(100-p.hunger)+"%";
  $("pH").style.width=p.love+"%";$("pHv").textContent=p.love+"%";
- $("pBd").textContent=night()?"💤":(PET_BADGE[p.mood]||"✨");
+ $("pBd").textContent=asleep()?"💤":(PET_BADGE[p.mood]||"✨");
  var pv=$("petSvg"),pk=p.kind+"|"+moodOf(p)+"|"+(p.wear||"")+"|"+p.stage;if(pv&&pv.getAttribute("data-k")!==pk){pv.setAttribute("data-k",pk);pv.innerHTML=petSvg(p.kind,moodOf(p),p)}
  fillStreak();fillWardrobe();
  if(p.last){var who=p.last.mine?"Ты":name(S.partner);$("pLast").textContent=who+" "+({feed:"покормил(а)",pet:"погладил(а)",play:"поиграл(а) с ним",care:"позаботился(ась) о нём"}[p.last.type]||"заходил(а)")+" · "+ago(p.last.at)}
