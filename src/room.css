@@ -1,0 +1,83 @@
+/* ===== общая комната v2 ===== */
+#rmSvg{position:absolute;inset:0}#rmSvg svg{width:100%;height:100%;display:block}
+.rmedia{cursor:pointer}
+.rspin{transform-origin:268px 172px;animation:rSpin 1.6s linear infinite}
+@keyframes rSpin{to{transform:rotate(360deg)}}
+.rtv{animation:rTv 2.4s ease-in-out infinite}@keyframes rTv{0%,100%{fill:#8FD3F0}50%{fill:#C9B8F0}}
+.rbulb{animation:wBlink 2.2s ease-in-out infinite}.rbulb:nth-of-type(2n){animation-delay:-1.1s}
+.rneon{filter:drop-shadow(0 0 6px #FF7FB0);animation:wBlink 3s ease-in-out infinite}
+@keyframes wBlink{0%,100%{opacity:1}50%{opacity:.4}}
+.rwx.rain path{animation:rRain .8s linear infinite}.rwx.snow circle{animation:rSnow 3s linear infinite}
+@keyframes rRain{from{transform:translateY(-30px)}to{transform:translateY(40px)}}
+@keyframes rSnow{from{transform:translateY(-30px)}to{transform:translateY(40px)}}
+.rwin{position:absolute;left:50%;top:2%;transform:translateX(-50%);font-size:11px;font-weight:600;color:#fff;background:rgba(73,59,69,.5);padding:2px 9px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.rwin:empty{display:none}
+.rav{position:relative;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer}
+.rmood{position:absolute;right:-6px;top:-6px;font-size:20px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.rmood:empty{display:none}
+.rbub{position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%) scale(.6);max-width:150px;width:max-content;padding:6px 10px;border-radius:14px;background:#fff;color:#493B45;font-size:12px;line-height:1.25;box-shadow:0 6px 16px rgba(0,0,0,.18);opacity:0;transition:.25s cubic-bezier(.3,1.5,.5,1);pointer-events:none;z-index:4;word-break:break-word;text-align:center}
+.rbub::after{content:"";position:absolute;left:50%;bottom:-5px;margin-left:-5px;border:5px solid transparent;border-top-color:#fff;border-bottom:0}
+.rbub.on{opacity:1;transform:translateX(-50%) scale(1)}
+.rav.wob{animation:rWob .6s ease}.rav.tick{animation:rTick .5s ease 2}
+@keyframes rWob{0%,100%{transform:none}25%{transform:rotate(-14deg) scale(.92)}60%{transform:rotate(9deg)}}
+@keyframes rTick{0%,100%{transform:none}25%{transform:translateX(-4px) rotate(-5deg)}75%{transform:translateX(4px) rotate(5deg)}}
+/* руки */
+.rhands{position:absolute;left:30%;right:30%;bottom:40%;height:20px;pointer-events:none;z-index:3}
+.rh{position:absolute;top:8px;height:6px;width:0;border-radius:6px;background:linear-gradient(90deg,#FFD2B8,#F2A08E);transition:width .45s ease;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.rh.me{left:0}.rh.pa{right:0;background:linear-gradient(270deg,#D8CCF6,#A595D8)}
+.rhands.me .rh.me,.rhands.pa .rh.pa{width:42%}
+.rhands.both .rh.me,.rhands.both .rh.pa{width:50%}
+.rhh{position:absolute;left:50%;top:-12px;transform:translateX(-50%) scale(0);font-size:26px;transition:.35s cubic-bezier(.3,1.6,.5,1)}
+.rhands.both .rhh{transform:translateX(-50%) scale(1);animation:rBeat 1.2s ease-in-out infinite}
+.rhh[data-t]::after{content:attr(data-t);position:absolute;left:50%;top:100%;transform:translateX(-50%);font-weight:600;font-size:11px;line-height:1;font-family:inherit;color:#fff;background:rgba(73,59,69,.6);padding:2px 7px;border-radius:999px;margin-top:2px}
+@keyframes rBeat{0%,100%{transform:translateX(-50%) scale(1)}15%{transform:translateX(-50%) scale(1.25)}30%{transform:translateX(-50%) scale(1)}}
+/* питомец */
+.rpet{position:absolute;bottom:3%;left:50%;width:64px;transform:translateX(-50%);transition:left 2.6s ease-in-out;z-index:3;cursor:pointer}
+.rpet.flip svg{transform:scaleX(-1)}.rpet svg{width:100%;height:auto;display:block}
+.rpet.hop{animation:rHop .5s ease}.rpet.nap{opacity:.95}
+@keyframes rHop{0%,100%{margin-bottom:0}40%{margin-bottom:18px}}
+/* летящие подушки */
+.rthrow{position:absolute;bottom:40%;font-size:30px;font-style:normal;z-index:5;animation-duration:.65s;animation-timing-function:ease-in;animation-fill-mode:forwards}
+.rthrow.toPa{left:28%;animation-name:rToPa}.rthrow.toMe{left:66%;animation-name:rToMe}
+@keyframes rToPa{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(70px,-50px) rotate(180deg)}100%{transform:translate(140px,0) rotate(360deg);opacity:.2}}
+@keyframes rToMe{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(-70px,-50px) rotate(-180deg)}100%{transform:translate(-140px,0) rotate(-360deg);opacity:.2}}
+.rhint{text-align:center;font-size:12px;color:var(--muted);margin-top:6px}
+/* фраза, рация, действия */
+.rsay{display:flex;gap:8px;margin-top:12px}.rsay .in{flex:1;margin:0}.rsay .btn{width:48px;flex:none;padding:0;margin:0;font-size:20px}
+.rmic{margin-top:10px}
+.rmic button{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border:0;border-radius:20px;background:linear-gradient(135deg,var(--acc1),var(--acc2));color:#fff;font-weight:600;font-size:16px;line-height:1;font-family:inherit;cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;box-shadow:0 8px 20px rgba(201,130,145,.35);transition:transform .15s}
+.rmic .ri{font-size:22px}
+.rmic button.rec{transform:scale(.97);background:linear-gradient(135deg,#F06E8C,#D84D6E);animation:rRec 1.2s ease-in-out infinite}
+.rmic button:disabled{opacity:.55}
+@keyframes rRec{0%,100%{box-shadow:0 0 0 0 rgba(240,110,140,.5)}50%{box-shadow:0 0 0 12px rgba(240,110,140,0)}}
+.ract{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.ract button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:1px solid var(--line);border-radius:16px;background:var(--inbg);font-size:24px;color:var(--ink);cursor:pointer}
+.ract button span{font-size:12px}.ract button:active{transform:scale(.94)}
+.rjoin{margin-left:6px;border:0;border-radius:999px;padding:4px 10px;background:var(--acc);color:#fff;font-weight:600;font-size:12px;line-height:1.2;font-family:inherit;cursor:pointer}
+.rvoice{display:block;margin:8px auto 0;border:0;border-radius:999px;padding:7px 14px;background:var(--chip);color:var(--ink);font-weight:600;font-size:13px;line-height:1;font-family:inherit;cursor:pointer}
+/* карточки ниже */
+.rcard{margin-top:14px}
+.rch{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.rch b{font-size:15px}.rch small{font-size:12px;color:var(--muted)}
+.rmoods{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
+.rmoods button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px;border:1px solid var(--line);border-radius:14px;background:var(--inbg);font-size:20px;color:var(--ink);cursor:pointer}
+.rmoods button span{font-size:10px;color:var(--muted)}.rmoods button.on{border-color:var(--acc);background:var(--navon)}
+.rdraw{position:relative;aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#B8C9DA,#D5DEE8 40%,#C2CFDD);box-shadow:inset 0 0 30px rgba(255,255,255,.6)}
+.rdraw::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.35),transparent 40%),radial-gradient(circle at 80% 70%,rgba(255,255,255,.3),transparent 45%);pointer-events:none}
+.rdraw canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.rclr{border:0;background:var(--chip);border-radius:999px;padding:5px 11px;font-weight:600;font-size:12px;line-height:1;font-family:inherit;color:var(--ink);cursor:pointer}
+.rcols{display:flex;gap:8px;margin-top:10px;justify-content:center}
+.rcols button{width:28px;height:28px;border-radius:50%;border:2px solid rgba(0,0,0,.08);cursor:pointer}.rcols button.on{box-shadow:0 0 0 3px var(--acc)}
+.rcwrap{display:flex;justify-content:center;padding:8px 0}
+.rcan{position:relative;width:56px;height:120px;cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.rcan .bd{position:absolute;left:8px;right:8px;bottom:0;height:84px;border-radius:10px 10px 6px 6px;background:linear-gradient(90deg,#FBE9DD,#FFF7F0 50%,#F2D9C9)}
+.rcan .bd::before{content:"";position:absolute;left:50%;top:-8px;width:2px;height:10px;margin-left:-1px;background:#4A3B42}
+.rcan .fl{position:absolute;left:50%;top:6px;width:20px;height:30px;margin-left:-10px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#FFF6C8,#FFC24A 50%,#FF8A3D);opacity:0;transform:scale(.3);transition:.4s;filter:drop-shadow(0 0 10px rgba(255,190,80,.8))}
+.rcan.half .fl{opacity:.55;transform:scale(.55)}
+.rcan.lit .fl{opacity:1;transform:scale(1);animation:rFlame 1s ease-in-out infinite alternate}
+@keyframes rFlame{from{transform:scale(1) rotate(-3deg)}to{transform:scale(1.08,1.15) rotate(3deg)}}
+.rdl{font-size:13px;font-weight:600;margin:10px 0 6px}
+.rdo{display:flex;flex-wrap:wrap;gap:6px}
+.rdo button{border:1px solid var(--line);border-radius:12px;background:var(--inbg);padding:7px 10px;font-weight:500;font-size:13px;line-height:1.2;font-family:inherit;color:var(--ink);cursor:pointer;text-align:left}
+.rdo button small{display:block;font-size:10px;color:var(--muted)}
+.rdo button.on{border-color:var(--acc);background:var(--navon);font-weight:600}.rdo button.lock{opacity:.6}
+@media (prefers-reduced-motion:reduce){.rspin,.rtv,.rbulb,.rneon,.rwx *,.rhh,.rcan .fl,.rmic button.rec{animation:none!important}}
