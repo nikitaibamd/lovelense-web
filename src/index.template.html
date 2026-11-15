@@ -715,7 +715,7 @@ var SHEETS={
    var iseg=function(id,key,opts){var e=$(id);opts.forEach(function(o){var on=String(io[key])===String(o[0]);var x=node('<button type="button" class="'+(on?"on":"")+'">'+o[1]+'</button>');
     x.onclick=function(){window.llSet(key,o[0]);haptic();Array.prototype.forEach.call(e.children,function(y){y.classList.toggle("on",y===x)})};e.appendChild(x)})};
    iseg("iIsl","island",[[true,"Вкл"],[false,"Выкл"]]);
-   iseg("iInfo","info",[["both","По очереди"],["dist","Км"],["bat","Заряд"]]);
+   iseg("iInfo","info",[["both","По очереди"],["bat","Заряд"]]);
    iseg("iStyle","style",[["peach","Персик"],["rose","Роза"],["night","Ночь"],["glass","Стекло"]]);
    iseg("iDet","detail",[["full","Подробная"],["compact","Компактная"]]);
   }
