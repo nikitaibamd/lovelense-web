@@ -960,7 +960,7 @@ function setPhoto(el,u){
  else{el.style.backgroundImage="";el.textContent=u?initial(u):"♡"}
 }
 function online(){if(!S||!S.partner||S.partner_active===false)return false;var t=Math.max(S.partner_bat&&S.partner_bat.t||0,S.partner_loc&&S.partner_loc.t||0);return Date.now()-t<10*60000}
-function batTxt(b){if(!b||typeof b.level!=="number")return "";return (b.charging?"⚡ ":"🔋 ")+b.level+"%"}
+function batTxt(b){if(!b||typeof b.level!=="number")return "";var m=b.t?Math.round((Date.now()-b.t)/60000):0;return (b.charging?"⚡ ":"🔋 ")+b.level+"%"+(m>=30?" · "+(m<90?m+" мин":m<2880?Math.round(m/60)+" ч":Math.round(m/1440)+" дн"):"")}
 
 // ---------- фон ----------
 function prefs(){var p={};try{p=JSON.parse(ls("ll_prefs")||"{}")||{}}catch(e){}var o={};for(var k in PREF_DEF)o[k]=p[k]!=null?p[k]:PREF_DEF[k];if(!p.bg&&ls("ll_bg"))o.bg=ls("ll_bg");if(!BGS[o.bg])o.bg=PREF_DEF.bg;return o}
@@ -3045,7 +3045,9 @@ function start(){
  fxInit();
  initRoam();
  setInterval(function(){lastPut=0;put()},30000);
- if(navigator.getBattery){navigator.getBattery().then(function(b){
+ // заряд шлём только с телефона: ноутбук или Telegram Desktop не должны перезаписывать заряд телефона
+ var batPhone=/^android/.test(String(TG&&TG.platform||""));
+ if(batPhone&&!window.LL_MAC&&navigator.getBattery){navigator.getBattery().then(function(b){
   var send=function(){call("/v2/update",{level:Math.round(b.level*100),charging:b.charging}).catch(function(){})};
   b.addEventListener("levelchange",send);b.addEventListener("chargingchange",send);send();setInterval(send,60000);
  }).catch(function(){})}
