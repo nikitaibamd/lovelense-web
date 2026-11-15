@@ -166,8 +166,10 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 .btn.danger{background:transparent;color:#c4575f;border:1px solid rgba(196,87,95,.35)}
 .btn:active,.row:active,.mi:active,.round:active,.tile:active{transform:scale(.98)}
 .btn:disabled{opacity:.55}
-.in{width:100%;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--inbg);color:var(--ink);color-scheme:light dark;font:inherit;font-size:16px;outline:none}
+.in{box-sizing:border-box;max-width:100%;min-width:0;width:100%;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--inbg);color:var(--ink);color-scheme:light dark;font:inherit;font-size:16px;outline:none}
 .in:focus{border-color:var(--acc)}
+input[type=date].in{-webkit-appearance:none;appearance:none;display:block;min-height:48px;text-align:left}
+input[type=date].in::-webkit-date-and-time-value{text-align:left}
 .prow{display:flex;align-items:center;gap:12px;margin-top:12px}
 .pav{width:48px;height:48px;border-radius:50%;flex:none;background:linear-gradient(160deg,var(--acc1),var(--acc)) center/cover;display:flex;align-items:center;justify-content:center;color:#fff;font:600 20px Georgia,serif}
 .pnm{flex:1;min-width:0}.pnm b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pnm span{font-size:13px;color:var(--muted)}
@@ -694,6 +696,21 @@ var SHEETS={
     grid.appendChild(x);
    });
   });
+  // iPhone-приложение: Dynamic Island и карточка на экране блокировки
+  if(window.LL_IOS&&window.llSet){
+   var io=window.LL_IOS,ib=box(B,'<div class="lab">iPhone: остров и виджет</div>'+
+    '<div class="opt"><div class="lab">Питомец в Dynamic Island</div><div class="seg" id="iIsl"></div></div>'+
+    '<div class="opt"><div class="lab">Рядом с питомцем в острове</div><div class="seg" id="iInfo"></div></div>'+
+    '<div class="opt"><div class="lab">Цвет карточки на экране блокировки</div><div class="seg" id="iStyle"></div></div>'+
+    '<div class="opt"><div class="lab">Карточка</div><div class="seg" id="iDet"></div></div>'+
+    '<div class="hint">Изменения появятся в острове через несколько секунд</div>');
+   var iseg=function(id,key,opts){var e=$(id);opts.forEach(function(o){var on=String(io[key])===String(o[0]);var x=node('<button type="button" class="'+(on?"on":"")+'">'+o[1]+'</button>');
+    x.onclick=function(){window.llSet(key,o[0]);haptic();Array.prototype.forEach.call(e.children,function(y){y.classList.toggle("on",y===x)})};e.appendChild(x)})};
+   iseg("iIsl","island",[[true,"Вкл"],[false,"Выкл"]]);
+   iseg("iInfo","info",[["both","По очереди"],["dist","Км"],["bat","Заряд"]]);
+   iseg("iStyle","style",[["peach","Персик"],["rose","Роза"],["night","Ночь"],["glass","Стекло"]]);
+   iseg("iDet","detail",[["full","Подробная"],["compact","Компактная"]]);
+  }
   var c=box(B,'<div class="lab">Кастомизация</div>'+
    '<div class="opt"><div class="lab">Акцентный цвет</div><div class="sw6" id="cAcc"></div></div>'+
    '<div class="opt"><div class="lab">Карточки</div><div class="seg" id="cCards"></div></div>'+
