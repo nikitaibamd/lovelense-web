@@ -394,6 +394,25 @@ canvas.clv{display:block;width:100%}
 .tdt{text-align:center}.tdtb{font-size:26px;font-weight:600;margin-top:4px}.tdtw{font-size:15px;margin-top:4px}.tdtc{font-size:20px;font-weight:600;color:var(--acc2);margin-top:8px}
 .hubnav.many{overflow-x:auto;scrollbar-width:none}.hubnav.many::-webkit-scrollbar{display:none}.hubnav.many button{flex:none;min-width:68px}
 
+.g2h b{display:block;font-size:18px}.g2h small{font-size:13px;color:var(--muted)}
+.g2q{padding:12px 14px;margin-top:10px}.g2qt{font-size:15px;font-weight:600;margin-bottom:8px}
+.g2ab{display:flex;gap:8px}.g2ab button{flex:1;padding:10px;border-radius:14px;border:1px solid var(--line);background:var(--inbg);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.g2ab button.on{background:linear-gradient(160deg,var(--acc1),var(--acc2));color:#fff;border-color:transparent}
+.g2q.res .g2r{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted)}.g2q.res .g2r b{margin-left:auto;font-size:20px}
+.g2q.res.ok{box-shadow:0 0 0 2px var(--acc1) inset}
+.g2score{text-align:center}.g2score b{display:block;font-size:34px;color:var(--acc2)}.g2score small{font-size:14px}
+.g2wait{text-align:center;font-size:16px;line-height:1.6}.g2wait small{color:var(--muted)}
+.g2st{text-align:center;font-size:16px;font-weight:600;margin:14px 0 10px;color:var(--muted)}.g2st.you{color:var(--acc2);animation:breathe 2.4s ease-in-out infinite}
+.g2ttt{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:340px;margin:0 auto}
+.g2ttt button{aspect-ratio:1;border-radius:14px;border:0;background:var(--card);box-shadow:var(--shadow);font-size:30px;font-weight:700;color:var(--acc2);cursor:pointer}
+.g2ttt button.f{animation:pop .25s}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+.g2sw{margin-top:10px}.g2sea{display:grid;gap:3px;max-width:330px;margin:0 auto}
+.g2sea button{aspect-ratio:1;border:0;border-radius:6px;background:rgba(110,182,236,.28);color:#fff;font-size:15px;font-weight:700;padding:0;cursor:pointer}
+.g2sea button.s1{background:#8C7A84}.g2sea button.s2{background:rgba(110,182,236,.12);color:var(--muted)}.g2sea button.s3{background:#F08A5D}.g2sea button.s4{background:#C0392B}
+.g2ph{padding:6px;margin-top:10px}.g2ph img{width:100%;border-radius:14px;display:block;max-height:300px;object-fit:cover}
+.g2map{height:260px;border-radius:18px;overflow:hidden;margin-top:10px;box-shadow:var(--shadow)}
+
 /* касание сердца */
 .hbtn{position:relative;width:56px;height:56px;flex:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .hbtn .bigheart{display:block;pointer-events:none}
@@ -703,7 +722,7 @@ input[type=date].in::-webkit-date-and-time-value{text-align:left}
   <div class="nowtog" id="nowTog" style="display:none"></div>
   <div class="card meet" id="meetCard" style="display:none"></div>
   <button class="card hubc" id="hubMedia" type="button"><span class="hic">🎬<i>🎧</i></span><span class="htx"><b>Смотрим и слушаем</b><small id="hubMediaSub">Кино · Музыка · Общая комната</small></span><span class="chev"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g></svg></span></button>
-  <button class="card hubc" id="hubGames" type="button"><span class="hic">🎮</span><span class="htx"><b>Игры</b><small id="hubGamesSub">Шахматы · Угадайка · Раскраска</small></span><span class="gbadge" id="hubGamesBadge"></span><span class="chev"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g></svg></span></button>
+  <button class="card hubc" id="hubGames" type="button"><span class="hic">🎮</span><span class="htx"><b>Игры</b><small id="hubGamesSub">Шахматы · Морской бой · 5×5 · Кто из нас · Где я</small></span><span class="gbadge" id="hubGamesBadge"></span><span class="chev"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g></svg></span></button>
   <div id="musicHold" style="display:none">
    <button class="btn sec" id="mFind" type="button">🔍 Найти песню или плейлист</button>
    <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
@@ -2078,7 +2097,7 @@ function hubOpen(kind,sub){
  var H=HUBS[kind];if(!H)return;
  SHEETS.hub={t:H.t,r:function(){}};openSheet("hub");HUB.returnTo=null;HUB.kind=kind;
  $("sheet").classList.add("hub");
- var nav=node('<div class="hubnav" id="hubNav"></div>');
+ var nav=node('<div class="hubnav'+(H.tabs.length>4?' many':'')+'" id="hubNav"></div>');
  H.tabs.forEach(function(t){var b=node('<button type="button" data-s="'+t[0]+'"><span class="hi">'+t[1]+'</span><span>'+t[2]+'</span></button>');b.onclick=function(){if(HUB.sub!==t[0]){haptic();hubSub(t[0])}};nav.appendChild(b)});
  $("sheet").appendChild(nav);
  hubSub(sub||H.tabs[0][0]);hubBadges();
@@ -2379,6 +2398,95 @@ function sleepAudio(sound,end){
  g.parentNode.insertBefore(us,g.nextSibling);g.parentNode.insertBefore(lv,us.nextSibling);
  us.onclick=function(){haptic();hubOpen("us","q")};lv.onclick=function(){haptic();hubOpen("live",SLP.state?"sleep":"date")};
 })();
+
+// ===================== Ещё игры вдвоём =====================
+HUBS.games.tabs=HUBS.games.tabs.concat([["who","🤔","Кто из нас"],["ttt","⭕","5×5"],["sea","🚢","Бой"],["where","📍","Где я?"]]);
+function g2(kind,action,x){var b=x||{};b.kind=kind;b.action=action||"get";return call("/v2/pair/play",b)}
+function g2poll(kind,draw){var last=-1;var t=function(){g2(kind).then(function(r){if(r.rev!==last){last=r.rev;draw(r)}}).catch(function(){})};clearInterval(GM.timer);GM.timer=setInterval(t,3000);return function(r){last=r.rev;draw(r)}}
+function g2head(B,title,sub){tAdd(B,'<div class="card box g2h"><b>'+title+'</b><small>'+sub+'</small></div><div id="g2b"></div>')}
+var G2ERR={bad_move:"Сейчас так нельзя",no_location:"Нет твоей геопозиции — включи её, чтобы загадать место",bad_photo:"Фото не подошло"};
+function g2err(e){toast(G2ERR[e&&e.message]||"Не получилось")}
+
+// --- «Кто из нас?» ---
+SHEETS.g_who={t:"Кто из нас?",r:function(B){
+ g2head(B,"🤔 Кто из нас?","Честно отвечай про вас двоих. Когда ответите оба — увидите, где совпали");
+ var sel=[];
+ var draw=g2poll("who",function(r){var W=$("g2b");if(!W)return;W.innerHTML="";
+  if(!r.mine){
+   if(sel.length!==r.qs.length)sel=r.qs.map(function(){return -1});
+   r.qs.forEach(function(q,i){var e=node('<div class="card g2q"><div class="g2qt"></div><div class="g2ab"><button type="button" data-v="1">🙋 Я</button><button type="button" data-v="0">👉 '+esc(pingName())+'</button></div></div>');
+    e.querySelector(".g2qt").textContent=(i+1)+". "+q;
+    Array.prototype.forEach.call(e.querySelectorAll("button"),function(b){b.classList.toggle("on",sel[i]===+b.getAttribute("data-v"));b.onclick=function(){haptic();sel[i]=+b.getAttribute("data-v");Array.prototype.forEach.call(e.querySelectorAll("button"),function(y){y.classList.toggle("on",y===b)})}});
+    W.appendChild(e)});
+   var go=node('<button class="btn" type="button">Готово ✨</button>');W.appendChild(go);
+   if(r.partner_done)W.appendChild(node('<div class="hint" style="text-align:center">'+esc(pingName())+' уже ответил(а) 👀</div>'));
+   go.onclick=function(){if(sel.indexOf(-1)>=0){toast("Ответь на все вопросы");return}haptic("medium");g2("who","answer",{ans:sel}).then(draw).catch(g2err)};
+  }else if(!r.partner){W.appendChild(node('<div class="card box g2wait">⏳ Ждём ответы '+'партнёра'+'…<br><small>Как только '+esc(pingName())+' ответит, здесь появятся совпадения</small></div>'))}
+  else{var same=0;
+   r.qs.forEach(function(q,i){var me=r.mine[i],pa=r.partner[i],ok=me!==pa;if(ok)same++; // «я» у меня = «ты» у партнёра — значит совпали
+    var e=node('<div class="card g2q res'+(ok?" ok":"")+'"><div class="g2qt"></div><div class="g2r"><span>ты: '+(me?"я":esc(pingName()))+'</span><span>'+esc(pingName())+': '+(pa?esc(pingName()):"ты")+'</span><b>'+(ok?"💞":"🤔")+'</b></div></div>');
+    e.querySelector(".g2qt").textContent=q;W.appendChild(e)});
+   W.insertBefore(node('<div class="card box g2score"><b>'+same+' из '+r.qs.length+'</b><small>'+(same>=r.qs.length-1?"Вы чувствуете друг друга 💞":same>=r.qs.length/2?"Неплохо! Есть что обсудить 😊":"Ого, вот это разные взгляды 😄")+'</small></div>'),W.firstChild);
+   var nx=node('<button class="btn" type="button">Новые вопросы</button>');nx.onclick=function(){haptic();sel=[];g2("who","new").then(draw).catch(g2err)};W.appendChild(nx);
+  }});
+ g2("who").then(draw).catch(function(){});
+}};
+
+// --- крестики-нолики 5×5 (4 в ряд) ---
+SHEETS.g_ttt={t:"5×5",r:function(B){
+ g2head(B,"⭕ Крестики-нолики 5×5","Собери 4 в ряд — по горизонтали, вертикали или диагонали");
+ var draw=g2poll("ttt",function(r){var W=$("g2b");if(!W)return;W.innerHTML="";
+  var st=r.win==="me"?"Ты победил(а)! 🏆":r.win==="partner"?esc(pingName())+" победил(а) 🙈":r.win==="draw"?"Ничья 🤝":r.my_turn?"Твой ход — ты "+(r.me===1?"✕":"◯"):"Ход партнёра…";
+  W.appendChild(node('<div class="g2st'+(r.my_turn?" you":"")+'">'+st+'</div>'));
+  var g=node('<div class="g2ttt"></div>');
+  r.b.forEach(function(v,i){var c=node('<button type="button" class="'+(v?"f":"")+'">'+(v===1?"✕":v===2?"◯":"")+'</button>');
+   c.onclick=function(){if(!r.my_turn||v)return;haptic("medium");c.textContent=r.me===1?"✕":"◯";c.classList.add("f");g2("ttt","move",{i:i}).then(draw).catch(g2err)};g.appendChild(c)});
+  W.appendChild(g);
+  if(r.win){var nx=node('<button class="btn" type="button">Ещё партию</button>');nx.onclick=function(){haptic();g2("ttt","new").then(draw).catch(g2err)};W.appendChild(nx)}
+ });
+ g2("ttt").then(draw).catch(function(){});
+}};
+
+// --- морской бой 7×7 ---
+SHEETS.g_sea={t:"Морской бой",r:function(B){
+ g2head(B,"🚢 Морской бой","Корабли расставлены сами. Попал — стреляешь ещё раз");
+ var draw=g2poll("sea",function(r){var W=$("g2b");if(!W)return;W.innerHTML="";
+  var st=r.win==="me"?"Флот партнёра потоплен! 🏆":r.win==="partner"?"Твой флот потоплен 🏴‍☠️":r.my_turn?"Твой выстрел 🎯":"Стреляет "+esc(pingName())+"…";
+  W.appendChild(node('<div class="g2st'+(r.my_turn?" you":"")+'">'+st+'</div>'));
+  var grid=function(cells,shoot,label){var w=node('<div class="g2sw"><div class="lab">'+label+'</div><div class="g2sea" style="grid-template-columns:repeat('+r.n+',1fr)"></div></div>'),g=w.lastChild;
+   cells.forEach(function(v,i){var c=node('<button type="button" class="s'+v+'">'+(v===2?"·":v===3?"✹":v===4?"✖":"")+'</button>');
+    if(shoot&&!v)c.onclick=function(){if(!r.my_turn)return;haptic("heavy");c.classList.add("s2");g2("sea","shoot",{i:i}).then(function(x){draw(x);var nv=x.theirs[i];if(nv>=3){haptic("heavy");toast(nv===4?"Потоплен! 💥":"Попал! 🔥")}}).catch(g2err)};
+    g.appendChild(c)});return w};
+  W.appendChild(grid(r.theirs,true,"Флот "+esc(pingName())));
+  W.appendChild(grid(r.mine,false,"Твой флот"));
+  if(r.win){var nx=node('<button class="btn" type="button">Новый бой</button>');nx.onclick=function(){haptic();g2("sea","new").then(draw).catch(g2err)};W.appendChild(nx)}
+ });
+ g2("sea").then(draw).catch(function(){});
+}};
+
+// --- «Угадай, где я» ---
+SHEETS.g_where={t:"Где я?",r:function(B){
+ g2head(B,"📍 Угадай, где я","Сфоткай, что вокруг, — партнёр поставит точку на карте. Чем ближе, тем больше очков");
+ var map=null;
+ var draw=g2poll("where",function(r){var W=$("g2b");if(!W)return;W.innerHTML="";map=null;var R=r.round;
+  var newBtn=function(t){var l=node('<label class="btn" style="text-align:center">'+t+'<input type="file" accept="image/*" style="display:none"></label>');
+   l.querySelector("input").onchange=function(){var f=this.files&&this.files[0];if(!f)return;toast("Загружаю…");var img=new Image();
+    img.onload=function(){var k=Math.min(1,900/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+     var q=.7,u=c.toDataURL("image/jpeg",q);while(u.length>290000&&q>.3){q-=.1;u=c.toDataURL("image/jpeg",q)}
+     g2("where","new",{photo:u}).then(function(x){toast("Загадано! Ждём догадку 📍");draw(x)}).catch(g2err)};img.src=URL.createObjectURL(f)};return l};
+  if(!R){W.appendChild(newBtn("📷 Загадать моё место"));return}
+  W.appendChild(node('<div class="card g2ph"><img alt=""></div>'));W.lastChild.firstChild.src=R.photo;
+  if(R.mine&&!R.guess){W.appendChild(node('<div class="g2st">Ждём, где тебя поищет '+esc(pingName())+'…</div>'));W.appendChild(newBtn("Загадать другое место"));return}
+  W.appendChild(node('<div class="g2map" id="g2map"></div>'));
+  setTimeout(function(){if(!$("g2map")||typeof L==="undefined")return;map=L.map("g2map",{zoomControl:false}).setView([50,50],2);tiles(map);
+   if(R.guess){var a=[R.answer.lat,R.answer.lng],g=[R.guess.lat,R.guess.lng];L.marker(a).addTo(map).bindTooltip("было тут");L.circleMarker(g,{radius:8,color:"#C98291"}).addTo(map).bindTooltip("догадка");L.polyline([a,g],{color:"#C98291",dashArray:"6 6"}).addTo(map);map.fitBounds([a,g],{padding:[30,30],maxZoom:12})}
+   else{var mk=null;map.on("click",function(e){if(!mk)mk=L.circleMarker(e.latlng,{radius:9,color:"#C98291"}).addTo(map);else mk.setLatLng(e.latlng);var b=$("g2go");if(b){b.disabled=false;b.dataset.ll=e.latlng.lat+","+e.latlng.lng}})}},50);
+  if(R.guess){var km=R.guess.km;W.appendChild(node('<div class="card box g2score"><b>'+(km<1?Math.round(km*1000)+" м":Math.round(km)+" км")+'</b><small>'+R.guess.score+' очков из 5000 '+(km<20?"— почти в точку! 🎯":km<300?"— тепло 🔥":"— далековато 😄")+'</small></div>'));W.appendChild(newBtn("📷 Теперь моя очередь загадать"))}
+  else{var go=node('<button class="btn" id="g2go" type="button" disabled>Я думаю, это здесь 📍</button>');W.appendChild(go);
+   go.onclick=function(){var p=(go.dataset.ll||"").split(",");if(p.length<2)return;haptic("medium");g2("where","guess",{lat:+p[0],lng:+p[1]}).then(draw).catch(g2err)}}
+ });
+ g2("where").then(draw).catch(function(){});
+}};
 
 function openLink(u){try{if(TG&&TG.openTelegramLink)TG.openTelegramLink(u);else window.open(u,"_blank")}catch(e){window.open(u,"_blank")}}
 

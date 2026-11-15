@@ -57,6 +57,7 @@ button{font:inherit;color:inherit}
 %%HUBCSS%%
 %%PLAYERCSS%%
 %%TOGCSS%%
+%%G2CSS%%
 /* касание сердца */
 .hbtn{position:relative;width:56px;height:56px;flex:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .hbtn .bigheart{display:block;pointer-events:none}
@@ -366,7 +367,7 @@ input[type=date].in::-webkit-date-and-time-value{text-align:left}
   <div class="nowtog" id="nowTog" style="display:none"></div>
   <div class="card meet" id="meetCard" style="display:none"></div>
   <button class="card hubc" id="hubMedia" type="button"><span class="hic">🎬<i>🎧</i></span><span class="htx"><b>Смотрим и слушаем</b><small id="hubMediaSub">Кино · Музыка · Общая комната</small></span><span class="chev">%%chev%%</span></button>
-  <button class="card hubc" id="hubGames" type="button"><span class="hic">🎮</span><span class="htx"><b>Игры</b><small id="hubGamesSub">Шахматы · Угадайка · Раскраска</small></span><span class="gbadge" id="hubGamesBadge"></span><span class="chev">%%chev%%</span></button>
+  <button class="card hubc" id="hubGames" type="button"><span class="hic">🎮</span><span class="htx"><b>Игры</b><small id="hubGamesSub">Шахматы · Морской бой · 5×5 · Кто из нас · Где я</small></span><span class="gbadge" id="hubGamesBadge"></span><span class="chev">%%chev%%</span></button>
   <div id="musicHold" style="display:none">
    <button class="btn sec" id="mFind" type="button">🔍 Найти песню или плейлист</button>
    <div class="mhere" id="mHere"><i></i><span>Вместе</span></div>
@@ -778,6 +779,7 @@ var SHEETS={
 %%GAMESJS%%
 %%HUBJS%%
 %%TOGJS%%
+%%G2JS%%
 function openLink(u){try{if(TG&&TG.openTelegramLink)TG.openTelegramLink(u);else window.open(u,"_blank")}catch(e){window.open(u,"_blank")}}
 
 // --- партнёр ---

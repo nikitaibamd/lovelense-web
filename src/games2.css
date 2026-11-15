@@ -1,0 +1,18 @@
+.g2h b{display:block;font-size:18px}.g2h small{font-size:13px;color:var(--muted)}
+.g2q{padding:12px 14px;margin-top:10px}.g2qt{font-size:15px;font-weight:600;margin-bottom:8px}
+.g2ab{display:flex;gap:8px}.g2ab button{flex:1;padding:10px;border-radius:14px;border:1px solid var(--line);background:var(--inbg);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.g2ab button.on{background:linear-gradient(160deg,var(--acc1),var(--acc2));color:#fff;border-color:transparent}
+.g2q.res .g2r{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted)}.g2q.res .g2r b{margin-left:auto;font-size:20px}
+.g2q.res.ok{box-shadow:0 0 0 2px var(--acc1) inset}
+.g2score{text-align:center}.g2score b{display:block;font-size:34px;color:var(--acc2)}.g2score small{font-size:14px}
+.g2wait{text-align:center;font-size:16px;line-height:1.6}.g2wait small{color:var(--muted)}
+.g2st{text-align:center;font-size:16px;font-weight:600;margin:14px 0 10px;color:var(--muted)}.g2st.you{color:var(--acc2);animation:breathe 2.4s ease-in-out infinite}
+.g2ttt{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:340px;margin:0 auto}
+.g2ttt button{aspect-ratio:1;border-radius:14px;border:0;background:var(--card);box-shadow:var(--shadow);font-size:30px;font-weight:700;color:var(--acc2);cursor:pointer}
+.g2ttt button.f{animation:pop .25s}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+.g2sw{margin-top:10px}.g2sea{display:grid;gap:3px;max-width:330px;margin:0 auto}
+.g2sea button{aspect-ratio:1;border:0;border-radius:6px;background:rgba(110,182,236,.28);color:#fff;font-size:15px;font-weight:700;padding:0;cursor:pointer}
+.g2sea button.s1{background:#8C7A84}.g2sea button.s2{background:rgba(110,182,236,.12);color:var(--muted)}.g2sea button.s3{background:#F08A5D}.g2sea button.s4{background:#C0392B}
+.g2ph{padding:6px;margin-top:10px}.g2ph img{width:100%;border-radius:14px;display:block;max-height:300px;object-fit:cover}
+.g2map{height:260px;border-radius:18px;overflow:hidden;margin-top:10px;box-shadow:var(--shadow)}

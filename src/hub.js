@@ -12,7 +12,7 @@ function hubOpen(kind,sub){
  var H=HUBS[kind];if(!H)return;
  SHEETS.hub={t:H.t,r:function(){}};openSheet("hub");HUB.returnTo=null;HUB.kind=kind;
  $("sheet").classList.add("hub");
- var nav=node('<div class="hubnav" id="hubNav"></div>');
+ var nav=node('<div class="hubnav'+(H.tabs.length>4?' many':'')+'" id="hubNav"></div>');
  H.tabs.forEach(function(t){var b=node('<button type="button" data-s="'+t[0]+'"><span class="hi">'+t[1]+'</span><span>'+t[2]+'</span></button>');b.onclick=function(){if(HUB.sub!==t[0]){haptic();hubSub(t[0])}};nav.appendChild(b)});
  $("sheet").appendChild(nav);
  hubSub(sub||H.tabs[0][0]);hubBadges();
