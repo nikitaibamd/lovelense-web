@@ -168,7 +168,10 @@ html[data-cards=dark] .nav button.on{color:var(--acc1)}
 .btn:disabled{opacity:.55}
 .in{box-sizing:border-box;max-width:100%;min-width:0;width:100%;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--inbg);color:var(--ink);color-scheme:light dark;font:inherit;font-size:16px;outline:none}
 .in:focus{border-color:var(--acc)}
-input[type=date].in{-webkit-appearance:none;appearance:none;display:block;min-height:48px;text-align:left}
+.dwrap{position:relative;width:100%;max-width:100%;overflow:hidden;border-radius:16px}
+input[type=date].in{-webkit-appearance:none;appearance:none;display:block;width:100%!important;max-width:100%!important;min-width:0!important;min-height:48px;line-height:22px;text-align:left;margin:0}
+input[type=date].in::-webkit-date-and-time-value{text-align:left;margin:0;min-width:0}
+input[type=date].in::-webkit-datetime-edit{padding:0}
 input[type=date].in::-webkit-date-and-time-value{text-align:left}
 .prow{display:flex;align-items:center;gap:12px;margin-top:12px}
 .pav{width:48px;height:48px;border-radius:50%;flex:none;background:linear-gradient(160deg,var(--acc1),var(--acc)) center/cover;display:flex;align-items:center;justify-content:center;color:#fff;font:600 20px Georgia,serif}
@@ -679,7 +682,7 @@ var SHEETS={
   var live=function(){$("mpBat").textContent=batTxt(S&&S.my_bat)||"—";$("mpGeo").textContent=pos.me?"обновлена "+ago(pos.me.t):geoMsg};
   live();cur.live=live;
   if(S&&S.partner){
-   var d=box(B,'<div class="lab">Дата начала отношений (общая для вас двоих)</div><input class="in" type="date" id="mpStart" max="'+iso(new Date())+'" value="'+esc(S.meta&&S.meta.start_date||"")+'"><button class="btn" id="mpSave" type="button">Сохранить</button>');
+   var d=box(B,'<div class="lab">Дата начала отношений (общая для вас двоих)</div><div class="dwrap"><input class="in" type="date" id="mpStart" max="'+iso(new Date())+'" value="'+esc(S.meta&&S.meta.start_date||"")+'"></div><button class="btn" id="mpSave" type="button">Сохранить</button>');
    $("mpSave").onclick=function(){var v=$("mpStart").value||null;call("/v2/pair/meta",{start_date:v}).then(function(x){S.meta=x.meta;render();haptic("medium");toast("Сохранено ♡")}).catch(function(e){toast(ERR[e.message]||"Не получилось сохранить")})};
   }
  }},
@@ -782,7 +785,7 @@ function renderPartner(B){
   var p=d.partner,b=box(B,'<div class="prow" style="margin-top:0"><div class="pav" id="ppAv"></div><div class="pnm"><b>'+esc(name(p))+'</b><span>'+(d.partner_active===false?"Отписался от канала — данные скрыты":online()?"● Онлайн":"Не в сети")+'</span></div></div>'+
    '<div class="kv" style="margin-top:8px"><span>Заряд</span><b>'+esc(batTxt(d.partner_bat)||"—")+'</b></div><div class="kv"><span>Время у партнёра</span><b>'+(d.partner_tz?clock(d.partner_tz):"—")+'</b></div><div class="kv"><span>Геопозиция</span><b>'+(d.partner_loc?ago(d.partner_loc.t):"—")+'</b></div>');
   setPhoto($("ppAv"),p);
-  box(B,'<div class="lab">Следующая встреча (общая)</div><input class="in" type="date" id="ppMeet" min="'+iso(new Date())+'" value="'+esc(d.meta&&d.meta.meet_date||"")+'"><button class="btn" id="ppSave" type="button">Сохранить</button>');
+  box(B,'<div class="lab">Следующая встреча (общая)</div><div class="dwrap"><input class="in" type="date" id="ppMeet" min="'+iso(new Date())+'" value="'+esc(d.meta&&d.meta.meet_date||"")+'"></div><button class="btn" id="ppSave" type="button">Сохранить</button>');
   $("ppSave").onclick=function(){var v=$("ppMeet").value||null;call("/v2/pair/meta",{meet_date:v}).then(function(x){S.meta=x.meta;haptic("medium");toast(v?"Встреча назначена ♡":"Дата убрана")}).catch(function(e){toast(ERR[e.message]||"Не получилось сохранить")})};
   var u=box(B,'<button class="btn danger" id="ppUn" type="button" style="margin-top:0">Отвязать партнёра</button>');
   $("ppUn").onclick=function(){confirmAsk("Отвязать партнёра? Вы перестанете видеть друг друга.",function(){act("/v2/unlink",{})})};
