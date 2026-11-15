@@ -33,3 +33,7 @@
 .tfw span{padding:4px 12px;border-radius:999px;background:var(--inbg);font-size:13px;color:var(--muted);transition:all .4s}.tfw span.on{background:linear-gradient(160deg,var(--acc1),var(--acc2));color:#fff}
 .tdt{text-align:center}.tdtb{font-size:26px;font-weight:600;margin-top:4px}.tdtw{font-size:15px;margin-top:4px}.tdtc{font-size:20px;font-weight:600;color:var(--acc2);margin-top:8px}
 .hubnav.many{overflow-x:auto;scrollbar-width:none}.hubnav.many::-webkit-scrollbar{display:none}.hubnav.many button{flex:none;min-width:68px}
+
+/* значки-уведомления у вкладок отключены */
+.nbadge,.gbadge,#navBadge,#hubGamesBadge{display:none!important}
+.nav button.live::after,.hubnav button::after{display:none!important}
