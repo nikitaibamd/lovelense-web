@@ -7,7 +7,7 @@ var HUBS={
 var MUSIC_IDS=["mFind","mHere","mNowCard","mQCard"];
 function musicHome(){var h=$("musicHold");if(!h)return;MUSIC_IDS.forEach(function(id){var e=$(id);if(e&&e.parentNode!==h)h.appendChild(e)})}
 // уборка перед закрытием или сменой страницы: музыка возвращается на место, видео и комната останавливаются
-function hubCleanup(){musicHome();movieDestroy();var n=$("hubNav");if(n)n.remove();$("sheet").classList.remove("hub");HUB.kind=null;HUB.sub=null}
+function hubCleanup(){if(typeof togStop==="function")togStop();musicHome();movieDestroy();var n=$("hubNav");if(n)n.remove();$("sheet").classList.remove("hub");HUB.kind=null;HUB.sub=null}
 function hubOpen(kind,sub){
  var H=HUBS[kind];if(!H)return;
  SHEETS.hub={t:H.t,r:function(){}};openSheet("hub");HUB.returnTo=null;HUB.kind=kind;
@@ -18,12 +18,13 @@ function hubOpen(kind,sub){
  hubSub(sub||H.tabs[0][0]);hubBadges();
 }
 function hubSub(sub){
- var B=$("shB");musicHome();movieDestroy();clearInterval(GM.timer);GM.timer=null;
+ var B=$("shB");if(typeof togStop==="function")togStop();musicHome();movieDestroy();clearInterval(GM.timer);GM.timer=null;
  HUB.sub=sub;Array.prototype.forEach.call($("hubNav").children,function(b){b.classList.toggle("on",b.getAttribute("data-s")===sub)});
  B.innerHTML="";B.scrollTop=0;B.classList.remove("hubin");void B.offsetWidth;B.classList.add("hubin");
  if(HUB.kind==="games"){cur={k:"g_"+sub,live:null};SHEETS["g_"+sub].r(B);return}
  if(sub==="music"){cur={k:"h_music",live:null};var w=node('<div class="hubmusic"></div>');B.appendChild(w);MUSIC_IDS.forEach(function(id){var e=$(id);if(e)w.appendChild(e)});return}
  if(sub==="movie"){cur={k:"h_movie",live:null};movieRender(B);return}
+ if(typeof TOG!=="undefined"&&TOG[sub]){cur={k:"t_"+sub,live:null};TOG[sub](B);return}
  cur={k:"h_room",live:null};roomRender(B);
 }
 // значки «тебя ждут» на нижних вкладках игр и на кнопках во «Вместе»
