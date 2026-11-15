@@ -53,11 +53,12 @@ function gameList(list){
  GAMES.forEach(function(g){var r=node('<button type="button" class="card gitem"><span class="gi">'+g[1]+'</span><span class="gt"><b>'+g[2]+'</b><small>'+g[3]+'</small></span><span class="gb" data-b="'+g[0]+'"></span></button>');r.onclick=function(){haptic();openSheet("g_"+g[0])};list.appendChild(r)});
  if(GM.sum)gameMarks(list,GM.sum);
 }
+function noDuo(g){(g||[]).forEach(function(x){if(x.kind==="duo")x.you=false});return g}
 function gameMarks(list,games){(games||[]).forEach(function(g){var e=list&&list.querySelector('[data-b="'+g.kind+'"]');if(e){e.textContent=g.text;e.classList.toggle("you",!!g.you)}})}
 SHEETS.games={t:"Игры вдвоём",r:function(B){
  if(!S||!S.partner){box(B,'<div class="hint" style="margin-top:0">Игры появятся, когда вы добавите партнёра ♡</div>');return}
  var list=node('<div class="glist"></div>');B.appendChild(list);gameList(list);
- call("/v2/pair/games").then(function(x){GM.sum=x.games;gameMarks(list,x.games)}).catch(function(){});
+ call("/v2/pair/games").then(function(x){noDuo(x.games);GM.sum=x.games;gameMarks(list,x.games)}).catch(function(){});
 }};
 // вкладка «Вместе»: игры, значок «тебя ждут», строка «сейчас вместе»
 var GAME_NOW={chess:["♟️","сейчас в шахматах — заходи!"],guess:["✏️","рисует или угадывает — присоединяйся!"],duo:["🎨","рисует свою половину картинки"]};
@@ -75,7 +76,7 @@ function gamesCard(){
  hubBadges();
  if(!has||Date.now()-GM.cardT<20000)return;GM.cardT=Date.now();
  call("/v2/pair/games").then(function(x){
-  GM.sum=x.games;gameMarks(tg,x.games);hubBadges();
+  noDuo(x.games);GM.sum=x.games;gameMarks(tg,x.games);hubBadges();
   var n=(x.games||[]).filter(function(g){return g.you}).length,b=$("navBadge");if(b){b.textContent=n;b.classList.toggle("on",n>0)}
  }).catch(function(){});
 }
