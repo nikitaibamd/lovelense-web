@@ -72,6 +72,12 @@ function petSvg(kind,mood,opt){
  if(W==="tophat")acc='<rect x="70" y="40" width="60" height="9" rx="4" fill="#3E3639"/><rect x="79" y="2" width="42" height="42" rx="5" fill="#3E3639"/><rect x="79" y="30" width="42" height="7" fill="#E86F7E"/>';
  if(W==="hearts"){var hp=function(x){return '<path d="M'+x+' 112 C'+(x-18)+' 99 '+(x-10)+' 85 '+x+' 95 C'+(x+10)+' 85 '+(x+18)+' 99 '+x+' 112 Z" fill="#FF6B8A" fill-opacity=".82" stroke="'+ink+'" stroke-width="2.4" stroke-linejoin="round"/>'};acc=hp(77)+hp(123)+'<path d="M93 97 Q100 93 107 97" '+ln(2.4)+'/>'}
  if(W==="wreath"){acc='<path d="M50 72 Q100 30 150 72" stroke="#9CCB86" stroke-width="3.5" fill="none" stroke-linecap="round"/>';[[54,68,"#F6A9B6"],[68,54,"#FFE08A"],[84,46,"#CDB8F0"],[100,43,"#F6A9B6"],[116,46,"#FFE08A"],[132,54,"#CDB8F0"],[146,68,"#F6A9B6"]].forEach(function(f){acc+='<circle cx="'+f[0]+'" cy="'+f[1]+'" r="7.5" fill="'+f[2]+'" stroke="#fff" stroke-width="2"/><circle cx="'+f[0]+'" cy="'+f[1]+'" r="2.6" fill="#fff"/>'})}
+ // зимний режим: шапка с помпоном и шарф (если наряд не на голове / не шарф)
+ if(typeof winterOn==="function"&&winterOn()&&!(opt&&opt.plain)){
+  if(W!=="crown"&&W!=="tophat"&&W!=="wreath"&&W!=="bow")acc+='<path d="M46 74 C40 22 160 22 154 74 Z" fill="#E8697C" stroke="#C9566A" stroke-width="2.5"/><path d="M70 40 v30 M86 32 v38 M100 30 v40 M114 32 v38 M130 40 v30" stroke="#F28C9B" stroke-width="3" stroke-linecap="round"/><rect x="40" y="60" width="120" height="18" rx="9" fill="#FFF6F2" stroke="#E3D3D6" stroke-width="2"/><circle cx="100" cy="24" r="12" fill="#FFFFFF" stroke="#E3D3D6" stroke-width="2"/>';
+  if(W!=="scarf")acc+='<path d="M58 144 Q100 164 142 144 L143 155 Q100 177 57 155 Z" fill="#7FA8DC" stroke="#5F88BE" stroke-width="2"/><path d="M70 152 l4 8 M86 157 l3 8 M114 157 l-3 8 M130 152 l-4 8" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/><rect x="116" y="152" width="14" height="30" rx="5" fill="#7FA8DC" stroke="#5F88BE" stroke-width="2" transform="rotate(-12 123 152)"/>';
+  if(mood!=="sleep")acc+='<ellipse class="wbreath" cx="104" cy="128" rx="7" ry="4" fill="#FFFFFF" opacity=".7"/>';
+ }
  return '<svg class="pet-svg mood-'+mood+'" viewBox="0 -16 200 226" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="200" rx="'+Math.round(58*sc)+'" ry="7" fill="rgba(74,59,66,.12)"/><g transform="translate(100 200) scale('+sc+') translate(-100 -200)"><g class="bob">'+wg+tail+body+ears+head+face+front+acc+'</g></g>'+z+'</svg>';
 }
 

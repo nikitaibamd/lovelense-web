@@ -398,6 +398,38 @@ canvas.clv{display:block;width:100%}
 .nbadge,.gbadge,#navBadge,#hubGamesBadge{display:none!important}
 .nav button.live::after,.hubnav button::after{display:none!important}
 
+/* ===== Зимний режим ===== */
+#snow{position:fixed;inset:0;z-index:45;pointer-events:none;display:none}
+#wDrift,#wLights{display:none}
+html[data-winter="on"] #snow{display:block}
+/* сугроб внизу, под нижним меню */
+html[data-winter="on"] #wDrift{display:block;position:fixed;left:0;right:0;bottom:0;height:calc(70px + var(--bot));z-index:0;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 70' preserveAspectRatio='none'%3E%3Cpath d='M0 38 C40 18 70 30 110 26 C150 22 170 6 220 16 C270 26 300 10 340 18 C370 24 390 20 400 22 L400 70 L0 70 Z' fill='%23ffffff' fill-opacity='.85'/%3E%3Cpath d='M0 52 C60 36 110 50 170 42 C230 34 280 48 330 40 C360 36 385 42 400 40 L400 70 L0 70 Z' fill='%23EAF3FB'/%3E%3C/svg%3E") bottom/100% 100% no-repeat;
+ filter:drop-shadow(0 -2px 6px rgba(140,170,210,.25))}
+html[data-winter="on"] .bgfade{background:linear-gradient(180deg,rgba(214,232,250,.35) 0%,rgba(236,244,252,.18) 45%,rgba(255,255,255,.35) 100%)}
+/* гирлянда сверху */
+html[data-winter="on"] #wLights{display:block;position:fixed;left:0;right:0;top:var(--top);height:34px;z-index:44;pointer-events:none;overflow:hidden}
+#wLights svg{width:100%;height:100%;display:block}
+#wLights .bulb{animation:wBlink 2.4s ease-in-out infinite}
+#wLights .bulb:nth-child(3n){animation-delay:-.8s}#wLights .bulb:nth-child(3n+1){animation-delay:-1.6s}
+@keyframes wBlink{0%,100%{opacity:1}50%{opacity:.35}}
+/* снежные шапки на карточках главного экрана и меню */
+html[data-winter="on"] .view>.card{position:relative}
+html[data-winter="on"] .view>.card:not(.mapbox)::after,html[data-winter="on"] .nav::after{content:"";position:absolute;left:14px;right:14px;top:-5px;height:11px;pointer-events:none;z-index:3;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 11' preserveAspectRatio='none'%3E%3Cpath d='M0 6 C8 0 18 1 26 4 C34 7 40 2 52 2 C64 2 70 8 82 6 C94 4 100 0 114 2 C128 4 132 8 146 6 C160 4 168 0 182 3 C190 5 196 4 200 6 L200 11 L0 11 Z' fill='%23ffffff'/%3E%3C/svg%3E") top/100% 100% no-repeat;
+ filter:drop-shadow(0 1px 1px rgba(120,150,190,.25));border-radius:6px 6px 0 0}
+html[data-winter="on"] .hubc{overflow:visible}
+html[data-winter="on"] .hubc::before{border-radius:inherit}
+/* иней на кнопках меню */
+html[data-winter="on"] .nav button.on{box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 0 14px rgba(170,205,240,.35)}
+/* питомец: пар изо рта на морозе */
+.wbreath{animation:wBreath 3.6s ease-out infinite;transform-origin:100px 128px}
+@keyframes wBreath{0%{opacity:0;transform:translate(0,0) scale(.4)}25%{opacity:.75}100%{opacity:0;transform:translate(18px,-16px) scale(1.4)}}
+/* настройки */
+.wprev{display:flex;align-items:center;gap:10px;margin:2px 0 10px;font-size:13px;color:var(--muted)}
+.wprev b{font-size:26px}
+@media (prefers-reduced-motion:reduce){#wLights .bulb,.wbreath{animation:none!important}}
+
 .g2h b{display:block;font-size:18px}.g2h small{font-size:13px;color:var(--muted)}
 .g2q{padding:12px 14px;margin-top:10px}.g2qt{font-size:15px;font-weight:600;margin-bottom:8px}
 .g2ab{display:flex;gap:8px}.g2ab button{flex:1;padding:10px;border-radius:14px;border:1px solid var(--line);background:var(--inbg);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
@@ -696,7 +728,7 @@ input[type=date].in::-webkit-date-and-time-value{text-align:left}
 </style>
 </head>
 <body>
-<div class="bg" id="bg"></div><div class="bgfade"></div><div class="aura" id="aura"><b></b><b></b><b></b></div>
+<div class="bg" id="bg"></div><div class="bgfade"></div><div id="wDrift"></div><div id="wLights"></div><canvas id="snow"></canvas><div class="aura" id="aura"><b></b><b></b><b></b></div>
 
 <div class="page">
  <!-- ДОМ -->
@@ -793,7 +825,7 @@ var BGS={},BG_GROUPS=[[],["Белые",[]],["Чёрные",[]],["Светло-г
 ].forEach(function(x){BGS[x[1]]={n:x[2],css:x[3],tone:x[4],dark:!!x[5]};BG_GROUPS[x[0]][1].push(x[1])});
 BG_GROUPS.shift();
 var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лаванда"],["blue","#8FB5DE","Голубой"],["mint","#8CC7B0","Мята"],["peach","#E8A97E","Персик"],["graphite","#8A7E85","Графит"]];
-var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on",night:"system",aura:"on"};
+var PREF_DEF={winter:"auto",snow:"light",map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on",night:"system",aura:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
 // ---------- питомцы: милые SVG-зверьки ----------
 var PET_LOOK={
@@ -869,6 +901,12 @@ function petSvg(kind,mood,opt){
  if(W==="tophat")acc='<rect x="70" y="40" width="60" height="9" rx="4" fill="#3E3639"/><rect x="79" y="2" width="42" height="42" rx="5" fill="#3E3639"/><rect x="79" y="30" width="42" height="7" fill="#E86F7E"/>';
  if(W==="hearts"){var hp=function(x){return '<path d="M'+x+' 112 C'+(x-18)+' 99 '+(x-10)+' 85 '+x+' 95 C'+(x+10)+' 85 '+(x+18)+' 99 '+x+' 112 Z" fill="#FF6B8A" fill-opacity=".82" stroke="'+ink+'" stroke-width="2.4" stroke-linejoin="round"/>'};acc=hp(77)+hp(123)+'<path d="M93 97 Q100 93 107 97" '+ln(2.4)+'/>'}
  if(W==="wreath"){acc='<path d="M50 72 Q100 30 150 72" stroke="#9CCB86" stroke-width="3.5" fill="none" stroke-linecap="round"/>';[[54,68,"#F6A9B6"],[68,54,"#FFE08A"],[84,46,"#CDB8F0"],[100,43,"#F6A9B6"],[116,46,"#FFE08A"],[132,54,"#CDB8F0"],[146,68,"#F6A9B6"]].forEach(function(f){acc+='<circle cx="'+f[0]+'" cy="'+f[1]+'" r="7.5" fill="'+f[2]+'" stroke="#fff" stroke-width="2"/><circle cx="'+f[0]+'" cy="'+f[1]+'" r="2.6" fill="#fff"/>'})}
+ // зимний режим: шапка с помпоном и шарф (если наряд не на голове / не шарф)
+ if(typeof winterOn==="function"&&winterOn()&&!(opt&&opt.plain)){
+  if(W!=="crown"&&W!=="tophat"&&W!=="wreath"&&W!=="bow")acc+='<path d="M46 74 C40 22 160 22 154 74 Z" fill="#E8697C" stroke="#C9566A" stroke-width="2.5"/><path d="M70 40 v30 M86 32 v38 M100 30 v40 M114 32 v38 M130 40 v30" stroke="#F28C9B" stroke-width="3" stroke-linecap="round"/><rect x="40" y="60" width="120" height="18" rx="9" fill="#FFF6F2" stroke="#E3D3D6" stroke-width="2"/><circle cx="100" cy="24" r="12" fill="#FFFFFF" stroke="#E3D3D6" stroke-width="2"/>';
+  if(W!=="scarf")acc+='<path d="M58 144 Q100 164 142 144 L143 155 Q100 177 57 155 Z" fill="#7FA8DC" stroke="#5F88BE" stroke-width="2"/><path d="M70 152 l4 8 M86 157 l3 8 M114 157 l-3 8 M130 152 l-4 8" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/><rect x="116" y="152" width="14" height="30" rx="5" fill="#7FA8DC" stroke="#5F88BE" stroke-width="2" transform="rotate(-12 123 152)"/>';
+  if(mood!=="sleep")acc+='<ellipse class="wbreath" cx="104" cy="128" rx="7" ry="4" fill="#FFFFFF" opacity=".7"/>';
+ }
  return '<svg class="pet-svg mood-'+mood+'" viewBox="0 -16 200 226" xmlns="http://www.w3.org/2000/svg"><ellipse cx="100" cy="200" rx="'+Math.round(58*sc)+'" ry="7" fill="rgba(74,59,66,.12)"/><g transform="translate(100 200) scale('+sc+') translate(-100 -200)"><g class="bob">'+wg+tail+body+ears+head+face+front+acc+'</g></g>'+z+'</svg>';
 }
 
@@ -1569,6 +1607,7 @@ var SHEETS={
     grid.appendChild(x);
    });
   });
+  winterSettings(B);
   // iPhone-приложение: Dynamic Island и карточка на экране блокировки
   if(window.LL_IOS&&window.llSet){
    var io=window.LL_IOS,ib=box(B,'<div class="lab">iPhone: остров и виджет</div>'+
@@ -2493,6 +2532,72 @@ SHEETS.g_where={t:"Где я?",r:function(B){
  g2("where").then(draw).catch(function(){});
 }};
 
+// ===================== Зимний режим =====================
+// prefs().winter: "on" | "auto" (с 1 декабря по конец февраля) | "off"; prefs().snow: "light" | "storm" | "none"
+function winterOn(){
+ var p=prefs();if(p.winter==="on")return true;if(p.winter==="off")return false;
+ var m=new Date().getMonth();return m===11||m===0||m===1;
+}
+var WIN={raf:0,flakes:[],cv:null,ctx:null,w:0,h:0,dpr:1,on:false,n:0,last:0};
+function winterLights(){
+ var e=$("wLights");if(!e||e.firstChild)return;
+ var cols=["#FF6B7A","#FFD36E","#7FD1A8","#8FB5DE","#C9A6F0"],n=14,h='<svg viewBox="0 0 400 34" preserveAspectRatio="none"><path d="M0 4';
+ for(var i=0;i<n;i++){var x0=i*400/n,x1=(i+1)*400/n;h+=' Q'+((x0+x1)/2)+' 22 '+x1+' 4'}
+ h+='" stroke="#5B4B55" stroke-opacity=".55" stroke-width="1.4" fill="none"/>';
+ for(var j=0;j<n;j++){var cx=(j+.5)*400/n,c=cols[j%cols.length];
+  h+='<g class="bulb"><rect x="'+(cx-2)+'" y="11" width="4" height="4" rx="1" fill="#6B5A63"/><ellipse cx="'+cx+'" cy="20" rx="4.2" ry="6" fill="'+c+'"/><ellipse cx="'+cx+'" cy="20" rx="9" ry="10" fill="'+c+'" opacity=".22"/></g>'}
+ e.innerHTML=h+'</svg>';
+}
+function winterResize(){
+ var c=WIN.cv;if(!c)return;WIN.dpr=Math.min(2,window.devicePixelRatio||1);WIN.w=innerWidth;WIN.h=innerHeight;
+ c.width=WIN.w*WIN.dpr;c.height=WIN.h*WIN.dpr;c.style.width=WIN.w+"px";c.style.height=WIN.h+"px";WIN.ctx.setTransform(WIN.dpr,0,0,WIN.dpr,0,0);
+}
+function flake(top){return{x:Math.random()*WIN.w,y:top?-10-Math.random()*WIN.h*.2:Math.random()*WIN.h,r:.8+Math.random()*2.6,s:.3+Math.random()*.9,dx:Math.random()*Math.PI*2,a:.55+Math.random()*.4}}
+function winterTick(t){
+ WIN.raf=0;if(!WIN.on||document.hidden)return;
+ var dt=Math.min(3,WIN.last?(t-WIN.last)/16.7:1);WIN.last=t;
+ var g=WIN.ctx,F=WIN.flakes;g.clearRect(0,0,WIN.w,WIN.h);g.fillStyle="#fff";g.shadowColor="rgba(96,128,176,.55)";g.shadowBlur=3;
+ for(var i=0;i<F.length;i++){var f=F[i];
+  f.y+=f.s*(1+f.r*.35)*dt;f.dx+=.012*dt;f.x+=Math.sin(f.dx)*.35*dt;
+  if(f.y>WIN.h+6){F[i]=flake(true);continue}
+  if(f.x<-6)f.x=WIN.w+5;else if(f.x>WIN.w+6)f.x=-5;
+  g.globalAlpha=f.a;g.beginPath();g.arc(f.x,f.y,f.r,0,6.283);g.fill();
+ }
+ g.globalAlpha=1;WIN.raf=requestAnimationFrame(winterTick);
+}
+function winterSnow(n){
+ if(!WIN.cv){WIN.cv=$("snow");if(!WIN.cv)return;WIN.ctx=WIN.cv.getContext("2d");winterResize();addEventListener("resize",winterResize);
+  document.addEventListener("visibilitychange",function(){if(!document.hidden&&WIN.on&&!WIN.raf){WIN.last=0;WIN.raf=requestAnimationFrame(winterTick)}})}
+ var calm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;if(calm)n=Math.min(n,18);
+ WIN.on=n>0;WIN.flakes=[];for(var i=0;i<n;i++)WIN.flakes.push(flake(false));
+ if(!WIN.on){WIN.ctx&&WIN.ctx.clearRect(0,0,WIN.w,WIN.h);if(WIN.raf)cancelAnimationFrame(WIN.raf);WIN.raf=0;return}
+ if(!WIN.raf){WIN.last=0;WIN.raf=requestAnimationFrame(winterTick)}
+}
+function applyWinter(){
+ var on=winterOn(),p=prefs(),h=document.documentElement,was=h.getAttribute("data-winter")==="on";
+ h.setAttribute("data-winter",on?"on":"off");
+ if(on)winterLights();
+ var n=on?(p.snow==="storm"?140:p.snow==="none"?0:55):0;
+ if(on!==was||WIN.n!==n){WIN.n=n;winterSnow(n)}
+ if(on!==was)["petPic","petSvg"].forEach(function(id){var e=$(id);if(e)e.removeAttribute("data-k")});
+ if(on!==was&&typeof render==="function"&&typeof S!=="undefined"&&S)try{render()}catch(e){}
+}
+// настройки в «Оформлении»
+function winterSettings(B){
+ var p=prefs(),b=box(B,'<div class="lab">❄️ Зимний режим</div>'+
+  '<div class="wprev"><b>⛄</b><span>Снегопад, гирлянда, сугробы и тёплая шапка с шарфом у питомца</span></div>'+
+  '<div class="opt"><div class="lab">Режим</div><div class="seg" id="wMode"></div></div>'+
+  '<div class="opt"><div class="lab">Снег</div><div class="seg" id="wSnow"></div></div>');
+ var seg=function(id,key,opts){var e=$(id);opts.forEach(function(o){var x=node('<button type="button" class="'+(prefs()[key]===o[0]?"on":"")+'">'+o[1]+'</button>');
+  x.onclick=function(){setPref(key,o[0]);haptic();Array.prototype.forEach.call(e.children,function(y){y.classList.toggle("on",y===x)})};e.appendChild(x)})};
+ seg("wMode","winter",[["on","Вкл"],["auto","С 1 декабря"],["off","Выкл"]]);
+ seg("wSnow","snow",[["light","Лёгкий"],["storm","Метель"],["none","Без снега"]]);
+}
+(function(){
+ var _al=applyLook;applyLook=function(){_al();applyWinter()};
+ applyWinter();
+})();
+
 function openLink(u){try{if(TG&&TG.openTelegramLink)TG.openTelegramLink(u);else window.open(u,"_blank")}catch(e){window.open(u,"_blank")}}
 
 // --- партнёр ---
@@ -2593,7 +2698,7 @@ function fillWardrobe(){
  var w=$("pW"),p=S&&S.pet;if(!w||!p||!p.shop)return;w.innerHTML="";
  var none=node('<button type="button" class="'+(!p.wear?"on":"")+'"><span class="wi">✕</span><b>Без наряда</b><small>'+(!p.wear?"Сейчас":"Снять")+'</small></button>');none.onclick=function(){if(p.wear)wearSkin(null)};w.appendChild(none);
  p.shop.forEach(function(it){
-  var b=node('<button type="button" class="'+(p.wear===it.id?"on":"")+(it.owned?"":" lock")+'"><span class="wi">'+petSvg(p.kind,"idle",{wear:it.id,level:20})+'</span><b>'+esc(it.name)+'</b><small>'+(it.owned?(p.wear===it.id?"Надето":"Надеть"):it.lvl?"🔒 ур. "+it.lvl:"⭐ "+it.stars)+'</small></button>');
+  var b=node('<button type="button" class="'+(p.wear===it.id?"on":"")+(it.owned?"":" lock")+'"><span class="wi">'+petSvg(p.kind,"idle",{wear:it.id,level:20,plain:1})+'</span><b>'+esc(it.name)+'</b><small>'+(it.owned?(p.wear===it.id?"Надето":"Надеть"):it.lvl?"🔒 ур. "+it.lvl:"⭐ "+it.stars)+'</small></button>');
   b.onclick=function(){if(it.owned){if(p.wear!==it.id)wearSkin(it.id);return}if(it.lvl){toast("Откроется на "+it.lvl+" уровне");return}buySkin(it)};
   w.appendChild(b);
  });

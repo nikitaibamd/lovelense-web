@@ -1,0 +1,31 @@
+/* ===== Зимний режим ===== */
+#snow{position:fixed;inset:0;z-index:45;pointer-events:none;display:none}
+#wDrift,#wLights{display:none}
+html[data-winter="on"] #snow{display:block}
+/* сугроб внизу, под нижним меню */
+html[data-winter="on"] #wDrift{display:block;position:fixed;left:0;right:0;bottom:0;height:calc(70px + var(--bot));z-index:0;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 70' preserveAspectRatio='none'%3E%3Cpath d='M0 38 C40 18 70 30 110 26 C150 22 170 6 220 16 C270 26 300 10 340 18 C370 24 390 20 400 22 L400 70 L0 70 Z' fill='%23ffffff' fill-opacity='.85'/%3E%3Cpath d='M0 52 C60 36 110 50 170 42 C230 34 280 48 330 40 C360 36 385 42 400 40 L400 70 L0 70 Z' fill='%23EAF3FB'/%3E%3C/svg%3E") bottom/100% 100% no-repeat;
+ filter:drop-shadow(0 -2px 6px rgba(140,170,210,.25))}
+html[data-winter="on"] .bgfade{background:linear-gradient(180deg,rgba(214,232,250,.35) 0%,rgba(236,244,252,.18) 45%,rgba(255,255,255,.35) 100%)}
+/* гирлянда сверху */
+html[data-winter="on"] #wLights{display:block;position:fixed;left:0;right:0;top:var(--top);height:34px;z-index:44;pointer-events:none;overflow:hidden}
+#wLights svg{width:100%;height:100%;display:block}
+#wLights .bulb{animation:wBlink 2.4s ease-in-out infinite}
+#wLights .bulb:nth-child(3n){animation-delay:-.8s}#wLights .bulb:nth-child(3n+1){animation-delay:-1.6s}
+@keyframes wBlink{0%,100%{opacity:1}50%{opacity:.35}}
+/* снежные шапки на карточках главного экрана и меню */
+html[data-winter="on"] .view>.card{position:relative}
+html[data-winter="on"] .view>.card:not(.mapbox)::after,html[data-winter="on"] .nav::after{content:"";position:absolute;left:14px;right:14px;top:-5px;height:11px;pointer-events:none;z-index:3;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 11' preserveAspectRatio='none'%3E%3Cpath d='M0 6 C8 0 18 1 26 4 C34 7 40 2 52 2 C64 2 70 8 82 6 C94 4 100 0 114 2 C128 4 132 8 146 6 C160 4 168 0 182 3 C190 5 196 4 200 6 L200 11 L0 11 Z' fill='%23ffffff'/%3E%3C/svg%3E") top/100% 100% no-repeat;
+ filter:drop-shadow(0 1px 1px rgba(120,150,190,.25));border-radius:6px 6px 0 0}
+html[data-winter="on"] .hubc{overflow:visible}
+html[data-winter="on"] .hubc::before{border-radius:inherit}
+/* иней на кнопках меню */
+html[data-winter="on"] .nav button.on{box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 0 14px rgba(170,205,240,.35)}
+/* питомец: пар изо рта на морозе */
+.wbreath{animation:wBreath 3.6s ease-out infinite;transform-origin:100px 128px}
+@keyframes wBreath{0%{opacity:0;transform:translate(0,0) scale(.4)}25%{opacity:.75}100%{opacity:0;transform:translate(18px,-16px) scale(1.4)}}
+/* настройки */
+.wprev{display:flex;align-items:center;gap:10px;margin:2px 0 10px;font-size:13px;color:var(--muted)}
+.wprev b{font-size:26px}
+@media (prefers-reduced-motion:reduce){#wLights .bulb,.wbreath{animation:none!important}}

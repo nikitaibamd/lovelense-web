@@ -57,6 +57,7 @@ button{font:inherit;color:inherit}
 %%HUBCSS%%
 %%PLAYERCSS%%
 %%TOGCSS%%
+%%WINCSS%%
 %%G2CSS%%
 /* касание сердца */
 .hbtn{position:relative;width:56px;height:56px;flex:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
@@ -337,7 +338,7 @@ input[type=date].in::-webkit-date-and-time-value{text-align:left}
 </style>
 </head>
 <body>
-<div class="bg" id="bg"></div><div class="bgfade"></div><div class="aura" id="aura"><b></b><b></b><b></b></div>
+<div class="bg" id="bg"></div><div class="bgfade"></div><div id="wDrift"></div><div id="wLights"></div><canvas id="snow"></canvas><div class="aura" id="aura"><b></b><b></b><b></b></div>
 
 <div class="page">
  <!-- ДОМ -->
@@ -434,7 +435,7 @@ var BGS={},BG_GROUPS=[[],["Белые",[]],["Чёрные",[]],["Светло-г
 ].forEach(function(x){BGS[x[1]]={n:x[2],css:x[3],tone:x[4],dark:!!x[5]};BG_GROUPS[x[0]][1].push(x[1])});
 BG_GROUPS.shift();
 var ACCENTS=[["rose","#D89494","Розовый"],["lavender","#A99BD6","Лаванда"],["blue","#8FB5DE","Голубой"],["mint","#8CC7B0","Мята"],["peach","#E8A97E","Персик"],["graphite","#8A7E85","Графит"]];
-var PREF_DEF={map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on",night:"system",aura:"on"};
+var PREF_DEF={winter:"auto",snow:"light",map:"sat",room:"pink",bg:"pearl",acc:"rose",cards:"auto",glass:"matte",logo:"serif",bat:"on",beat:"on",night:"system",aura:"on"};
 var PET_EMO={cat:"🐱",dog:"🐶",rabbit:"🐰",fox:"🦊",bear:"🐻",panda:"🐼"},PET_BADGE={hungry:"🍖",lonely:"💔",love:"💞",joy:"💗",fed:"😋"};
 %%PETJS%%
 var ERR={yandex_geo:"Яндекс Музыка не отдаёт плейлисты за пределами России — вставь список треков текстом",unsupported:"Этот сервис не отдаёт плейлист по ссылке — вставь список треков текстом",bad_playlist:"Не понял ссылку — нужна ссылка на плейлист, альбом или трек",empty_playlist:"Плейлист пустой или закрытый — сделай его публичным",import_failed:"Не получилось открыть плейлист, попробуй ещё раз",search_failed:"Поиск сейчас не отвечает",bad_link:"Это не похоже на ссылку YouTube",not_embeddable:"Автор запретил проигрывать это видео в других приложениях — попробуй другое",queue_full:"В очереди уже 50 треков",partner_taken:"У этого человека уже есть партнёр",you_have_partner:"У вас уже есть партнёр",not_found:"Пользователь не найден. Он должен хотя бы раз открыть Lovelense",bad_username:"Введите ник от 4 символов (латиница, цифры, _)",too_many_requests:"Слишком много отправленных запросов",no_request:"Запрос уже не актуален",full:"Он ещё сыт 😌",too_fast:"Не так часто 🙂",tired:"Устал играть, отдохнёт минут 10",clean:"Уже чистенький — уход раз в час",no_partner:"Сначала добавьте партнёра",bad_date:"Проверьте дату",too_many_devices:"Уже подключено 5 устройств — отключите лишнее",channel_check_failed:"Не удалось проверить подписку, попробуйте позже",not_owned:"Этот наряд ещё не открыт",already_owned:"Этот наряд уже ваш ♡",invoice_failed:"Не получилось открыть оплату",bad_item:"Такого наряда нет",not_your_turn:"Сейчас ход партнёра",bad_move:"Так ходить нельзя",game_over:"Партия уже закончилась",conflict:"Партнёр сходил одновременно — обновляю",bad_game:"Такой игры нет"};
@@ -702,6 +703,7 @@ var SHEETS={
     grid.appendChild(x);
    });
   });
+  winterSettings(B);
   // iPhone-приложение: Dynamic Island и карточка на экране блокировки
   if(window.LL_IOS&&window.llSet){
    var io=window.LL_IOS,ib=box(B,'<div class="lab">iPhone: остров и виджет</div>'+
@@ -780,6 +782,7 @@ var SHEETS={
 %%HUBJS%%
 %%TOGJS%%
 %%G2JS%%
+%%WINJS%%
 function openLink(u){try{if(TG&&TG.openTelegramLink)TG.openTelegramLink(u);else window.open(u,"_blank")}catch(e){window.open(u,"_blank")}}
 
 // --- партнёр ---
@@ -880,7 +883,7 @@ function fillWardrobe(){
  var w=$("pW"),p=S&&S.pet;if(!w||!p||!p.shop)return;w.innerHTML="";
  var none=node('<button type="button" class="'+(!p.wear?"on":"")+'"><span class="wi">✕</span><b>Без наряда</b><small>'+(!p.wear?"Сейчас":"Снять")+'</small></button>');none.onclick=function(){if(p.wear)wearSkin(null)};w.appendChild(none);
  p.shop.forEach(function(it){
-  var b=node('<button type="button" class="'+(p.wear===it.id?"on":"")+(it.owned?"":" lock")+'"><span class="wi">'+petSvg(p.kind,"idle",{wear:it.id,level:20})+'</span><b>'+esc(it.name)+'</b><small>'+(it.owned?(p.wear===it.id?"Надето":"Надеть"):it.lvl?"🔒 ур. "+it.lvl:"⭐ "+it.stars)+'</small></button>');
+  var b=node('<button type="button" class="'+(p.wear===it.id?"on":"")+(it.owned?"":" lock")+'"><span class="wi">'+petSvg(p.kind,"idle",{wear:it.id,level:20,plain:1})+'</span><b>'+esc(it.name)+'</b><small>'+(it.owned?(p.wear===it.id?"Надето":"Надеть"):it.lvl?"🔒 ур. "+it.lvl:"⭐ "+it.stars)+'</small></button>');
   b.onclick=function(){if(it.owned){if(p.wear!==it.id)wearSkin(it.id);return}if(it.lvl){toast("Откроется на "+it.lvl+" уровне");return}buySkin(it)};
   w.appendChild(b);
  });
