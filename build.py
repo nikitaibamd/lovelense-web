@@ -35,3 +35,7 @@ assert not re.findall(r'%%[A-Za-z]+%%', t)
 os.makedirs(P('dist'), exist_ok=True)
 open(P('dist', 'index.html'), 'w', encoding='utf-8').write(t)
 print('dist/index.html', len(t))
+
+# статические страницы (политика, поддержка)
+for f in glob.glob(P('pages', '*.html')):
+    shutil.copy(f, P('dist', os.path.basename(f)))
