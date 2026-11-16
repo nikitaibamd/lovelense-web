@@ -28,7 +28,7 @@ html.desk[data-mstyle=glass] .dnav button:hover{background:rgba(255,255,255,.1)}
 html.desk[data-mstyle=glass] .dnav button.on{background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.16));color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 16px rgba(0,0,0,.15)}
 html.desk[data-mstyle=glass] .dpart{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:26px}
 /* монохромные иконки и эмодзи */
-html.desk[data-mstyle=glass] .dnav .di,html.desk[data-mstyle=glass] .hic,html.desk[data-mstyle=glass] .petpic,html.desk[data-mstyle=glass] .rzpic,
+html.desk[data-mstyle=glass] .dnav .di,html.desk[data-mstyle=glass] .hic,
 html.desk[data-mstyle=glass] .hubnav .hi,html.desk[data-mstyle=glass] .ract button,html.desk[data-mstyle=glass] .remo button,html.desk[data-mstyle=glass] .mi .ic,
 html.desk[data-mstyle=glass] .meet,html.desk[data-mstyle=glass] .gbig,html.desk[data-mstyle=glass] .rmoods button{filter:grayscale(1) brightness(1.18) contrast(1.05)}
 html.desk[data-mstyle=glass] .hubc .hic{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22)}
