@@ -12,8 +12,19 @@ if(DESK){(function(){
  if(!window.llPet)ITEMS=ITEMS.filter(function(i){return i[0]!=="ryzhiy"});
  // стиль Mac-версии: «Розовый» (как в Telegram) или «Стекло» (графитовое жидкое стекло)
  PREF_DEF.mstyle="pink";
+ // фоны «Стекло» — в общем списке фонов (только на Mac)
+ BGS.graphite={n:"Графит",tone:"dark",dark:true,css:"radial-gradient(circle at 93% 112%,rgba(255,255,255,.78) 0,rgba(226,226,232,.5) 14%,rgba(160,161,168,.35) 26%,rgba(255,255,255,.55) 29.6%,transparent 30.4%),radial-gradient(circle at 2% 106%,rgba(255,255,255,.6) 0,rgba(210,210,216,.35) 13%,rgba(255,255,255,.4) 19.6%,transparent 20.4%),radial-gradient(circle at 80% -12%,rgba(255,255,255,.35) 0,rgba(255,255,255,.12) 22%,transparent 34%),linear-gradient(118deg,transparent 30%,rgba(255,255,255,.14) 44%,transparent 56%),linear-gradient(135deg,#86878c 0%,#5b5c61 36%,#404145 64%,#707176 100%)"};
+ BGS.obsidian={n:"Обсидиан",tone:"dark",dark:true,css:"radial-gradient(circle at 90% 110%,rgba(170,175,190,.55) 0,rgba(90,94,108,.35) 18%,rgba(200,205,220,.4) 27.6%,transparent 28.4%),radial-gradient(circle at 6% 0%,rgba(150,155,175,.35) 0,transparent 30%),linear-gradient(118deg,transparent 35%,rgba(255,255,255,.08) 48%,transparent 60%),linear-gradient(135deg,#2c2e35 0%,#17181d 55%,#24262d 100%)"};
+ BGS.silver={n:"Серебро",tone:"light",css:"radial-gradient(circle at 92% 110%,#ffffff 0,rgba(235,236,240,.8) 16%,rgba(205,207,214,.7) 27%,rgba(255,255,255,.9) 29.6%,transparent 30.4%),radial-gradient(circle at 4% 104%,rgba(255,255,255,.9) 0,rgba(220,222,228,.6) 15%,transparent 20.4%),linear-gradient(118deg,transparent 30%,rgba(255,255,255,.5) 46%,transparent 58%),linear-gradient(135deg,#e9eaee 0%,#cfd1d7 45%,#bfc1c8 70%,#dfe0e5 100%)"};
+ BGS.mist={n:"Туманное стекло",tone:"light",css:"radial-gradient(circle at 88% 108%,rgba(255,255,255,.95) 0,rgba(214,226,240,.7) 16%,rgba(255,255,255,.85) 26.6%,transparent 27.4%),radial-gradient(ellipse 50% 40% at 10% 10%,rgba(255,255,255,.7),transparent 70%),linear-gradient(135deg,#dfe6ee 0%,#c7d1dd 50%,#e8ecf2 100%)"};
+ BG_GROUPS.unshift(["Стекло (для Mac)",["graphite","obsidian","silver","mist"]]);
  var _alM=applyLook;applyLook=function(){_alM();h.setAttribute("data-mstyle",prefs().mstyle==="glass"?"glass":"pink");var q=$("dStyle");if(q)Array.prototype.forEach.call(q.children,function(b){b.classList.toggle("on",b.getAttribute("data-s")===prefs().mstyle)})};
- window.deskStyle=function(v){haptic();setPref("mstyle",v)};
+ // при выборе «Стекла» ставим графитовый фон; дальше любой фон можно сменить в «Оформлении»
+ var GLASS_BG=["graphite","obsidian","silver","mist"];
+ window.deskStyle=function(v){haptic();var p=prefs();
+  if(v==="glass"&&GLASS_BG.indexOf(p.bg)<0){var pp={};try{pp=JSON.parse(ls("ll_prefs")||"{}")||{}}catch(e){}pp.bgPink=p.bg;pp.bg="graphite";pp.mstyle="glass";ls("ll_prefs",JSON.stringify(pp));applyLook();return}
+  if(v==="pink"&&GLASS_BG.indexOf(p.bg)>=0){var q={};try{q=JSON.parse(ls("ll_prefs")||"{}")||{}}catch(e){}q.bg=q.bgPink&&BGS[q.bgPink]?q.bgPink:"pearl";q.mstyle="pink";ls("ll_prefs",JSON.stringify(q));applyLook();return}
+  setPref("mstyle",v)};
  var side=node('<aside class="dside" id="dSide"><div class="dbrand"><span class="dlogo">LoveLense</span><small>вместе на любом расстоянии</small></div>'+
   '<div class="dstyle" id="dStyle"><button type="button" data-s="pink">🌸 Розовый</button><button type="button" data-s="glass">◐ Стекло</button></div><nav class="dnav" id="dNav"></nav>'+
   '<div class="dpart" id="dPart"><div class="dpav" id="dPav">♡</div><div class="dpt"><b id="dPn">Партнёр</b><small id="dPs">—</small></div></div></aside>');

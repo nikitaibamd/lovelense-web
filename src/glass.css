@@ -10,13 +10,6 @@ html.desk[data-mstyle=glass]{
 }
 html.desk[data-mstyle=glass] body{background:transparent}
 /* фон: графит с мягкими светящимися сферами */
-html.desk[data-mstyle=glass] #bg{filter:none!important;transform:none!important;inset:0!important;background:
- radial-gradient(circle at 93% 112%,rgba(255,255,255,.78) 0,rgba(226,226,232,.5) 14%,rgba(160,161,168,.35) 26%,rgba(255,255,255,.55) 29.6%,transparent 30.4%),
- radial-gradient(circle at 2% 106%,rgba(255,255,255,.6) 0,rgba(210,210,216,.35) 13%,rgba(255,255,255,.4) 19.6%,transparent 20.4%),
- radial-gradient(circle at 80% -12%,rgba(255,255,255,.35) 0,rgba(255,255,255,.12) 22%,transparent 34%),
- linear-gradient(118deg,transparent 30%,rgba(255,255,255,.14) 44%,transparent 56%),
- radial-gradient(ellipse 40% 30% at 55% 60%,rgba(0,0,0,.18),transparent 70%),
- linear-gradient(135deg,#86878c 0%,#5b5c61 36%,#404145 64%,#707176 100%)!important}
 html.desk[data-mstyle=glass] .bgfade{background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.12))}
 html.desk[data-mstyle=glass] .aura,html.desk[data-mstyle=glass] #wLights,html.desk[data-mstyle=glass] #wDrift{display:none!important}
 /* стеклянные панели */
@@ -28,11 +21,11 @@ html.desk[data-mstyle=glass] .card{border-radius:30px}
 html.desk[data-mstyle=glass] .hubc::before{display:none}
 /* меню — парящая капсула */
 html.desk[data-mstyle=glass] .dside{left:22px;top:22px;bottom:22px;width:calc(var(--side) - 46px);border-radius:36px;padding-top:58px}
-html.desk[data-mstyle=glass] .dlogo{font:600 30px/1.1 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;color:#fff;letter-spacing:-.2px}
-html.desk[data-mstyle=glass] .dbrand small{color:rgba(255,255,255,.6)}
-html.desk[data-mstyle=glass] .dnav button{color:rgba(255,255,255,.9);padding:11px 14px;border-radius:999px}
+html.desk[data-mstyle=glass] .dlogo{font:600 30px/1.1 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;color:var(--ink);letter-spacing:-.2px}
+html.desk[data-mstyle=glass] .dbrand small{color:var(--muted)}
+html.desk[data-mstyle=glass] .dnav button{color:var(--ink);padding:11px 14px;border-radius:999px}
 html.desk[data-mstyle=glass] .dnav button:hover{background:rgba(255,255,255,.1)}
-html.desk[data-mstyle=glass] .dnav button.on{background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.16));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 16px rgba(0,0,0,.15)}
+html.desk[data-mstyle=glass] .dnav button.on{background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.16));color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 16px rgba(0,0,0,.15)}
 html.desk[data-mstyle=glass] .dpart{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:26px}
 /* монохромные иконки и эмодзи */
 html.desk[data-mstyle=glass] .dnav .di,html.desk[data-mstyle=glass] .hic,html.desk[data-mstyle=glass] .petpic,html.desk[data-mstyle=glass] .rzpic,
@@ -41,24 +34,24 @@ html.desk[data-mstyle=glass] .meet,html.desk[data-mstyle=glass] .gbig,html.desk[
 html.desk[data-mstyle=glass] .hubc .hic{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22)}
 html.desk[data-mstyle=glass] .hubc .chev{width:38px;height:38px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28)}
 html.desk[data-mstyle=glass] .hubc .chev svg{width:18px;height:18px}
-html.desk[data-mstyle=glass] .bigheart path{fill:rgba(255,255,255,.18)!important;stroke:#fff!important;stroke-width:1.6}
+html.desk[data-mstyle=glass] .bigheart path{fill:rgba(255,255,255,.18)!important;stroke:var(--ink)!important;stroke-width:1.6}
 html.desk[data-mstyle=glass] .thread path{stroke:rgba(255,255,255,.7)!important}
-html.desk[data-mstyle=glass] .ava .bat,html.desk[data-mstyle=glass] .cdist{background:rgba(255,255,255,.16)!important;color:#fff!important;border-color:rgba(255,255,255,.25)!important}
-html.desk[data-mstyle=glass] .days .n,html.desk[data-mstyle=glass] .dhi h1{color:#fff}
-html.desk[data-mstyle=glass] .days svg path{fill:#fff!important}
-html.desk[data-mstyle=glass] #bell,html.desk[data-mstyle=glass] .round{background:rgba(255,255,255,.14)!important;border:1px solid rgba(255,255,255,.28)!important;color:#fff!important;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+html.desk[data-mstyle=glass] .ava .bat,html.desk[data-mstyle=glass] .cdist{background:rgba(255,255,255,.16)!important;color:var(--ink)!important;border-color:rgba(255,255,255,.25)!important}
+html.desk[data-mstyle=glass] .days .n,html.desk[data-mstyle=glass] .dhi h1{color:var(--ink)}
+html.desk[data-mstyle=glass] .days svg path{fill:var(--ink)!important}
+html.desk[data-mstyle=glass] #bell,html.desk[data-mstyle=glass] .round{background:rgba(255,255,255,.14)!important;border:1px solid rgba(255,255,255,.28)!important;color:var(--ink)!important;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
 /* разделы */
 html.desk[data-mstyle=glass] .sheet{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
-html.desk[data-mstyle=glass] .sheet .sh h2{color:#fff}
+html.desk[data-mstyle=glass] .sheet .sh h2{color:var(--ink)}
 html.desk[data-mstyle=glass] .btn{background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(235,235,240,.9));color:#2d2e32;box-shadow:0 8px 20px rgba(0,0,0,.18)}
-html.desk[data-mstyle=glass] .btn.sec{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.26)}
-html.desk[data-mstyle=glass] .btn.danger{background:rgba(255,90,110,.22);color:#fff}
+html.desk[data-mstyle=glass] .btn.sec{background:rgba(255,255,255,.14);color:var(--ink);border:1px solid rgba(255,255,255,.26)}
+html.desk[data-mstyle=glass] .btn.danger{background:rgba(255,90,110,.22);color:var(--ink)}
 html.desk[data-mstyle=glass] .seg{background:rgba(255,255,255,.1)}
-html.desk[data-mstyle=glass] .seg button{color:rgba(255,255,255,.85)}
-html.desk[data-mstyle=glass] .seg button.on{background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.2));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
-html.desk[data-mstyle=glass] .in{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.24)}
+html.desk[data-mstyle=glass] .seg button{color:var(--ink)}
+html.desk[data-mstyle=glass] .seg button.on{background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.2));color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+html.desk[data-mstyle=glass] .in{background:rgba(255,255,255,.1);color:var(--ink);border-color:rgba(255,255,255,.24)}
 html.desk[data-mstyle=glass] .in::placeholder{color:rgba(255,255,255,.5)}
-html.desk[data-mstyle=glass] .hubnav button.on{background:rgba(255,255,255,.24);color:#fff}
+html.desk[data-mstyle=glass] .hubnav button.on{background:rgba(255,255,255,.24);color:var(--ink)}
 html.desk[data-mstyle=glass] .rmic button{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(230,230,236,.85));color:#2d2e32}
 html.desk[data-mstyle=glass] .toast{background:rgba(40,41,45,.82);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
 /* переключатель стиля */
@@ -75,8 +68,18 @@ html.desk .dstyle{display:flex;gap:4px;margin:0 10px 14px;padding:3px;border-rad
 .mstyles b{display:block;padding:8px 12px 10px;font-size:14px}
 .mstyles .pink .pv{background:linear-gradient(135deg,#FDE8E4,#E3DAF5)}.mstyles .pink .pv i{background:rgba(255,255,255,.75)}
 .mstyles .glass .pv{background:radial-gradient(ellipse 60% 70% at 90% 100%,rgba(255,255,255,.5),transparent 70%),linear-gradient(135deg,#7c7d82,#3d3e42)}.mstyles .glass .pv i{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35)}
-html.desk[data-mstyle=glass] .meet .fu b{background:rgba(255,255,255,.16);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
-html.desk[data-mstyle=glass] .meet .ml{color:#fff}
+html.desk[data-mstyle=glass] .meet .fu b{background:rgba(255,255,255,.16);color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+html.desk[data-mstyle=glass] .meet .ml{color:var(--ink)}
 html.desk[data-mstyle=glass] body:has(#sheet.on) .page{visibility:hidden}
-html.desk[data-mstyle=glass] .mstyles button.on{border-color:#fff}
+html.desk[data-mstyle=glass] .mstyles button.on{border-color:var(--ink)}
 html.desk[data-mstyle=glass] .rjoin,html.desk[data-mstyle=glass] .chip.pri{background:rgba(255,255,255,.92);color:#2d2e32}
+/* «Стекло» на светлом фоне */
+html.desk[data-mstyle=glass][data-tone=light]{--ink:#26272b;--muted:rgba(38,39,43,.58);--title:#26272b;--border:rgba(255,255,255,.8);--chip:rgba(255,255,255,.45);--inbg:rgba(255,255,255,.5);--line:rgba(38,39,43,.14);--navon:rgba(255,255,255,.7);
+ --shadow:0 18px 44px rgba(60,60,70,.14),inset 0 1px 0 rgba(255,255,255,.9)}
+html.desk[data-mstyle=glass][data-tone=light] .card,html.desk[data-mstyle=glass][data-tone=light] .dside,html.desk[data-mstyle=glass][data-tone=light] .hubnav{
+ background:linear-gradient(160deg,rgba(255,255,255,.62),rgba(255,255,255,.32) 55%,rgba(255,255,255,.45))!important;border-color:rgba(255,255,255,.85)!important}
+html.desk[data-mstyle=glass][data-tone=light] .dnav button.on,html.desk[data-mstyle=glass][data-tone=light] .seg button.on,html.desk[data-mstyle=glass][data-tone=light] .hubnav button.on{background:rgba(255,255,255,.85)}
+html.desk[data-mstyle=glass][data-tone=light] .btn{background:#26272b;color:#fff}
+html.desk[data-mstyle=glass][data-tone=light] .btn.sec{background:rgba(255,255,255,.6);color:var(--ink)}
+html.desk[data-mstyle=glass][data-tone=light] .bigheart path{fill:rgba(38,39,43,.08)!important}
+html.desk[data-mstyle=glass][data-tone=light] .dnav .di,html.desk[data-mstyle=glass][data-tone=light] .hic{filter:grayscale(1) contrast(1.05)}
