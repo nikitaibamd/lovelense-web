@@ -10,9 +10,23 @@ if(DESK){(function(){
   ["look","🎨","Оформление"],["prof","👤","Профиль"]
  ];
  if(!window.llPet)ITEMS=ITEMS.filter(function(i){return i[0]!=="ryzhiy"});
- var side=node('<aside class="dside" id="dSide"><div class="dbrand"><span class="dlogo">LoveLense</span><small>вместе на любом расстоянии</small></div><nav class="dnav" id="dNav"></nav>'+
+ // стиль Mac-версии: «Розовый» (как в Telegram) или «Стекло» (графитовое жидкое стекло)
+ PREF_DEF.mstyle="pink";
+ var _alM=applyLook;applyLook=function(){_alM();h.setAttribute("data-mstyle",prefs().mstyle==="glass"?"glass":"pink");var q=$("dStyle");if(q)Array.prototype.forEach.call(q.children,function(b){b.classList.toggle("on",b.getAttribute("data-s")===prefs().mstyle)})};
+ window.deskStyle=function(v){haptic();setPref("mstyle",v)};
+ var side=node('<aside class="dside" id="dSide"><div class="dbrand"><span class="dlogo">LoveLense</span><small>вместе на любом расстоянии</small></div>'+
+  '<div class="dstyle" id="dStyle"><button type="button" data-s="pink">🌸 Розовый</button><button type="button" data-s="glass">◐ Стекло</button></div><nav class="dnav" id="dNav"></nav>'+
   '<div class="dpart" id="dPart"><div class="dpav" id="dPav">♡</div><div class="dpt"><b id="dPn">Партнёр</b><small id="dPs">—</small></div></div></aside>');
  document.body.appendChild(side);
+ Array.prototype.forEach.call($("dStyle").children,function(b){b.onclick=function(){deskStyle(b.getAttribute("data-s"))}});
+ applyLook();
+ // «Оформление»: выбор стиля для Mac сверху
+ var _look=SHEETS.look.r;
+ SHEETS.look.r=function(B){
+  var b=box(B,'<div class="lab">Стиль LoveLense для Mac</div><div class="mstyles"><button type="button" class="pink" data-s="pink"><div class="pv"><i></i><i></i></div><b>🌸 Розовый</b></button><button type="button" class="glass" data-s="glass"><div class="pv"><i></i><i></i></div><b>◐ Стекло</b></button></div><div class="hint">Переключать можно и вверху бокового меню</div>');
+  Array.prototype.forEach.call(b.querySelectorAll("[data-s]"),function(x){x.classList.toggle("on",x.getAttribute("data-s")===prefs().mstyle);x.onclick=function(){deskStyle(x.getAttribute("data-s"));Array.prototype.forEach.call(b.querySelectorAll("[data-s]"),function(y){y.classList.toggle("on",y===x)})}});
+  _look(B);
+ };
  ITEMS.forEach(function(it,i){
   var b=node('<button type="button" data-k="'+it[0]+'"><span class="di">'+it[1]+'</span><span>'+it[2]+'</span>'+(i<9?'<kbd>⌘'+(i+1)+'</kbd>':'')+'</button>');
   b.onclick=function(){deskGo(it[0])};$("dNav").appendChild(b);
