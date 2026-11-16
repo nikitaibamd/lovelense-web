@@ -514,6 +514,77 @@ html[data-winter="on"] .nav button.on{box-shadow:inset 0 0 0 1px rgba(255,255,25
 .wprev b{font-size:26px}
 @media (prefers-reduced-motion:reduce){#wLights .bulb,.wbreath{animation:none!important}}
 
+/* ===== LoveLense для Mac: настольная раскладка ===== */
+.dside{display:none}
+html.desk{--side:264px}
+html.desk .nav{display:none!important}
+html.desk .dside{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:var(--side);z-index:120;padding:54px 14px 16px;box-sizing:border-box;
+ background:var(--card);border-right:1px solid var(--border);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);-webkit-app-region:drag}
+.dbrand{padding:0 10px 18px}
+.dlogo{display:block;font:400 30px/1.1 Georgia,serif;color:var(--ink);letter-spacing:.2px}
+html[data-logo=sans] .dlogo{font-family:inherit;font-weight:600;font-size:26px}
+.dbrand small{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.dnav{display:flex;flex-direction:column;gap:2px;flex:1;overflow:auto}
+.dnav button{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border:0;border-radius:12px;background:transparent;color:var(--ink);font:500 15px/1.2 inherit;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s}
+.dnav button:hover{background:var(--chip)}
+.dnav button.on{background:var(--navon);color:var(--acc2);font-weight:600}
+.dnav .di{width:24px;text-align:center;font-size:18px}
+.dnav kbd{margin-left:auto;font:500 11px/1 inherit;font-family:inherit;color:var(--muted);opacity:0;transition:opacity .15s}
+.dnav button:hover kbd{opacity:1}
+.dpart{display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px;border-radius:16px;background:var(--chip);cursor:pointer}
+.dpav{width:42px;height:42px;flex:none;border-radius:50%;background:linear-gradient(160deg,#D8CCF6,#A595D8) center/cover;color:#fff;display:flex;align-items:center;justify-content:center;font:600 18px/1 Georgia,serif;position:relative}
+.dpart.on .dpav::after{content:"";position:absolute;right:0;bottom:0;width:11px;height:11px;border-radius:50%;background:#4FAF6A;border:2px solid var(--card)}
+.dpt{min-width:0}.dpt b{display:block;font-size:14px}.dpt small{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* основная область */
+html.desk .page{max-width:none;margin:0 0 0 var(--side);padding:40px 44px 48px}
+html.desk .view{max-width:1240px;margin:0 auto}
+html.desk #v-home .top{position:absolute;right:44px;top:34px;margin:0;z-index:3}
+.dhi{display:none}
+html.desk .dhi{display:block;margin:4px 0 22px}
+html.desk .dhi h1{margin:0;font:600 32px/1.15 inherit;font-family:inherit;color:var(--title)}
+html.desk .dhi small{display:block;margin-top:4px;font-size:14px;color:var(--muted);text-transform:capitalize}
+html.desk .dhero{padding:26px 30px 18px;margin:0 0 20px}
+html.desk .dhero .couple{max-width:640px;margin:0 auto}
+html.desk .dhero .ctimes{max-width:640px;margin:0 auto 4px}
+.dgrid{display:contents}
+html.desk .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;align-items:stretch}
+html.desk .dgrid>*{margin:0!important;min-height:96px;width:auto!important;max-width:none!important}
+html.desk .dgrid .hubc{height:100%}
+html.desk .dgrid .days{display:flex;flex-direction:column;justify-content:center}
+html.desk #v-map .mapbox{height:calc(100vh - 230px);min-height:420px}
+/* разделы открываются справа от меню */
+html.desk .sheet{left:var(--side)}
+html.desk .sheet .sb{max-width:none;padding-left:40px;padding-right:40px}
+html.desk .sheet .sh{max-width:none;padding-left:40px;padding-right:40px}
+html.desk .sheet .sb>*{max-width:860px;margin-left:auto;margin-right:auto}
+html.desk .sheet .sh{padding-top:30px}
+html.desk .sheet.hub .sb{padding-top:64px;padding-bottom:40px}
+html.desk .hubnav{top:84px;bottom:auto;width:min(620px,calc(100% - 80px));animation:none}
+html.desk .hubnav button{flex-direction:row;justify-content:center;gap:8px;font-size:14px;padding:9px 0}
+html.desk .hubnav button .hi{font-size:18px}
+html.desk .sheet .sh,html.desk .dside{-webkit-user-select:none;user-select:none}
+html.desk #wDrift{left:var(--side)}
+html.desk .ping{left:calc(50% + var(--side) / 2)}
+html.desk .toast{left:calc(50% + var(--side) / 2)}
+/* Рыжий */
+.dbig{font-size:64px;text-align:center;margin:6px 0}
+.rzhead{display:flex;align-items:center;gap:14px}.rzhead b{display:block;font-size:17px}.rzhead small{color:var(--muted);font-size:13px}
+.rzpic{width:84px;height:84px;flex:none;border-radius:22px;background:var(--chip);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.rzpic svg{width:92%;height:auto}
+/* узкое окно — обычная мобильная раскладка */
+@media (max-width:899px){
+ html.desk .dside{display:none}html.desk .nav{display:flex!important}
+ html.desk .page{margin:0 auto;max-width:480px;padding:calc(14px + var(--top)) 18px calc(110px + var(--bot))}
+ html.desk .sheet{left:0}html.desk .dhi{display:none}
+ html.desk .sheet .sb{max-width:480px;padding:6px 18px calc(30px + var(--bot))}
+ html.desk .dgrid{display:block}html.desk .dgrid>*{margin-top:14px!important}
+ html.desk .hubnav{top:auto;bottom:calc(12px + var(--bot))}
+ html.desk .sheet.hub .sb{padding-top:0;padding-bottom:calc(110px + var(--bot))}
+ html.desk #v-home .top{position:static}
+}
+
+html.desk .rroom{max-width:720px;margin-left:auto;margin-right:auto}
+
 .g2h b{display:block;font-size:18px}.g2h small{font-size:13px;color:var(--muted)}
 .g2q{padding:12px 14px;margin-top:10px}.g2qt{font-size:15px;font-weight:600;margin-bottom:8px}
 .g2ab{display:flex;gap:8px}.g2ab button{flex:1;padding:10px;border-radius:14px;border:1px solid var(--line);background:var(--inbg);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
@@ -3000,6 +3071,99 @@ if(IS_APP){
   $("invGo").onclick=function(){var v=$("invIn").value.trim();if(!v)return;haptic();var bt=this;bt.disabled=true;
    call("/v2/invite/accept",{code:v}).then(function(x){haptic("heavy");toast("Готово, вы теперь пара ♡");poll(function(){if(cur&&cur.k==="partner")renderPartner($("shB"));render()})}).catch(function(e){bt.disabled=false;toast(ERR[e.message]||"Не получилось")})};
  };
+}
+
+// ===================== LoveLense для Mac: настольная раскладка =====================
+// Боковое меню слева, главная — панель из карточек, разделы открываются справа (не поверх всего экрана).
+// Включается в Mac-приложении (window.LL_MAC) или в предпросмотре с ?desk=1.
+var DESK=!!(window.LL_MAC||/[?&]desk=1/.test(location.search));
+if(DESK){(function(){
+ var h=document.documentElement;h.classList.add("desk");
+ var ITEMS=[
+  ["home","🏠","Главная"],["map","🗺","Карта"],["media","🎬","Кино и музыка"],["games","🎮","Игры"],
+  ["us","💞","Мы двое"],["live","🌙","Рядом сейчас"],["pet","🦊","Питомец"],["ryzhiy","🧺","Рыжий на Mac"],
+  ["look","🎨","Оформление"],["prof","👤","Профиль"]
+ ];
+ if(!window.llPet)ITEMS=ITEMS.filter(function(i){return i[0]!=="ryzhiy"});
+ var side=node('<aside class="dside" id="dSide"><div class="dbrand"><span class="dlogo">LoveLense</span><small>вместе на любом расстоянии</small></div><nav class="dnav" id="dNav"></nav>'+
+  '<div class="dpart" id="dPart"><div class="dpav" id="dPav">♡</div><div class="dpt"><b id="dPn">Партнёр</b><small id="dPs">—</small></div></div></aside>');
+ document.body.appendChild(side);
+ ITEMS.forEach(function(it,i){
+  var b=node('<button type="button" data-k="'+it[0]+'"><span class="di">'+it[1]+'</span><span>'+it[2]+'</span>'+(i<9?'<kbd>⌘'+(i+1)+'</kbd>':'')+'</button>');
+  b.onclick=function(){deskGo(it[0])};$("dNav").appendChild(b);
+ });
+ $("dPart").onclick=function(){deskGo("partner")};
+ // главная: «герой» (вы двое) + карточки разделов в одной сетке
+ var home=$("v-home"),hero=node('<div class="card dhero" id="dHero"></div>');
+ ["ctimes","couple","thint"].forEach(function(c){var e=home.querySelector("."+c)||$(c==="thint"?"tHint":"");if(e)hero.appendChild(e)});
+ var top=home.querySelector(".top");home.insertBefore(hero,top?top.nextSibling:home.firstChild);
+ var grid=node('<div class="dgrid" id="dGrid"></div>');home.appendChild(grid);
+ ["daysCard","meetCard","petRow","hubMedia","hubGames","hubUs","hubLive"].forEach(function(id){var e=$(id);if(e)grid.appendChild(e)});
+ // приветствие
+ var hi=node('<div class="dhi"><h1 id="dHi">Привет ♡</h1><small id="dDate"></small></div>');home.insertBefore(hi,home.firstChild);
+ function greet(){var hr=new Date().getHours(),n=S&&S.me?name(S.me):"";$("dHi").textContent=(hr<5?"Доброй ночи":hr<12?"Доброе утро":hr<18?"Добрый день":"Добрый вечер")+(n?", "+n:"")+" ♡";
+  $("dDate").textContent=new Date().toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"})}
+ // переходы
+ var curK="home";
+ window.deskGo=function(k){
+  haptic();curK=k;Array.prototype.forEach.call($("dNav").children,function(b){b.classList.toggle("on",b.getAttribute("data-k")===k)});
+  if($("sheet").classList.contains("on")){HUB.returnTo=null;closeSheet()}
+  var tab=function(t){var b=document.querySelector('.nav button[data-tab="'+t+'"]');if(b)b.click()};
+  if(k==="home"||k==="map"||k==="prof"){tab(k);return}
+  tab("home");
+  if(k==="media")hubOpen("media","movie");else if(k==="games")hubOpen("games");else if(k==="us")hubOpen("us");else if(k==="live")hubOpen("live");
+  else openSheet(k);
+ };
+ // назад из раздела — снова главная (раздел закрыли кнопкой ← или Esc)
+ var obs=new MutationObserver(function(){if(!$("sheet").classList.contains("on")&&["home","map","prof"].indexOf(curK)<0){var t=document.querySelector(".nav button.on");var k=t?t.getAttribute("data-tab"):"home";curK=k;Array.prototype.forEach.call($("dNav").children,function(b){b.classList.toggle("on",b.getAttribute("data-k")===k)})}});
+ obs.observe($("sheet"),{attributes:true,attributeFilter:["class"]});
+ // ⌘1…⌘9
+ document.addEventListener("keydown",function(e){if(e.metaKey&&!e.shiftKey&&!e.altKey&&/^[1-9]$/.test(e.key)){var it=ITEMS[+e.key-1];if(it){e.preventDefault();deskGo(it[0])}}});
+ // карточка партнёра внизу меню
+ function part(){
+  if(!S)return;var p=S.partner;greet();
+  if(!p){$("dPn").textContent="Добавь партнёра";$("dPs").textContent="Нажми, чтобы пригласить";setPhoto($("dPav"),null);return}
+  setPhoto($("dPav"),p);$("dPn").textContent=name(p);
+  var bits=[online()?"● в сети":"не в сети"];if(S.partner_tz)bits.push(clock(S.partner_tz));var bt=batTxt(S.partner_bat);if(bt)bits.push(bt);
+  $("dPs").textContent=bits.join(" · ");$("dPart").classList.toggle("on",online());
+ }
+ setInterval(part,5000);setTimeout(part,600);
+ $("dNav").children[0].classList.add("on");
+})()}
+
+// ===================== Рыжий на Mac: настройки =====================
+if(window.llPet){
+ var RZ={st:null};
+ window.__llPetState=function(j){try{RZ.st=typeof j==="string"?JSON.parse(j):j}catch(e){RZ.st=null}if(cur&&cur.k==="ryzhiy")rzRender($("shB"))};
+ SHEETS.ryzhiy={t:"Рыжий на Mac",r:function(B){B.innerHTML='<div class="hint" style="margin-top:0">Связываюсь с Рыжим…</div>';window.llPet({cmd:"get"});setTimeout(function(){if(cur&&cur.k==="ryzhiy"&&!RZ.st)rzRender(B)},1500)}};
+ function rzRender(B){
+  B.innerHTML="";var s=RZ.st;
+  if(!s){box(B,'<div class="dbig">🧺</div><div class="lab" style="text-align:center">Рыжий сейчас не запущен</div><div class="hint" style="text-align:center">Рыжий живёт на рабочем столе: гуляет по окнам, спит в лукошке, приносит весточки от партнёра.</div><button class="btn" id="rzRun" type="button">Запустить Рыжего</button>');
+   $("rzRun").onclick=function(){haptic();window.llPet({cmd:"launch"});setTimeout(function(){window.llPet({cmd:"get"})},2500)};return}
+  var c=s.cfg||{},pn=S&&S.pet?S.pet.name:"Рыжий";
+  var top=box(B,'<div class="rzhead"><div class="rzpic" id="rzPic"></div><div><b>'+esc(pn)+' на рабочем столе</b><small>'+(s.connected?"Подключён к LoveLense ♡":"Не подключён к LoveLense")+'</small></div></div>'+
+   '<div class="ract" style="margin-top:12px"><button type="button" data-c="feed">🍖<span>Покормить</span></button><button type="button" data-c="play">🎾<span>Поиграть</span></button><button type="button" data-c="call">👋<span>Позвать сюда</span></button></div>'+
+   '<div class="ract"><button type="button" data-c="home">🧺<span>В лукошко</span></button><button type="button" data-c="toggle">'+(s.visible?"🙈<span>Спрятать</span>":"👀<span>Показать</span>")+'</button><button type="button" data-c="pet">🎨<span>Вид и имя</span></button></div>');
+  if(S&&S.pet)$("rzPic").innerHTML=petSvg(S.pet.kind,"happy",S.pet);
+  Array.prototype.forEach.call(top.querySelectorAll("[data-c]"),function(b){b.onclick=function(){var k=b.getAttribute("data-c");haptic();
+   if(k==="pet"){deskGo("pet");return}window.llPet({cmd:k});toast({feed:"Ням! 🍖",play:"Играем! 🎾",call:"Бежит к тебе 🦊",home:"Пошёл в лукошко 🧺",toggle:s.visible?"Спрятался":"Вернулся"}[k]);setTimeout(function(){window.llPet({cmd:"get"})},400)}});
+  var cf=box(B,'<div class="lab">Характер и вид</div>'+
+   '<div class="opt"><div class="lab">Размер</div><div class="seg" id="rzSize"></div></div>'+
+   '<div class="opt"><div class="lab">Скорость</div><div class="seg" id="rzSpeed"></div></div>'+
+   '<div class="opt"><div class="lab">Разговорчивость</div><div class="seg" id="rzChat"></div></div>'+
+   '<div class="opt"><div class="lab">Ночью</div><div class="seg" id="rzSleep"></div></div>'+
+   '<div class="opt"><div class="lab">Обои «небо партнёра»</div><div class="seg" id="rzSky"></div></div>'+
+   '<div class="opt"><div class="lab">Запускать при входе в Mac</div><div class="seg" id="rzLogin"></div></div>');
+  var seg=function(id,key,opts,val){var e=$(id);opts.forEach(function(o){var x=node('<button type="button" class="'+(String(val)===String(o[0])?"on":"")+'">'+o[1]+'</button>');
+   x.onclick=function(){haptic();Array.prototype.forEach.call(e.children,function(y){y.classList.toggle("on",y===x)});var m={cmd:"set"};m[key]=o[0];window.llPet(m)};e.appendChild(x)})};
+  seg("rzSize","size",[[0.75,"S"],[1,"M"],[1.3,"L"],[1.6,"XL"]],c.size||1);
+  seg("rzSpeed","speed",[[0.6,"Спокойный"],[1,"Обычный"],[1.6,"Шустрый"]],c.speed||1);
+  seg("rzChat","chat",[[0,"Молчун"],[1,"Обычный"],[2,"Болтун"]],c.chat==null?1:c.chat);
+  seg("rzSleep","sleep",[[true,"Спит в лукошке"],[false,"Не спит"]],c.sleep!==false);
+  seg("rzSky","sky",[[true,"Вкл"],[false,"Выкл"]],s.sky!==false);
+  seg("rzLogin","login",[[true,"Да"],[false,"Нет"]],!!s.login);
+  box(B,'<div class="hint" style="margin-top:0">Рыжий — тот же питомец, что у вас в LoveLense: его вид, имя и наряд общие для пары. Гладь его кликом, двойной клик — разбудить, зажми — подержать, перетащи файл на него — отнесёт партнёру. ⌥⇧H — сердечко партнёру из любой программы.</div>');
+ }
 }
 
 function openLink(u){try{if(TG&&TG.openTelegramLink)TG.openTelegramLink(u);else window.open(u,"_blank")}catch(e){window.open(u,"_blank")}}

@@ -1,0 +1,70 @@
+/* ===== LoveLense для Mac: настольная раскладка ===== */
+.dside{display:none}
+html.desk{--side:264px}
+html.desk .nav{display:none!important}
+html.desk .dside{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:var(--side);z-index:120;padding:54px 14px 16px;box-sizing:border-box;
+ background:var(--card);border-right:1px solid var(--border);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);-webkit-app-region:drag}
+.dbrand{padding:0 10px 18px}
+.dlogo{display:block;font:400 30px/1.1 Georgia,serif;color:var(--ink);letter-spacing:.2px}
+html[data-logo=sans] .dlogo{font-family:inherit;font-weight:600;font-size:26px}
+.dbrand small{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.dnav{display:flex;flex-direction:column;gap:2px;flex:1;overflow:auto}
+.dnav button{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border:0;border-radius:12px;background:transparent;color:var(--ink);font:500 15px/1.2 inherit;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s}
+.dnav button:hover{background:var(--chip)}
+.dnav button.on{background:var(--navon);color:var(--acc2);font-weight:600}
+.dnav .di{width:24px;text-align:center;font-size:18px}
+.dnav kbd{margin-left:auto;font:500 11px/1 inherit;font-family:inherit;color:var(--muted);opacity:0;transition:opacity .15s}
+.dnav button:hover kbd{opacity:1}
+.dpart{display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px;border-radius:16px;background:var(--chip);cursor:pointer}
+.dpav{width:42px;height:42px;flex:none;border-radius:50%;background:linear-gradient(160deg,#D8CCF6,#A595D8) center/cover;color:#fff;display:flex;align-items:center;justify-content:center;font:600 18px/1 Georgia,serif;position:relative}
+.dpart.on .dpav::after{content:"";position:absolute;right:0;bottom:0;width:11px;height:11px;border-radius:50%;background:#4FAF6A;border:2px solid var(--card)}
+.dpt{min-width:0}.dpt b{display:block;font-size:14px}.dpt small{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* основная область */
+html.desk .page{max-width:none;margin:0 0 0 var(--side);padding:40px 44px 48px}
+html.desk .view{max-width:1240px;margin:0 auto}
+html.desk #v-home .top{position:absolute;right:44px;top:34px;margin:0;z-index:3}
+.dhi{display:none}
+html.desk .dhi{display:block;margin:4px 0 22px}
+html.desk .dhi h1{margin:0;font:600 32px/1.15 inherit;font-family:inherit;color:var(--title)}
+html.desk .dhi small{display:block;margin-top:4px;font-size:14px;color:var(--muted);text-transform:capitalize}
+html.desk .dhero{padding:26px 30px 18px;margin:0 0 20px}
+html.desk .dhero .couple{max-width:640px;margin:0 auto}
+html.desk .dhero .ctimes{max-width:640px;margin:0 auto 4px}
+.dgrid{display:contents}
+html.desk .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;align-items:stretch}
+html.desk .dgrid>*{margin:0!important;min-height:96px;width:auto!important;max-width:none!important}
+html.desk .dgrid .hubc{height:100%}
+html.desk .dgrid .days{display:flex;flex-direction:column;justify-content:center}
+html.desk #v-map .mapbox{height:calc(100vh - 230px);min-height:420px}
+/* разделы открываются справа от меню */
+html.desk .sheet{left:var(--side)}
+html.desk .sheet .sb{max-width:none;padding-left:40px;padding-right:40px}
+html.desk .sheet .sh{max-width:none;padding-left:40px;padding-right:40px}
+html.desk .sheet .sb>*{max-width:860px;margin-left:auto;margin-right:auto}
+html.desk .sheet .sh{padding-top:30px}
+html.desk .sheet.hub .sb{padding-top:64px;padding-bottom:40px}
+html.desk .hubnav{top:84px;bottom:auto;width:min(620px,calc(100% - 80px));animation:none}
+html.desk .hubnav button{flex-direction:row;justify-content:center;gap:8px;font-size:14px;padding:9px 0}
+html.desk .hubnav button .hi{font-size:18px}
+html.desk .sheet .sh,html.desk .dside{-webkit-user-select:none;user-select:none}
+html.desk #wDrift{left:var(--side)}
+html.desk .ping{left:calc(50% + var(--side) / 2)}
+html.desk .toast{left:calc(50% + var(--side) / 2)}
+/* Рыжий */
+.dbig{font-size:64px;text-align:center;margin:6px 0}
+.rzhead{display:flex;align-items:center;gap:14px}.rzhead b{display:block;font-size:17px}.rzhead small{color:var(--muted);font-size:13px}
+.rzpic{width:84px;height:84px;flex:none;border-radius:22px;background:var(--chip);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.rzpic svg{width:92%;height:auto}
+/* узкое окно — обычная мобильная раскладка */
+@media (max-width:899px){
+ html.desk .dside{display:none}html.desk .nav{display:flex!important}
+ html.desk .page{margin:0 auto;max-width:480px;padding:calc(14px + var(--top)) 18px calc(110px + var(--bot))}
+ html.desk .sheet{left:0}html.desk .dhi{display:none}
+ html.desk .sheet .sb{max-width:480px;padding:6px 18px calc(30px + var(--bot))}
+ html.desk .dgrid{display:block}html.desk .dgrid>*{margin-top:14px!important}
+ html.desk .hubnav{top:auto;bottom:calc(12px + var(--bot))}
+ html.desk .sheet.hub .sb{padding-top:0;padding-bottom:calc(110px + var(--bot))}
+ html.desk #v-home .top{position:static}
+}
+
+html.desk .rroom{max-width:720px;margin-left:auto;margin-right:auto}
