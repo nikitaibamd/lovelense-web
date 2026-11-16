@@ -3127,7 +3127,8 @@ if(DESK){(function(){
   var bits=[online()?"● в сети":"не в сети"];if(S.partner_tz)bits.push(clock(S.partner_tz));var bt=batTxt(S.partner_bat);if(bt)bits.push(bt);
   $("dPs").textContent=bits.join(" · ");$("dPart").classList.toggle("on",online());
  }
- setInterval(part,5000);setTimeout(part,600);
+ setInterval(part,3000);setTimeout(part,600);
+ var _render=render;render=function(){var r=_render.apply(this,arguments);try{part()}catch(e){}return r};
  $("dNav").children[0].classList.add("on");
 })()}
 
